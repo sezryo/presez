@@ -29,19 +29,34 @@
     //
   {
     overlays = {
+      forall = ( self: super:
+        let
+          dirContents = builtins.readDir ./packages;
+          genPackage = name: {
+            inherit name;
+            value = self.callPackage (./packages + "/${name}") {}; };
+          names = builtins.attrNames dirContents;
+        in builtins.listToAttrs (map genPackage names)
+      );
       nur = inputs.nur.overlay;
       emacs-overlay = inputs.emacs-overlay.overlay;
       rust-overlay = inputs.rust-overlay.overlay;
     };
-  
+
+    nixosModules.ego = { ... }: {
+      nixpkgs.pkgs = self.legacyPackages."x86_64-linux";
+      imports = [ ./fields ];
+    };
     nixosConfigurations = {
 
       "sezrienne" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs.inputs = inputs;
         modules = [
           ./sezrienne/subjectivity.nix
           { nixpkgs.pkgs = self.legacyPackages."x86_64-linux"; }
 	  sauricat.nixosModules.smallcat
+          self.nixosModules.ego
         ];
       }; 
     };
