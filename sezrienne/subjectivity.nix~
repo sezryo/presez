@@ -1,0 +1,139 @@
+{ config, pkgs, ... }:
+
+{
+  imports =
+    [ 
+      ../le-real/dasein.nix
+      ../le-real/intersubjectivity.nix
+    ];
+
+  boot.loader.grub = {
+    enable = true;
+    version = 2;
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+    device = "nodev"; # "nodev" for efi only
+    theme = pkgs.nixos-grub2-theme;
+  };
+  boot.loader.efi.efiSysMountPoint = "/boot";
+
+  time.timeZone = "Asia/Shanghai";
+
+  nixpkgs.config.allowUnfree = true;
+  nix = {
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
+  programs.fish.enable = true;
+  users.defaultUserShell = pkgs.fish;
+
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  
+  services = {
+    xserver = {
+      enable = true;
+      exportConfiguration = true;
+      # displayManager.lightdm.enable = true;
+      # windowManager.xmonad = {
+        # enable = true;
+	# enableContribAndExtras = true;
+	#   extraPackages = haskellPackages: [
+        #   haskellPackages.xmobar
+        #   haskellPackages.List
+        #   haskellPackages.monad-logger
+        #   haskellPackages.xmonad
+        # ];
+      # };
+      displayManager.gdm.enable = true;
+      displayManager.gdm.wayland = false;
+      desktopManager.gnome.enable = true;
+      layout = "us";
+      libinput.enable = true;
+    };
+    
+    printing.enable = true;
+    asusd.enable = true;
+  };
+  
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+  
+  users.users.sezrienne = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ]; 
+  };
+
+  environment.systemPackages = with pkgs; [
+  
+    ## Essntials
+    home-manager firefox wget vim emacs git vscode
+    ## Utils
+    pciutils binutils coreutils gnumake
+    
+    ## Haskell
+    stack cabal-install ghc agda
+    ## Pure Languages
+    agda coq racket clojure 
+    ## Impure Languages
+    ruby python311 nodejs-18_x rustc cargo clang
+    
+    ## Gismo
+    neofetch tealdeer tree cron ripgrep fd
+    ## Hardware
+    asusctl htop radeontop
+    ## Life
+    tdesktop zoom-us mps-youtube
+    ## Grammatology
+    ibus-engines.rime nerdfonts
+    ##  Efficiency
+    libreoffice okular calibre ocrmypdf
+    ##  Computational
+    # wolfram-engine
+    
+    ## Networks
+    clash
+    ## Shell
+    fish starship fzf
+    ## Tiling WM
+    xterm dmenu
+    
+  ];
+
+  fonts = {
+    enableDefaultFonts = true;
+    fonts = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      fira-code
+      fira-code-symbols
+      hanazono
+      nerdfonts
+      source-han-sans source-han-serif source-han-mono
+      wqy_microhei wqy_zenhei
+    ];
+    fontconfig = {
+      defaultFonts = {
+        serif = [ "Source Han Serif" ];
+        sansSerif = [ "Source Han Sans" ];
+        monospace = [ "Fira Code" ];
+      };
+    };
+  };
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; 
+    dedicatedServer.openFirewall = true;
+  };
+
+  
+  
+  system.stateVersion = "22.05";
+
+}
+
