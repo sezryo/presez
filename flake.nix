@@ -31,10 +31,10 @@
     overlays = {
       forall = ( self: super:
         let
-          dirContents = builtins.readDir ./packages;
+          dirContents = builtins.readDir ./creatio;
           genPackage = name: {
             inherit name;
-            value = self.callPackage (./packages + "/${name}") {}; };
+            value = self.callPackage (./creatio + "/${name}") {}; };
           names = builtins.attrNames dirContents;
         in builtins.listToAttrs (map genPackage names)
       );
