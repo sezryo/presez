@@ -23,7 +23,7 @@
   hardware.pulseaudio.enable = true;
 
   environment.systemPackages = with pkgs; [
-    asusctl
+    asusctl supergfxctl
   ];
 
 }
