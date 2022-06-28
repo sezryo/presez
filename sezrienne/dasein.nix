@@ -19,6 +19,7 @@
 
   services.printing.enable = true;
   services.asusd.enable = true;
+  services.supergfxd.enable = true;
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
