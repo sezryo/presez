@@ -1,25 +1,31 @@
-{ lib
-, fetchFromGitLab
-, fetchpatch
-, rustPlatform
-, pkg-config
-, udev
-}:
+{ lib, rustPlatform, fetchFromGitLab, pkg-config, udev, kmod }:
+
 rustPlatform.buildRustPackage rec {
   pname = "supergfxctl";
-  version = "git-de0f82";
+  version = "git-715716";
   src = fetchFromGitLab {
     owner = "asus-linux";
     repo = pname;
-    rev = "de0f8219c245708d472f4a77dcb4ddd574060a9e";
+    rev = "715716cfd924dc2105b377d3f4cc437593f47fc6";
     sha256 = "sha256-hdHZ1GNhEotyOOPW3PJMe4+sdTqwic7iCnVsA5a1F1c=";
   };
-  cargoHash = "sha256-B4HmHFcbPvNlZt7h6vCJFoGBCLveqrU/iUqhbjjks+w=";
+  patches = [
+    ./no-config-write.patch
+  ];
 
+  postPatch = ''
+    substituteInPlace data/supergfxd.service \
+      --replace /usr/bin $out/bin
+    substituteInPlace src/controller.rs \
+      --replace \"modprobe\" \"${kmod}/bin/modprobe\" \
+      --replace \"rmmod\" \"${kmod}/bin/rmmod\"
+  ''; 
+  
   nativeBuildInputs = [ pkg-config ];
   buildInputs = [ udev ];
-
-  postInstall = ''
-    make install INSTALL_PROGRAM=true DESTDIR=$out prefix=
-  ''; 
+  cargoHash = "sha256-XDpbMjB9q2Jnuq6ru416F66mX2RWeQpXkQjGO1/Wpd8=";
+  
+  makeFlags = [ "prefix=${placeholder "out"}" ];
+  buildPhase = "buildPhase";
+  installPhase = "installPhase";
 }
