@@ -2,12 +2,12 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "supergfxctl";
-  version = "git-715716";
+  version = "3.0.0";
   src = fetchFromGitLab {
     owner = "asus-linux";
     repo = pname;
-    rev = "715716cfd924dc2105b377d3f4cc437593f47fc6";
-    sha256 = "sha256-hdHZ1GNhEotyOOPW3PJMe4+sdTqwic7iCnVsA5a1F1c=";
+    rev = version;
+    sha256 = "sha256-ozQfXvR1Z9j9SGtQyZapik8B/UvT96crHsFiNL/hjgk=";
   };
   patches = [
     ./no-config-write.patch
@@ -23,7 +23,7 @@ rustPlatform.buildRustPackage rec {
   
   nativeBuildInputs = [ pkg-config ];
   buildInputs = [ udev ];
-  cargoHash = "sha256-XDpbMjB9q2Jnuq6ru416F66mX2RWeQpXkQjGO1/Wpd8=";
+  cargoHash = "sha256-C4E9WnWzSKR2RCUbCjPL2wmEbSlg4C+Ouw1OhtH5GSE=";
   
   makeFlags = [ "prefix=${placeholder "out"}" ];
   buildPhase = "buildPhase";

@@ -24,6 +24,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    taffybar xterm dmenu nitrogen
+    taffybar dmenu nitrogen alacritty
   ];
 }

@@ -20,13 +20,13 @@
   outputs = inputs@{ self, nixpkgs, nixos-hardware, home-manager, flake-utils, sauricat, ... }:
   
     flake-utils.lib.eachDefaultSystem (system: {
-    legacyPackages = import nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-      overlays = builtins.attrValues self.overlays;
-    };
-    })
-    //
+      legacyPackages = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = builtins.attrValues self.overlays;
+      };
+    }) //
+
   {
     overlays = {
       forall = ( self: super:
@@ -47,8 +47,8 @@
       nixpkgs.pkgs = self.legacyPackages."x86_64-linux";
       imports = [ ./fields ];
     };
-    nixosConfigurations = {
 
+    nixosConfigurations = {
       "sezrienne" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs.inputs = inputs;
@@ -57,6 +57,12 @@
           { nixpkgs.pkgs = self.legacyPackages."x86_64-linux"; }
 	  sauricat.nixosModules.smallcat
           self.nixosModules.ego
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.sezrienne = import ./le-symbolique/signifiers.nix;
+          }
         ];
       }; 
     };

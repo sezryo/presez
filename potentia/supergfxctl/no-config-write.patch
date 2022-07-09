@@ -2,7 +2,7 @@ diff --git a/src/config.rs b/src/config.rs
 index 1967d2d..e385158 100644
 --- a/src/config.rs
 +++ b/src/config.rs
-@@ -91,8 +91,6 @@ impl GfxConfig {
+@@ -43,8 +43,6 @@ impl GfxConfig {
      pub fn load(config_path: String) -> Self {
          let mut file = OpenOptions::new()
              .read(true)
@@ -11,20 +11,16 @@ index 1967d2d..e385158 100644
              .open(&config_path)
              .unwrap_or_else(|_| panic!("The directory {} is missing", config_path)); // okay to cause panic here
          let mut buf = String::new();
-@@ -100,16 +98,17 @@ impl GfxConfig {
+@@ -52,12 +50,17 @@ impl GfxConfig {
          if let Ok(read_len) = file.read_to_string(&mut buf) {
              if read_len == 0 {
                  config = Self::new(config_path);
 -            } else if let Ok(data) = serde_json::from_str(&buf) {
 -                config = data;
 -                config.config_path = config_path;
--            } else if let Ok(data) = serde_json::from_str(&buf) {
--                let old: GfxConfig300 = data;
--                config = old.into();
--                config.config_path = config_path;
              } else {
--                warn!("Could not deserialise {}, recreating", config_path);
--                config = GfxConfig::new(config_path);
+-                warn!("Could not deserialise {}", config_path);
+-                panic!("Please remove {} then restart service", config_path);
 +                match serde_json::from_str(&buf) {
 +                    Ok(data) => {
 +                        config = data;
@@ -38,7 +34,7 @@ index 1967d2d..e385158 100644
              }
          } else {
              config = Self::new(config_path)
-@@ -138,9 +139,6 @@ impl GfxConfig {
+@@ -86,9 +89,6 @@ impl GfxConfig {
      }    
  
      pub fn write(&self) {
