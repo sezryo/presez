@@ -10,7 +10,7 @@
   agda coq
 
   ## Lisp
-  emacs racket clojure scheme48 
+  racket clojure scheme48
   
   ## Rust
   rustc cargo
@@ -24,7 +24,7 @@
   ## Ergonomics
   tealdeer fd ripgrep exa
 
-  ## Gismo
+  ## Gismos
   htop neofetch radeontop
 
   ## Life

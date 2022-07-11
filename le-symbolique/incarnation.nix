@@ -5,6 +5,7 @@
     enable = true;
     shellAbbrs = {
       tree = "exa -TF"; l =  "exa -Fabl"; ls = "exa -F";
+      cipher = "nix-hash --flat --base32 --type sha256";
     };
     functions = {
       born = "sudo nixos-rebuild switch --flake path:/home/sezrienne/presez#sezrienne";

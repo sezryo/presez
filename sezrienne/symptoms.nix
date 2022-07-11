@@ -6,10 +6,12 @@
 
   environment.systemPackages = with pkgs; [
     home-manager
-    vim  
+    vim
     firefox
     wget
     git
+    emacs
+    emacsNativeComp
     pciutils
     binutils
     coreutils

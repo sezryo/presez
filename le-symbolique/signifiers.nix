@@ -4,6 +4,7 @@
   imports = [
     ./signs.nix
     ./incarnation.nix
+    ./scripture.nix
   ];
 
   home.username = "sezrienne";
