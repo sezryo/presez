@@ -8,7 +8,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
     sauricat.url = "github:sauricat/flakes";
-    nur.url = "github:nix-community/NUR";
+    nur.url = "github:nix-community/NUR"; 
     emacs-overlay = { url = "github:nix-community/emacs-overlay";
                       inputs.nixpkgs.follows = "nixpkgs";
                       inputs.flake-utils.follows = "flake-utils"; };
@@ -17,7 +17,7 @@
                      inputs.flake-utils.follows = "flake-utils"; };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixos-hardware, home-manager, flake-utils, sauricat, ... }:
+  outputs = inputs@{ self, nixpkgs, nixos-hardware, home-manager, flake-utils, sauricat,  ... }:
   
     flake-utils.lib.eachDefaultSystem (system: {
       legacyPackages = import nixpkgs {

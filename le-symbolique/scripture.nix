@@ -6,11 +6,11 @@ let
     sha256 = "sha256:003g02rr7vhz8782d7v6dkvklbax317wj9inb6zi6cglh5zn54kz";
   }) {
     doomPrivateDir = ./scripture-via-crucis;
-    emacsPackagesOverlay = self: super: {
-      magit-delta = super.magit-delta.overrideAttrs (esuper: {
+      emacsPackagesOverlay = self: super: {
+        magit-delta = super.magit-delta.overrideAttrs (esuper: {
         buildInputs = esuper.buildInputs ++ [ pkgs.git ];
       });
-    };
+    }; 
   };
 in
 {
