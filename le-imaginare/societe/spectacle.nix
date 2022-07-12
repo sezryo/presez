@@ -23,10 +23,13 @@
          haskellPackages.monad-logger
          haskellPackages.xmonad
        ];
+      config = ./strongMonad.hs;
     };
     layout = "us";
     libinput.enable = true;
   };
+
+  programs.nm-applet.enable = true;
 
   environment.systemPackages = with pkgs; [
     taffybar dmenu nitrogen alacritty rofi polybar

@@ -22,10 +22,10 @@
   ruby python311 clang
 
   ## Ergonomics
-  tealdeer fd ripgrep exa
+  tealdeer fd ripgrep exa trash-cli
 
-  ## Gismos
-  htop neofetch radeontop
+  ## Monitors
+  htop neofetch radeontop conky
 
   ## Life
   tdesktop zoom-us mps-youtube qbittorrent
