@@ -15,6 +15,7 @@
     pciutils
     binutils
     coreutils
+    nixfmt
     gnumake
     cron
   ];

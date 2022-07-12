@@ -4,8 +4,16 @@
   services.xserver = {
     enable = true;
     exportConfiguration = true;
-    /*
-    displayManager.lightdm.enable = true;
+    displayManager.lightdm.greeters.mini = {
+      enable = true;
+      user = "your-username";
+      extraConfig = ''
+        [greeter]
+        show-password-label = false
+        [greeter-theme]
+        background-image = ""
+      '';
+    };
     windowManager.xmonad = {
       enable = true;
       enableContribAndExtras = true;
@@ -16,14 +24,11 @@
          haskellPackages.xmonad
        ];
     };
-    */
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
     layout = "us";
     libinput.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
-    taffybar dmenu nitrogen alacritty
+    taffybar dmenu nitrogen alacritty rofi polybar
   ];
 }

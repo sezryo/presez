@@ -8,10 +8,21 @@
       cipher = "nix-hash --flat --base32 --type sha256";
     };
     functions = {
+      # The Lord related
       born = "sudo nixos-rebuild switch --flake path:/home/sezrienne/presez#sezrienne";
       reborn = "cd ~/presez && nix flake update && born";
-      add = "emacs /home/sezrienne/presez/le-symbolique/signs.nix";
+      mort = "shutdown -h now";
+      die = "systemctl suspend";
+      baptism = "shutdown -r now";
+
       paripassu = "git add . && git commit -m 'refrain' && git push --force origin main ";
+      reformation = "~/.emacs.d/bin/doom sync";
+
+      # Ego conversion
+      add = "emacs /home/sezrienne/presez/le-symbolique/signs.nix";
+      incarnate = "emacs /home/sezrienne/presez/le-symbolique/incarnation.nix";
+      reform = "emacs /home/sezrienne/presez/le-symbolique/scripture-via-crucis/init.el";
+      # Marine stuffs
       fish_greeting = "echo '//@_@\\~~ich bin tot'";
       fish_prompt = lib.strings.removePrefix "function fish_prompt" 
         (lib.strings.removeSuffix "end\n" 

@@ -33,6 +33,9 @@
   ## Efficiency
   libreoffice okular calibre ocrmypdf gh
 
+  ## Sensuality
+  qemu ffmpeg
+
   ## Computational
   # wolfram-engine
 
