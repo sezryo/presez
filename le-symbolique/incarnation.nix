@@ -7,7 +7,7 @@
       see = "exa -TFl"; spec = "exa -TFal"; l = "exa -Fabl"; ls = "exa -F";
       cipher = "nix-hash --flat --base32 --type sha256";
       dc = "trash"; # Discard artifacts
-      s = "sudo";
+      s = "sudo"; e = "emacs";
     };
     functions = {
       # The Lord related
@@ -16,7 +16,6 @@
       mort = "shutdown -h now";
       die = "systemctl suspend";
       baptism = "shutdown -r now";
-      initia = "sudo systemctl start supergfxd && sudo systemctl start asusd";
 
       paripassu = "git add . && git commit -m 'refrain' && git push --force origin main ";
       reformation = "~/.emacs.d/bin/doom sync";
@@ -33,7 +32,7 @@
           (builtins.readFile ./incarnation-via-crucis/fish_prompt.fish));
 
       # Use Substitutes
-      rm = "Do not be a TERRORIST!";
+      rm = "echo 'Do not be a TERRORIST!'";
     };
   };
 

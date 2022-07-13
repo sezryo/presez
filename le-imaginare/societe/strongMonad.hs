@@ -116,7 +116,7 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce (mySoundPlayer ++ startupSound)
   spawn "killall conky"   -- kill current conky on each restart
-  spawnOnce ""
+  spawnOnce "sudo systemctl start supergfxd && sudo systemctl start asusd"
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --

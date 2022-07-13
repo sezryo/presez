@@ -8,4 +8,5 @@
       experimental-features = nix-command flakes
     '';
   };
+  security.sudo.wheelNeedsPassword = false;
 }
