@@ -46,5 +46,5 @@
     enableFishIntegration = true; 
   };
   
-  home.packages = with pkgs; [ busybox starship ];
+  home.packages = with pkgs; [ busybox starship nushell];
 }
