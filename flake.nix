@@ -40,7 +40,7 @@
       );
       nur = inputs.nur.overlay;
       emacs-overlay = inputs.emacs-overlay.overlay;
-      rust-overlay = inputs.rust-overlay.overlay;
+      rust-overlay = inputs.rust-overlay.overlays.default;
     };
 
     nixosModules.ego = { ... }: {
@@ -55,7 +55,7 @@
         modules = [
           ./sezrienne/subjectivity.nix
           { nixpkgs.pkgs = self.legacyPackages."x86_64-linux"; }
-	  sauricat.nixosModules.smallcat
+	        sauricat.nixosModules.smallcat
           self.nixosModules.ego
           home-manager.nixosModules.home-manager
           {

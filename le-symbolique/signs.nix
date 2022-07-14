@@ -3,6 +3,9 @@
 {
   home.packages = with pkgs; [
 
+  ## Command line tools
+  # All described in ./incarnation.nix, mostly Rust used
+
   ## Haskell
   stack cabal-install ghc
   
@@ -21,11 +24,8 @@
   ## Minor
   ruby python311 clang
 
-  ## Ergonomics
-  tealdeer fd ripgrep exa trash-cli
-
   ## Monitors
-  htop neofetch radeontop conky
+  bottom neofetch radeontop conky
 
   ## Life
   tdesktop zoom-us mps-youtube qbittorrent
