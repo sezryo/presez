@@ -7,7 +7,6 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
-    sauricat.url = "github:sauricat/flakes";
     nur.url = "github:nix-community/NUR"; 
     emacs-overlay = { url = "github:nix-community/emacs-overlay";
                       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +16,7 @@
                      inputs.flake-utils.follows = "flake-utils"; };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixos-hardware, home-manager, flake-utils, sauricat,  ... }:
+  outputs = inputs@{ self, nixpkgs, nixos-hardware, home-manager, flake-utils,  ... }:
   
     flake-utils.lib.eachDefaultSystem (system: {
       legacyPackages = import nixpkgs {
@@ -55,7 +54,6 @@
         modules = [
           ./sezrienne/subjectivity.nix
           { nixpkgs.pkgs = self.legacyPackages."x86_64-linux"; }
-	        sauricat.nixosModules.smallcat
           self.nixosModules.ego
           home-manager.nixosModules.home-manager
           {

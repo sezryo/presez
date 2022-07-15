@@ -8,6 +8,10 @@ source /home/sezrienne/presez/le-symbolique/incarnation-via-crucis/zoxide.nu
   alias s = sudo
   alias e = emacs
   alias t = trash
+  alias lt = lsd --tree
+  alias see = lsd --tree -l
+  alias l = lsd -Fal
+  alias tg = telegram-desktop
 
 # The Lord related
   def born [] {bash -c "sudo nixos-rebuild switch --flake path:/home/sezrienne/presez#sezrienne"}
@@ -26,7 +30,8 @@ source /home/sezrienne/presez/le-symbolique/incarnation-via-crucis/zoxide.nu
 
   # Use Substitutes
   def rm [] {echo "Do not be a TERRORIST!"}
-  # def cd [] {echo "Use zoxide instead"}
+
+let pink = "#f5a9b8"
 
 module completions {
 
@@ -170,12 +175,12 @@ use completions *
 
 # for more information on themes see
 # https://www.nushell.sh/book/coloring_and_theming.html
-let default_theme = {
+let sezTheme = {
     # color for nushell primitives
     separator: white
     leading_trailing_space_bg: { attr: n } # no fg, no bg, attr none effectively turns this off
-    header: green_bold
-    empty: blue
+    header: $pink
+    empty: cyan
     bool: white
     int: white
     filesize: white
@@ -187,7 +192,7 @@ let default_theme = {
     nothing: white
     binary: white
     cellpath: white
-    row_index: green_bold
+    row_index: pink
     record: white
     list: white
     block: white
@@ -195,25 +200,25 @@ let default_theme = {
 
     # shapes are used to change the cli syntax highlighting
     shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: b}
-    shape_binary: purple_bold
+    shape_binary: green_bold
     shape_bool: light_cyan
-    shape_int: purple_bold
-    shape_float: purple_bold
+    shape_int: green_bold
+    shape_float: green_bold
     shape_range: yellow_bold
-    shape_internalcall: cyan_bold
-    shape_external: cyan
-    shape_externalarg: green_bold
+    shape_internalcall: $pink
+    shape_external: purple
+    shape_externalarg: $pink
     shape_literal: blue
     shape_operator: yellow
     shape_signature: green_bold
     shape_string: green
-    shape_string_interpolation: cyan_bold
-    shape_datetime: cyan_bold
-    shape_list: cyan_bold
+    shape_string_interpolation: $pink
+    shape_datetime: $pink
+    shape_list: $pink
     shape_table: blue_bold
     shape_record: cyan_bold
     shape_block: blue_bold
-    shape_filepath: cyan
+    shape_filepath: $pink
     shape_globpattern: cyan_bold
     shape_variable: purple
     shape_flag: blue_bold
@@ -227,7 +232,7 @@ let-env config = {
   table_mode: rounded # basic, compact, compact_double, light, thin, with_love, rounded, reinforced, heavy, none, other
   use_ls_colors: true
   rm_always_trash: false
-  color_config: $default_theme
+  color_config: $sezTheme
   use_grid_icons: true
   footer_mode: "25" # always, never, number_of_rows, auto
   quick_completions: true  # set this to false to prevent auto-selecting completions when only one remains

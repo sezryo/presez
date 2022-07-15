@@ -9,7 +9,7 @@
       version = 2;
       efiSupport = true;
       efiInstallAsRemovable = true;
-      device = "nodev"; # "nodev" for efi only
+      device = "nodev";
       theme = pkgs.nixos-grub2-theme;
     };
   boot.loader.efi.efiSysMountPoint = "/boot";

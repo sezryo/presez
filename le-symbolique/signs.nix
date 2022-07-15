@@ -27,6 +27,9 @@
   ## Monitors
   bottom neofetch radeontop conky
 
+  ## File managers
+  nnn
+
   ## Life
   tdesktop zoom-us mps-youtube qbittorrent
   
