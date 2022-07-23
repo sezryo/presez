@@ -1,11 +1,9 @@
-{ inputs, config, pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
+
+with import ../morphisms;
 
 {
-  imports = [
-    ./signs.nix
-    ./incarnation.nix
-    ./scripture.nix
-  ];
+  imports = listDir ../signs ++ listDir ../lingua;
 
   home.username = "sezrienne";
   home.homeDirectory = "/home/sezrienne";

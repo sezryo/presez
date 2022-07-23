@@ -24,7 +24,7 @@
   hardware.pulseaudio.enable = true;
 
   environment.systemPackages = with pkgs; [
-    asusctl supergfxctl mesa mesa-demos
+    asusctl supergfxctl mesa mesa-demos ffmpeg
   ];
 
 }
