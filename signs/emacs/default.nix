@@ -18,5 +18,5 @@ in
     enable = true;
     package = doom-emacs;
   };
-  home.packages = [ pkgs.emacsNativeComp ];
+  # home.packages = [ pkgs.emacsNativeComp ];
 }
