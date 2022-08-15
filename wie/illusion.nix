@@ -8,8 +8,4 @@
     desktopManager.gnome.enable = true;
     displayManager.gdm.wayland = true;
   };
-
-  environment.systemPackages = with pkgs; [
-    taffybar dmenu nitrogen alacritty rofi polybar
-  ];
 }

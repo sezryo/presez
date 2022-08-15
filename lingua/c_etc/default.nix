@@ -1,5 +1,5 @@
 { pkgs, lib, ... }:
 
 {
-  home.packages = with pkgs; [ clang ];
+  home.packages = with pkgs; [ gcc ];
 }

@@ -8,4 +8,5 @@
       shell = pkgs.nushell;
     };
   };
+  users.groups."networkmanager".members = [ "sezrienne" ];
 }

@@ -11,13 +11,10 @@
       ];
     };
   };
-  
-  environment.systemPackages = with pkgs; [
-    nerdfonts
-  ];
- 
+
    fonts = {
     enableDefaultFonts = true;
+    fontDir.enable = true;
     fonts = with pkgs; [
       noto-fonts
       noto-fonts-emoji
@@ -26,10 +23,11 @@
       noto-fonts-cjk
       hanazono
       source-han-sans source-han-serif source-han-mono
-      wqy_microhei wqy_zenhei
       sarasa-gothic
       arphic-ukai arphic-uming
       unfonts-core
+      nerdfonts
+      times-newer-roman
     ];
     fontconfig = {
       defaultFonts = {

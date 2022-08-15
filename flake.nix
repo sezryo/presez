@@ -17,7 +17,7 @@
   };
 
   outputs = inputs@{ self, nixpkgs, nixos-hardware, home-manager, flake-utils,  ... }:
-  
+
     flake-utils.lib.eachDefaultSystem (system: {
       legacyPackages = import nixpkgs {
         inherit system;
@@ -30,11 +30,10 @@
     overlays = {
       forall = ( self: super:
         let
-          dirContents = builtins.readDir ./potentia;
           genPackage = name: {
             inherit name;
-            value = self.callPackage (./potentia + "/${name}") {}; };
-          names = builtins.attrNames dirContents;
+            value = self.callPackage (./signs + "/${name}" + "/package.nix") {}; };
+          names = [ "asusctl" "supergfxctl" ];
         in builtins.listToAttrs (map genPackage names)
       );
       nur = inputs.nur.overlay;
@@ -52,14 +51,14 @@
         system = "x86_64-linux";
         specialArgs.inputs = inputs;
         modules = [
-          ./sezrienne/subjectivity.nix
+          ./wer/sezrienne/subjectivity.nix
           { nixpkgs.pkgs = self.legacyPackages."x86_64-linux"; }
           self.nixosModules.ego
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.sezrienne = import ./le-symbolique/signifiers.nix;
+            home-manager.users.sezrienne = import ./wer/sezrienne/motion.nix;
           }
         ];
       }; 

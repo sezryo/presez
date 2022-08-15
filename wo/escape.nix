@@ -1,15 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  networking.hostName = "sezrix";
-  networking.wireless.enable = false;
-  networking.networkmanager = {
-    enable = true;
-    wifi.macAddress = "random";
-    ethernet.macAddress = "random";
-  };
-  users.groups."networkmanager".members = [ "sezrienne" ];
-
   systemd.services.clashClient = {
     description = "Clash client service";
     wantedBy = [ "multi-user.target" ]; 
