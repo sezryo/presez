@@ -7,15 +7,16 @@ source /home/sezrienne/presez/signs/zoxide/init.nu
 alias cipher = (nix-hash --flat --base32 --type sha256)
 alias s = sudo
 alias e = emacs -nw
+alias se = sudo emacs -nw
 alias t = trash
 alias lt = lsd --tree
-alias see = lsd --tree -l
+alias see = lsd --tree -al
 alias l = lsd -Fal
 alias tg = telegram-desktop
 
 # The Lord related
 def born [] {bash -c "sudo nixos-rebuild switch --flake path:/home/sezrienne/presez#sezrienne --impure"}
-def reborn [] {cd /home/sezrienne/presez; sudo nix flake update; born}
+def reborn [] {cd /home/sezrienne/presez; sudo nix flake update; born; nix-store --gc}
 def mort [] {shutdown -h now}
 def die [] {systemctl suspend}
 def baptism [] {shutdown -r now}
@@ -29,6 +30,8 @@ def reform [] {emacs -nw /home/sezrienne/presez/signs/doom/init.el}
 
 # Ego illusion
 # def manifest [image] {asusctl anime image -p /home/sezrienne/zauber/static/$image}
+def dgpuon [] {supergfxctl -m hybrid}
+def dgpuoff [] {supergfxctl -m integrated}
 
 # Use Substitutes
 def rm [] {echo "Do not be a TERRORIST!"}

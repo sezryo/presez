@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 
 {
-  programs.nnn = {
+  programs.home-manager = {
     enable = true;
   };
 }

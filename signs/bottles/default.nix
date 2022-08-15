@@ -1,5 +1,5 @@
 { pkgs, lib, ... }:
 
 {
-  home.packages = [ pkgs.bottles ];
+  # home.packages = [ pkgs.bottles ];
 }
