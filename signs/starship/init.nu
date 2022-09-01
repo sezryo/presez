@@ -1,6 +1,6 @@
 let-env STARSHIP_SHELL = "nu"
 let-env STARSHIP_SESSION_KEY = (random chars -l 16)
-let-env PROMPT_MULTILINE_INDICATOR = (^/nix/store/4cz43bq1vf4f2g460lpsxppalrw4c2qi-starship-1.9.1/bin/starship prompt --continuation)
+let-env PROMPT_MULTILINE_INDICATOR = (^/nix/store/wd0gmlqw8h6lzsnzq69d4c50pzsvlkc2-starship-1.10.2/bin/starship prompt --continuation)
 
 # Does not play well with default character module.
 # TODO: Also Use starship vi mode indicators?
@@ -9,7 +9,7 @@ let-env PROMPT_INDICATOR = ""
 let-env PROMPT_COMMAND = {
     # jobs are not supported
     let width = (term size -c | get columns | into string)
-    ^/nix/store/4cz43bq1vf4f2g460lpsxppalrw4c2qi-starship-1.9.1/bin/starship prompt $"--cmd-duration=($env.CMD_DURATION_MS)" $"--status=($env.LAST_EXIT_CODE)" $"--terminal-width=($width)"
+    ^/nix/store/wd0gmlqw8h6lzsnzq69d4c50pzsvlkc2-starship-1.10.2/bin/starship prompt $"--cmd-duration=($env.CMD_DURATION_MS)" $"--status=($env.LAST_EXIT_CODE)" $"--terminal-width=($width)"
 }
 
 # Not well-suited for `starship prompt --right`.

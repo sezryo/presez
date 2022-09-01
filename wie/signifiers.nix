@@ -64,6 +64,24 @@ with import ../morphisms;
     "psmisc"
     "home-manager"
     "yubikey-manager"
-  ] ++ listDir ../lingua;
+    "yt-dlp"
+    "cachix"
+    # "zathura"
+  ] ++ useLinguae [
+    "agda"
+    "c_etc"
+    "clojure"
+    "coq"
+    "elixir"
+    "haskell"
+    "nix"
+    "purescript"
+    "python"
+    "racket"
+    "ruby"
+    "rust"
+    "scheme"
+    "tex"
+  ];
 
 }

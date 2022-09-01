@@ -18,7 +18,7 @@ alias tg = telegram-desktop
 # The Lord related
 def born [] {bash -c "sudo nixos-rebuild switch --flake path:/home/sezrienne/presez#sezrienne --impure"}
 def reborn [] {cd /home/sezrienne/presez; sudo nix flake update; born; reformation; tldr --update; nix-store --gc}
-def mort [] {shutdown -h now}
+ydef mort [] {shutdown -h now}
 def die [] {systemctl suspend}
 def baptism [] {shutdown -r now}
 def initia [] {sudo systemctl start asusd; sudo systemctl start supergfxd}

@@ -28,6 +28,9 @@ rec {
   listDirContaining = fromDir: Text:
     filter (x: hasInfix Text (readFile x)) (listDir fromDir);
 
-   useSigns = signsList:
+  useSigns = signsList:
     map (x: "/home/sezrienne/presez/signs/" + x) signsList;
+
+  useLinguae = linguaeList:
+    map (x: "/home/sezrienne/presez/linguae/" + x) linguaeList;
 }
