@@ -5,7 +5,7 @@
 with import ../functions;
 
 {
-  imports = useModules [
+  imports = useHomeModules [
 
     # Asus support
     "asusctl" "supergfxctl" "radeontop"

@@ -28,7 +28,9 @@ rec {
   listDirContaining = fromDir: Text:
     filter (x: hasInfix Text (readFile x)) (listDir fromDir);
 
-  useModules = modulesList:
+  useSystemModules = modulesList:
     map (x: "/home/sezrienne/presez/modules/" + x) modulesList;
 
+  useHomeModules = modulesList:
+    map (x: "/home/sezrienne/presez/modules/" + x + "/home.nix") modulesList;
 }

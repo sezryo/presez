@@ -5,7 +5,7 @@
 with import ../functions;
 
 {
-  imports = useModules [
+  imports = useHomeModules [
 
     # Toolchain for languages, n.b. only languages' modules' names are not indentical to its packages
     "agda" "coq" "purescript" "purescript" # Goodies
@@ -41,10 +41,10 @@ with import ../functions;
     "gammastep" "brightnessctl" "pamixer" "wev" "cava"
 
     # Operating environment
-    "hyprland" "eww" "wl-clipboard" "swaybg" "xdg-desktop-portal-wlr" "rofi" "fuzzel" "mako" "gtk4" "waybar" "grim"
+    "eww" "wl-clipboard" "swaybg" "xdg-desktop-portal-wlr" "rofi" "fuzzel" "mako" "gtk4" "waybar" "grim"
 
     # TODO: Need to migrate these modules into nix-fashioned
     # "emacs" "hyprland"
-  ];
+  ] ++ [ /home/sezrienne/presez/modules/hyprland/home.nix ];
 
 }

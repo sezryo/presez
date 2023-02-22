@@ -11,7 +11,6 @@
       ./proxy.nix
       ./network.nix
       ./i18n.nix
-      ./env.nix
     ];
   
   system.stateVersion = "22.05";

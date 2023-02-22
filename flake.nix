@@ -1,5 +1,5 @@
 {
-  description = "The preimage of Sezrkatzen";
+  description = "The preimage of Sez";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -38,6 +38,7 @@
           nixpkgs.config.allowUnfreePredicate = (pkg: true);
           nixpkgs.overlays = [
             rust-overlay.overlays.default
+            nur.overlay
           ];
           programs.home-manager.enable = true;
           home.stateVersion = "22.05";
@@ -53,14 +54,14 @@
           imports = [ ./lists/homeInitList.nix ];
       };
 
-      # Here is resrved for home-manager module blocks for other devices' environments
+      # Here is reserved for home-manager module blocks for other devices' environments
 
     in
     {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          nur.nixosModules.nur
+          hyprland.nixosModules.default
           systemCommon
           ./system/configuration.nix
         ];

@@ -5,7 +5,7 @@
 with import ../functions;
 
 {
-  imports = useModules [    
+  imports = useSystemModules [
 
     # Steam
     "steam" "gamescope"
@@ -14,6 +14,6 @@ with import ../functions;
     "flatpak"
 
     # Desktop environment services
-    "xdotool" "wmctrl" "blueman" "dbus" "upower"
+    "hyprland" "xdotool" "wmctrl" "blueman" "dbus" "upower"
   ];
 }
