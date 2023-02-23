@@ -19,10 +19,13 @@ with import ../functions;
     # Utils
     "binutils" "coreutils" "cpufrequtils" "pciutils"
 
+    # Asus support
+    "asusctl" "supergfxctl" "radeontop"
+
     # Command line tools
-    "grex" "lsd" "ripgrep" "bottom" "du-dust" "fzf" "procs" "tealdeer" "bat" "sd" "fd"
+    "grex" "lsd" "ripgrep" "bottom" "du-dust" "fzf" "procs" "tealdeer" "bat" "sd" "fd" "htop"
     "neofetch" "hyfetch"
-    "zip" "unzip" "psmisc"
+    "zip" "unzip" "psmisc" "pueue"
 
     # Developing
     "gh" "gnumake" "tokei" "git" "nodejs-18_x" "cachix"
@@ -32,7 +35,13 @@ with import ../functions;
     "lm_sensors" "libinput-gestures" "bluez" "bluez-tools"
 
     # Shells and Terminal emulators
-    "nu" "alacritty" "zoxide" "starship" "okular"
+    "nu" "alacritty" "zoxide" "starship" "zellij" "babashka"
+    # "wezrerm"
+
+    # Productivity
+    "ocrmypdf" "nyxt" "calibre" "zathura" "zoom-us" "thunderbird" "remarkable2-toolchain"
+    "bc" "gnuplot" "newsflash" "okular"
+    # "mathematica" "libreoffice"
 
     # Virtual environment
     "bottles" "qemu"
@@ -41,10 +50,16 @@ with import ../functions;
     "gammastep" "brightnessctl" "pamixer" "wev" "cava"
 
     # Operating environment
-    "eww" "wl-clipboard" "swaybg" "xdg-desktop-portal-wlr" "rofi" "fuzzel" "mako" "gtk4" "waybar" "grim"
+    "hyprland" "eww" "wl-clipboard" "swaybg" "xdg-desktop-portal-wlr" "rofi" "fuzzel" "mako" "gtk4" "waybar" "grim"
+
+    # Multimedia, social and entertainment
+    "yewtube" "qbittorrent" "spotify" "ncspot" "yt-dlp" "discord" "qq" "tdesktop"
+
+    # Security
+    "yubikey-manager" "thc-hydra" "burpsuite"
 
     # TODO: Need to migrate these modules into nix-fashioned
-    # "emacs" "hyprland"
-  ] ++ [ /home/sezrienne/presez/modules/hyprland/home.nix ];
+    # "emacs"
+  ];
 
 }

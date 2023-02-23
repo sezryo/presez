@@ -5,7 +5,7 @@
     sezrienne = {
       isNormalUser = true;
       extraGroups = [ "wheel" "input" ];
-      shell = pkgs.bash;
+      shell = pkgs.xonsh;
     };
   };
 

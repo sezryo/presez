@@ -23,58 +23,50 @@
   outputs = inputs@{ self, nixpkgs, nur, hyprland, rust-overlay, nixos-hardware, home-manager, ...  }:
     let
 
-      # These are modules used accross all devices on system level
-      systemCommon = { lib, ... }:
+      # These are modules used accross on system level
+      nixos = { lib, ... }:
         {
-          imports = [ ./lists/systemCommonList.nix ];
+          imports = [
+            ./lists/systemList.nix
+            ./system/configuration.nix
+          ];
         };
 
-      # These are modules used accross all devices on home level
-      homeCommon = { lib, ... }:
+      # These are common home settings across profiles
+      common = { lib, ... }:
         {
-          # _module.args = {
-          #   colourscheme = import ./colourscheme/tokyonight.nix;
-          # };
-          nixpkgs.config.allowUnfreePredicate = (pkg: true);
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
           nixpkgs.overlays = [
             rust-overlay.overlays.default
             nur.overlay
           ];
-          programs.home-manager.enable = true;
-          home.stateVersion = "22.05";
-          imports = [ ./lists/homeCommonList.nix ];
         };
 
-      # These are modules used on Init on system level. Init is sez-code for sez's ga402
-      homeInit = { lib, ... }:
+      # These are modules used on profile sezrienne
+      sezrienne = { lib, ... }:
         {
-          nixpkgs.config.allowUnfreePredicate = (pkg: true);
-          home.homeDirectory = "/home/sezrienne";
-          home.username = "sezrienne";
-          imports = [ ./lists/homeInitList.nix ];
-      };
+          home-manager.users.sezrienne = {
+            home.username = "sezrienne";
+            home.homeDirectory = "/home/sezrienne";
+            home.stateVersion = "22.05";
+            imports = [ ./lists/sezrienneList.nix ];
+          };
+        };
 
       # Here is reserved for home-manager module blocks for other devices' environments
 
     in
     {
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.sezrienne = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
         modules = [
+          nixos
+          common
+          sezrienne
           hyprland.nixosModules.default
-          systemCommon
-          ./system/configuration.nix
-        ];
-      };
-
-      homeConfigurations.nixos = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages."x86_64-linux";
-        modules = [
-          hyprland.homeManagerModules.default
-          homeCommon
-          homeInit
+          home-manager.nixosModules.home-manager
         ];
       };
     };
-
 }

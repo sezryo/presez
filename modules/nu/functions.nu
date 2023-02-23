@@ -6,18 +6,16 @@ alias ssy = sudo systemctl
 alias lt = lsd --tree
 alias l = lsd -Fal
 
-# System Rolling(?)
+# System Rolling(?), n.b. some args only suitable for sezrienne
 def jr [
   --ueno (-u) # Update nix flake
-  --harajuku (-h) # Rebuild the home level packages
-  --shinjuku (-s) # Rebuild the system level packages
+  --shinjuku (-s) # Rebuild the system packages
   --kanda (-k) # Garbage collection
   --akihabara (-a) # Thorough garbage collection, incl. root level
 ] {
   cd /home/sezrienne/presez;
   if $ueno {sudo nix flake update;}
-  if $harajuku {nix run home-manager --no-write-lock-file -- switch --flake './#nixos' --impure}
-  if $shinjuku {sudo nixos-rebuild switch --flake 'path:./#nixos' --impure;}
+  if $shinjuku {sudo nixos-rebuild switch --flake 'path:./#sezrienne' --impure;}
   if $kanda {nix-store --gc}
   if $akihabara {sudo nix-collect-garbage -d}
 }
@@ -31,57 +29,54 @@ def yamanote [flags: string] {
     }
 }
 
-# Adding new packages
+# Adding new packages, n.b. some args only suitable for sezrienne
 def tube [
   name: string
-  --oyster (-O) # Use your Oyster card! (Direct into the corresponding list after adding)
-  --holborn (-h) # Adding home packages
-  --embankment (-e) # Adding environment (system) packages
-  --marylebone (-m) # Adding home modules (if there are)
-  --southwark (-s) # Adding system services
+  --oyster (-o) # Use your Oyster card! (Direct into the corresponding list after adding)
+  --hammersmith (-h) # Installing packages in home level
+  --southKensington (-s) # Installing packages in system level
+  --holborn (-H) # Adding home.packages
+  --embankment (-E) # Adding environment.Systempackages
+  --piccadilly (-P) # Adding programs.enable
+  --southwark (-S) # Adding services.enable
 ] {
+  let file = if $hammersmith {"home.nix"} else {"default.nix"}
   cd /home/sezrienne/presez/modules; mkdir $name; cd $name;
-  if $holborn {
-    echo "{ pkgs, lib, ... }:\n\n{\n  home.packages = [ pkgs." $name " ];\n}" | str collect | save default.nix;
-    if $oyster {reform --lhc}}
-  if $embankment {
-    echo "{ pkgs, lib, ... }:\n\n{\n  environment.systemPackages = [ pkgs." $name " ];\n}" | str collect | save default.nix;
-    if $oyster {reform --lsc}}
-  if $marylebone {
-    echo "{ pkgs, lib, ... }:\n\n{\n  programs." $name " = {\n    enable = true;\n  };\n}" | str collect | save default.nix;
-    if $oyster {reform --lhc}}
-  if $southwark {
-    echo "{ pkgs, lib, ... }:\n\n{\n  services." $name " = {\n    enable = true;\n  };\n}" | str collect | save default.nix;
-    if $oyster {reform --lsc}}
+  if $holborn {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  home.packages = [ pkgs." ' + $name + ' " ];\n}" | str collect | save ' + $file);}
+  if $embankment {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  environment.systemPackages = [ pkgs." ' + $name + ' " ];\n}" | str collect | save ' + $file);}
+  if $piccadilly {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  programs." ' + $name + ' " = {\n    enable = true;\n  };\n}" | str collect | save ' + $file);}
+  if $southwark {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  services." ' + $name + ' " = {\n    enable = true;\n  };\n}" | str collect | save ' + $file);}
+  if $oyster {
+    if $hammersmith {reform --lh}
+    if $southKensington {reform --ls}
+  }
 }
 
 # Git shortcout
 def trinity [comment: string] {git add .; git commit -m $comment; git push --force origin main}
 
-# Change the config files
+# Change the config files, n.b. some args only suitable for sezrienne
 def reform [
   --emacs (-e) # Use emacs non-nw, defaultly use emacs -nw
   --vim (-v) # Use vim non-nw, defaultly use emacs -nw
   --system (-s): string # Configure system modules files in ~/presez/modules
   --home (-h): string # Configure home modules files in ~/presez/modules
-  --nuc # Nushell config
-  --nue # Nushell env
-  --nuf # Nushell functions
+  --nc # Nushell config
+  --ne # Nushell env
+  --nf # Nushell functions
   --doom # Doom emacs config
-  --lhc # Change homeCommon package list
-  --lhi # Change homeInit package list
-  --lsc # Change systemCommon package list
+  --lh # Change homeCommon package list
+  --ls # Change systemCommon package list
 ] {
   let ed = if $emacs {"emacs "} else {if $vim {"vim "} else {"emacs -nw "}}
   if ($system != null) {nu -c ($ed + "/home/sezrienne/presez/modules/" + $system + "/default.nix")}
   if ($home != null) {nu -c ($ed + "/home/sezrienne/presez/modules/" + $home + "/home.nix")}
-  if $nuc {nu -c ($ed + "/home/sezrienne/presez/modules/nu/config.nu")}
-  if $nue {nu -c ($ed + "/home/sezrienne/presez/modules/nu/env.nu")}
-  if $nuf {nu -c ($ed + "/home/sezrienne/presez/modules/nu/functions.nu")}
+  if $nc {nu -c ($ed + "/home/sezrienne/presez/modules/nu/config.nu")}
+  if $ne {nu -c ($ed + "/home/sezrienne/presez/modules/nu/env.nu")}
+  if $nf {nu -c ($ed + "/home/sezrienne/presez/modules/nu/functions.nu")}
   if $doom {nu -c ($ed + "/home/sezrienne/.doom.d/init.el")}
-  if $lhc {nu -c ($ed + "/home/sezrienne/presez/lists/homeCommonList.nix")}
-  if $lhi {nu -c ($ed + "/home/sezrienne/presez/lists/homeInitList.nix")}
-  if $lsc {nu -c ($ed + "/home/sezrienne/presez/lists/systemCommonList.nix")}
+  if $lh {nu -c ($ed + "/home/sezrienne/presez/lists/sezrienneList.nix")}
+  if $ls {nu -c ($ed + "/home/sezrienne/presez/lists/systemList.nix")}
 }
 
 # Realise doom emacs files. WARNING: This is tend to be deprecated by purely managed by nix

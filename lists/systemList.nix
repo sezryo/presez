@@ -10,8 +10,8 @@ with import ../functions;
     # Steam
     "steam" "gamescope"
 
-    # Packaging
-    "flatpak"
+    # System
+    "flatpak" "xonsh"
 
     # Desktop environment services
     "hyprland" "xdotool" "wmctrl" "blueman" "dbus" "upower"
