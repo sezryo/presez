@@ -1,5 +1,5 @@
 # shellAbbrs
-alias cipher = (nix-hash --flat --base32 --type sha256)
+alias cipher = nix-hash --flat --base32 --type sha256
 alias e = emacs -nw
 alias sy = systemctl
 alias ssy = sudo systemctl
@@ -15,7 +15,7 @@ def jr [
 ] {
   cd /home/sezrienne/presez;
   if $ueno {sudo nix flake update;}
-  if $shinjuku {sudo nixos-rebuild switch --flake 'path:./#sezrienne' --impure;}
+  if $shinjuku {sudo nixos-rebuild switch --flake 'path:./#sezrienne';}
   if $kanda {nix-store --gc}
   if $akihabara {sudo nix-collect-garbage -d}
 }

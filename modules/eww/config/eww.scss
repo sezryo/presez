@@ -27,9 +27,10 @@
 .bar {
   background-color: $bg;
   color: $fg;
+  border-radius: 12.5px;
 
   label {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 }
 
