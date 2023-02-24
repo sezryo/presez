@@ -64,6 +64,7 @@ def reform [
   --nc # Nushell config
   --ne # Nushell env
   --nf # Nushell functions
+  --hy # Hyprland config file
   --doom # Doom emacs config
   --lh # Change homeCommon package list
   --ls # Change systemCommon package list
@@ -74,6 +75,7 @@ def reform [
   if $nc {nu -c ($ed + "/home/sezrienne/presez/modules/nu/config.nu")}
   if $ne {nu -c ($ed + "/home/sezrienne/presez/modules/nu/env.nu")}
   if $nf {nu -c ($ed + "/home/sezrienne/presez/modules/nu/functions.nu")}
+  if $hy {nu -c ($ed + "/home/sezrienne/presez/modules/hyprland/myHypr.conf")}
   if $doom {nu -c ($ed + "/home/sezrienne/.doom.d/init.el")}
   if $lh {nu -c ($ed + "/home/sezrienne/presez/lists/sezrienneList.nix")}
   if $ls {nu -c ($ed + "/home/sezrienne/presez/lists/systemList.nix")}

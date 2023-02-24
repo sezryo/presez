@@ -9,7 +9,7 @@ window:
     y: 0
   dynamic_padding: false
   decorations: none
-  opacity: 0.9
+  opacity: 0.8
   startup_mode: Windowed
   title: Alacritty
   dynamic_title: true

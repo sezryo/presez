@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 
 {
-  programs.wezterm = {
+  programs.wlogout = {
     enable = true;
   };
 }

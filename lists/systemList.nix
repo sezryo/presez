@@ -11,9 +11,9 @@ with import ../functions;
     "steam" "gamescope"
 
     # System
-    "flatpak" "xonsh"
+    "flatpak" "xonsh" "acpica-tools" "pcre"
 
     # Desktop environment services
-    "hyprland" "xdotool" "wmctrl" "blueman" "dbus" "upower"
+    "hyprland" "xdotool" "wmctrl" "blueman" "dbus" "upower" "light"
   ];
 }

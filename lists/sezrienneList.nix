@@ -14,16 +14,16 @@ with import ../functions;
     "c" "python" # Baddies
 
     # Essentials
-    "firefox" "chromium" "vim" "emacs" "wget" "lf"
+    "firefox" "chromium" "vim" "emacs" "wget" "lf" "socat"
 
     # Utils
-    "binutils" "coreutils" "cpufrequtils" "pciutils"
+    "binutils" "coreutils" "cpufrequtils" "pciutils" "findutils" "gawk"
 
     # Asus support
     "asusctl" "supergfxctl" "radeontop"
 
     # Command line tools
-    "grex" "lsd" "ripgrep" "bottom" "du-dust" "fzf" "procs" "tealdeer" "bat" "sd" "fd" "htop"
+    "grex" "lsd" "ripgrep" "bottom" "du-dust" "fzf" "procs" "tealdeer" "bat" "sd" "fd" "htop" "gojq" "jaq"
     "neofetch" "hyfetch"
     "zip" "unzip" "psmisc" "pueue"
 
@@ -32,25 +32,31 @@ with import ../functions;
 
     # I/O
     "ffmpeg" "mesa" "mesa-demos" "vlc"
-    "lm_sensors" "libinput-gestures" "bluez" "bluez-tools"
+    "lm_sensors" "libinput-gestures"
+
+    # Bluetooth
+    "bluez" "bluez-tools" "blueberry"
 
     # Shells and Terminal emulators
     "nu" "alacritty" "zoxide" "starship" "zellij" "babashka"
-    # "wezrerm"
+    "wezterm"
 
     # Productivity
     "ocrmypdf" "nyxt" "calibre" "zathura" "zoom-us" "thunderbird" "remarkable2-toolchain"
-    "bc" "gnuplot" "newsflash" "okular"
+    "bc" "gnuplot" "newsflash" "okular" "imagemagick"
     # "mathematica" "libreoffice"
 
     # Virtual environment
     "bottles" "qemu"
 
     # Controllers
-    "gammastep" "brightnessctl" "pamixer" "wev" "cava"
+    "gammastep" "brightnessctl" "pavucontrol" "playerctl" "pamixer" "wev" "cava"
 
-    # Operating environment
-    "hyprland" "eww" "wl-clipboard" "swaybg" "xdg-desktop-portal-wlr" "rofi" "fuzzel" "mako" "gtk4" "waybar" "grim"
+    # Wayland
+    "wl-clipboard" "wlogout" "swaybg" "gtk4"
+
+    # Desktop environment
+    "hyprland" "eww"  "rofi" "fuzzel" "dunst" "grim" "gnome.gnome-control-center"
 
     # Multimedia, social and entertainment
     "yewtube" "qbittorrent" "spotify" "ncspot" "yt-dlp" "discord" "qq" "tdesktop"
@@ -58,8 +64,6 @@ with import ../functions;
     # Security
     "yubikey-manager" "thc-hydra" "burpsuite"
 
-    # TODO: Need to migrate these modules into nix-fashioned
-    # "emacs"
   ];
 
 }

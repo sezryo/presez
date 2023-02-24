@@ -20,6 +20,7 @@
     fontDir.enable = true;
     fonts = with pkgs; [
       noto-fonts
+      jost
       noto-fonts-emoji
       fira-code
       fira-code-symbols
@@ -32,6 +33,7 @@
       # nerdfonts
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
       times-newer-roman
+      material-symbols
     ];
     fontconfig = {
       defaultFonts = {

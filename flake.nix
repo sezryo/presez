@@ -1,25 +1,6 @@
 {
   description = "The preimage of Sez";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixos-hardware.url = "github:nixos/nixos-hardware/master";
-    hyprland.url = "github:hyprwm/Hyprland";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs"; };
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs"; };
-    flake-utils.url = "github:numtide/flake-utils";
-    emacs-overlay = { url = "github:nix-community/emacs-overlay";
-                      inputs.nixpkgs.follows = "nixpkgs";
-                      inputs.flake-utils.follows = "flake-utils"; };
-    rust-overlay = { url = "github:oxalica/rust-overlay";
-                     inputs.nixpkgs.follows = "nixpkgs";
-                     inputs.flake-utils.follows = "flake-utils"; };
-  };
-
   outputs = inputs@{ self, nixpkgs, nur, hyprland, rust-overlay, nixos-hardware, home-manager, ...  }:
     let
 
@@ -37,6 +18,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit inputs; };
           nixpkgs.overlays = [
             rust-overlay.overlays.default
             nur.overlay
@@ -69,4 +51,23 @@
         ];
       };
     };
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    hyprland.url = "github:hyprwm/Hyprland";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs"; };
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs"; };
+    flake-utils.url = "github:numtide/flake-utils";
+    emacs-overlay = { url = "github:nix-community/emacs-overlay";
+                      inputs.nixpkgs.follows = "nixpkgs";
+                      inputs.flake-utils.follows = "flake-utils"; };
+    rust-overlay = { url = "github:oxalica/rust-overlay";
+                     inputs.nixpkgs.follows = "nixpkgs";
+                     inputs.flake-utils.follows = "flake-utils"; };
+  };
 }

@@ -1,5 +1,3 @@
-# This dasein file is for asus rog laptops with amd cpu and amd gpu
-
 { config, pkgs, ... }:
 
 {
@@ -21,20 +19,4 @@
     initrd.kernelModules = [ "amdgpu" ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
-  services = {
-    printing.enable = true;
-    avahi.enable = true;
-    # for a WiFi printer
-    avahi.openFirewall = true;
-    # for an USB printer
-    ipp-usb.enable = true;
-    asusd.enable = true;
-    supergfxd.enable = true;
-  };
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-  hardware.bluetooth.enable = true;
-
-  environment.systemPackages = with pkgs; [ acpica-tools pcre ];
-
 }
