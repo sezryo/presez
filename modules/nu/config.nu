@@ -237,8 +237,8 @@ let-env config = {
     }
   }
   filesize: {
-    metric: true # true => KB, MB, GB (ISO standard), false => KiB, MiB, GiB (Windows standard)
-    format: "auto" # b, kb, kib, mb, mib, gb, gib, tb, tib, pb, pib, eb, eib, zb, zib, auto
+    metric: true
+    format: "auto"
   }
   color_config: $sezTheme
   use_grid_icons: true
@@ -438,13 +438,13 @@ let-env config = {
       name: completion_previous
       modifier: shift
       keycode: backtab
-      mode: [emacs, vi_normal, vi_insert] # Note: You can add the same keybinding to all modes by using a list
+      mode: [emacs, vi_normal, vi_insert]
       event: { send: menuprevious }
     }
     {
       name: history_menu
       modifier: control
-      keycode: char_r
+      keycode: char_h
       mode: emacs
       event: { send: menu name: history_menu }
     }
@@ -467,26 +467,12 @@ let-env config = {
         ]
        }
     }
-    # Keybindings used to trigger the user defined menus
-    {
-      name: commands_menu
-      modifier: control
-      keycode: char_t
-      mode: [emacs, vi_normal, vi_insert]
-      event: { send: menu name: commands_menu }
-    }
-    {
-      name: vars_menu
-      modifier: control
-      keycode: char_y
-      mode: [emacs, vi_normal, vi_insert]
-      event: { send: menu name: vars_menu }
-    }
+
     {
       name: commands_with_description
       modifier: control
       keycode: char_u
-      mode: [emacs, vi_normal, vi_insert]
+      mode: emacs
       event: { send: menu name: commands_with_description }
     }
     {
