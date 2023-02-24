@@ -1,7 +1,6 @@
 # presez
 **Sez's Dotfiles** \
 **BTW I use NixOS (with flakes)!** \
-\
 
 <p align="center"><img src="https://github.com/Sezriv/presez/blob/main/images/icons/nixowo.png"></p>
 
@@ -13,7 +12,7 @@
 |**Bar**|[Eww](https://github.com/elkowar/eww)|
 |**Shell**|[Nushell (primary)](https://github.com/nushell/nushell), [Xonsh (login)](https://github.com/xonsh/xonsh)|
 |**Text Editor**|[GNU Emacs](https://www.gnu.org/software/emacs/)|
-|**Browser**|[Firefox](moz://a), [Nyxt](https://nyxt.atlas.engineer/)|
+|**Browser**|[Firefox](www.mozilla.org/en-GB/), [Nyxt](https://nyxt.atlas.engineer/)|
 |**Fetch**|[Hyfetch](https://github.com/hykilpikonna/hyfetch)|
 |**Input method framework**|[Fcitx5-Rime](https://github.com/fcitx/fcitx5-rime)|
 |**File Manager**|[LF](https://github.com/gokcehan/lf)|
