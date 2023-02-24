@@ -1,8 +1,8 @@
 # presez
-Inverseimage of Sez. 
-BTW I use NixOS (unstable-23.05 with flakes)! 
+Inverseimage of Sez. \
+BTW I use NixOS (with flakes)! 
 
-<p align="center"><img src="https://github.com/Sezriv/presez/blob/main/images/wallpapers/street.jpg" width=300px></p>
+<p align="center"><img src="https://github.com/Sezriv/presez/blob/main/images/icons/nixowo.jpg" width=300px></p>
 
 ## Toolchain
 ||NixOS-unstable (Wayland)|
