@@ -29,8 +29,8 @@ rec {
     filter (x: hasInfix Text (readFile x)) (listDir fromDir);
 
   useSystemModules = modulesList:
-    map (x: "/home/sezrienne/presez/modules/" + x) modulesList;
+    map (x: ../. + ("/modules/" + x)) modulesList;
 
   useHomeModules = modulesList:
-    map (x: "/home/sezrienne/presez/modules/" + x + "/home.nix") modulesList;
+    map (x: ../. + ("/modules/" + x + "/home.nix")) modulesList;
 }
