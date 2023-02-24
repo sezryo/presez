@@ -1,6 +1,7 @@
 # presez
-Inverseimage of Sez. \
-BTW I use NixOS (with flakes)! 
+**Sez's Dotfiles** \
+**BTW I use NixOS (with flakes)!** \
+\
 
 <p align="center"><img src="https://github.com/Sezriv/presez/blob/main/images/icons/nixowo.png"></p>
 
