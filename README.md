@@ -4,7 +4,7 @@
 
 <p align="center"><img src="https://github.com/Sezriv/presez/blob/main/assets/icons/nixowo.png"></p>
 
-## Canonical objects
+## My toolchain
 ||NixOS-unstable (Wayland)|
 | - | :--: |
 |**Colour Scheme**|[Catppuccin-Frappé](https://github.com/catppuccin/catppuccin)|
