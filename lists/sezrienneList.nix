@@ -50,7 +50,7 @@ with import ../functions;
     "bottles" "qemu"
 
     # Controllers
-    "gammastep" "brightnessctl" "pavucontrol" "playerctl" "pamixer" "wev" "cava"
+    "gammastep" "brightnessctl" "playerctl" "wev" "cava"
 
     # Wayland
     "wl-clipboard" "wlogout" "swaybg" "gtk4"

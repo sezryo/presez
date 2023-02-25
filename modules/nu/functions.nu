@@ -1,5 +1,4 @@
 # shellAbbrs
-alias cipher = nix-hash --flat --base32 --type sha256
 alias e = emacs -nw
 alias sy = systemctl
 alias ssy = sudo systemctl
@@ -84,11 +83,15 @@ def reform [
 # Realise doom emacs files. WARNING: This is tend to be deprecated by purely managed by nix
 def doom [name: string] {nu -c ("/home/sezrienne/.emacs.d/bin/doom " + $name)}
 
+# Some useful tools
+def cipher [name: string] {nu -c ("nix-hash --flat --base32 --type sha256 " + $name)}
+def doxx [name: string] {nu -c ("grep -rnw . -e " + $name)}
+
 # Searching convenience
-def "wikt" [name: string] {firefox ('en.wiktionary.org/wiki/' + $name)}
-def "ggl" [name: string] {firefox ('google.com/search?client=firefox-b-d&q=' + $name)}
+def wikt [name: string] {firefox ('en.wiktionary.org/wiki/' + $name)}
+def ggl [name: string] {firefox ('google.com/search?client=firefox-b-d&q=' + $name)}
 
 # Asus stuffs related
-def "manifest" [image: string] {["/home/sezrienne/zauber/static/", $image, ".png"] | str collect | asusctl anime image -p $in}
+def manifest [image: string] {["/home/sezrienne/zauber/static/", $image, ".png"] | str collect | asusctl anime image -p $in}
 def dgpuon [] {supergfxctl -m hybrid}
 def dgpuoff [] {supergfxctl -m integrated}

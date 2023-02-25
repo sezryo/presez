@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 volicons=("" "" "")
 if [ ! "$XDG_CACHE_HOME" ]; then
   XDG_CACHE_HOME="/home/mihai/.local/cache"

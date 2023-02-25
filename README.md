@@ -2,7 +2,7 @@
 **Sez's Dotfiles** \
 **BTW I use NixOS (with flakes)!** \
 
-<p align="center"><img src="https://github.com/Sezriv/presez/blob/main/images/icons/nixowo.png"></p>
+<p align="center"><img src="https://github.com/Sezriv/presez/blob/main/assets/icons/nixowo.png"></p>
 
 ## Toolchain
 ||NixOS-unstable (Wayland)|
