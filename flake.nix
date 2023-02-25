@@ -23,6 +23,9 @@
             rust-overlay.overlays.default
             nur.overlay
           ];
+          _module.args = {
+            farbe = import ./colourschemes/catppuccin-frappe.nix;
+          };
         };
 
       # These are modules used on profile sezrienne
