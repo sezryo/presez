@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, colourscheme, ... }:
 
 let
   flake-compat = builtins.fetchTarball {

@@ -8,12 +8,18 @@ rec {
   emacs-name = "catppuccin-flavor 'frappe";
   gtk-name = "Catppuccin-frappe";
 
-  bg-primary = black;
-  bg-primary-bright = bright-black;
-  bg-primary-transparent-argb = utils.transparentify bg-primary;
-  bg-primary-bright-transparent-argb = utils.transparentify bg-primary-bright;
-  fg-primary = white;
-  fg-primary-bright = bright-white;
+  bg = base;
+  bg-bright = transparentify bg;
+  text = text;
+  urls = rosewater;
+  selection = surface2;
+  selectText = text;
+  cursor = rosewater;
+  cursorText = crust;
+  activeBorder = lavender;
+  inactiveBorder = overlay0;
+  bellBorder = yellow;
+  test = rgb(babbf1);
 
   accent-primary = blue;
   accent-secondary = magenta;

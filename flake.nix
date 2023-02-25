@@ -24,7 +24,7 @@
             nur.overlay
           ];
           _module.args = {
-            farbe = import ./colourschemes/catppuccin-frappe.nix;
+            colourscheme = import ./colourschemes/catppuccin-frappe.nix;
           };
         };
 

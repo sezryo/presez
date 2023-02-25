@@ -8,10 +8,10 @@ with import ../functions;
   imports = useHomeModules [
 
     # Toolchain for languages, n.b. only languages' modules' names are not indentical to its packages
-    "agda" "coq" "purescript" "purescript" # Goodies
-    "clojure" "elixir" "nix" "racket" "scheme" # Quasi-goodies
-    "ruby" "rust" "tex" # Normies
-    "c" "python" # Baddies
+    "LANG_agda" "LANG_coq" "LANG_purescript" # Goodies
+    "LANG_clojure" "LANG_elixir" "LANG_nix" "LANG_racket" "LANG_scheme" # Quasi-goodies
+    "LANG_ruby" "LANG_rust" "LANG_tex" # Normies
+    "LANG_c" "LANG_python" # Baddies
 
     # Essentials
     "firefox" "chromium" "vim" "emacs" "wget" "lf" "socat"

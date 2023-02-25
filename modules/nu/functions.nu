@@ -85,7 +85,7 @@ def doom [name: string] {nu -c ("/home/sezrienne/.emacs.d/bin/doom " + $name)}
 
 # Some useful tools
 def cipher [name: string] {nu -c ("nix-hash --flat --base32 --type sha256 " + $name)}
-def doxx [name: string] {nu -c ("grep -rnw . -e " + $name)}
+def doxx [name: string] {nu -c ("rg -rnw . -e " + $name)}
 
 # Searching convenience
 def wikt [name: string] {firefox ('en.wiktionary.org/wiki/' + $name)}
