@@ -19,12 +19,10 @@
     enableDefaultFonts = true;
     fontDir.enable = true;
     fonts = with pkgs; [
-      noto-fonts
+      jetbrains-mono
       jost
-      noto-fonts-emoji
-      fira-code
-      fira-code-symbols
-      noto-fonts-cjk
+      noto-fonts noto-fonts-emoji noto-fonts-cjk
+      fira-code fira-code-symbols
       hanazono
       source-han-sans source-han-serif source-han-mono
       sarasa-gothic
@@ -32,14 +30,13 @@
       unfonts-core
       # nerdfonts
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
-      times-newer-roman
       material-symbols
     ];
     fontconfig = {
       defaultFonts = {
         serif = [ "Source Han Serif SC" ];
         sansSerif = [ "Source Han Sans SC" ];
-        monospace = [ "Sarasa Mono SC" ];
+        monospace = [ "jetbrains-mono" ];
         emoji = [ "Noto Emoji" ];
       };
     };
