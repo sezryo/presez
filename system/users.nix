@@ -4,7 +4,7 @@
   users.users = {
     sezrienne = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "input" "libvirtd" "tss" ];
+      extraGroups = [ "wheel" "input" "libvirtd" "tss" "qemu-libvirtd" "kvm" ];
       shell = pkgs.xonsh;
     };
   };

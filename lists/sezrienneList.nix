@@ -20,7 +20,7 @@ with import ../functions;
     "binutils" "coreutils" "cpufrequtils" "pciutils" "findutils" "gawk"
 
     # Asus support
-    "asusctl" "supergfxctl" "radeontop"
+    "asusctl" "radeontop"
 
     # Command line tools
     "grex" "lsd" "ripgrep" "bottom" "du-dust" "fzf" "procs" "tealdeer" "bat" "sd" "fd" "htop" "gojq" "jaq"

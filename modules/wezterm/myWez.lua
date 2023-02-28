@@ -11,19 +11,19 @@ return {
 
   -- Emacs styled keybinds
   keys = {
-    { key = "W", mods = "CTRL|SHIFT", action= wezterm.action.CopyTo "ClipboardAndPrimarySelection" },
-    { key = 'Y', mods = 'CTRL|SHIFT', action = wezterm.action.PasteFrom "PrimarySelection" },
+    { key = "w", mods = "CTRL", action= wezterm.action.CopyTo "ClipboardAndPrimarySelection" },
+    { key = 'y', mods = 'CTRL', action = wezterm.action.PasteFrom "PrimarySelection" },
     { key = '-', mods = 'CTRL', action = wezterm.action.DecreaseFontSize },
     { key = '=', mods = 'CTRL', action = wezterm.action.IncreaseFontSize },
     -- { key = 'P', mods = 'CTRL', action = wezterm.action.ActivateCommandPalette }, -- Needs Nightly builds
-    { key = 'V', mods = 'ALT', action = wezterm.action.ScrollByPage(-1) },
-    { key = 'V', mods = 'CTRL', action = wezterm.action.ScrollByPage(1) },
+    { key = 'v', mods = 'ALT', action = wezterm.action.ScrollByPage(-1) },
+    { key = 'v', mods = 'CTRL', action = wezterm.action.ScrollByPage(1) },
     { key = ',', mods = 'CTRL|SHIFT', action = wezterm.action.ScrollToTop },
     { key = '.', mods = 'CTRL|SHIFT', action = wezterm.action.ScrollToBottom },
-    { key = 'X', mods = 'ALT', action = wezterm.action.ShowLauncher },
-    { key = 'T', mods = 'CTRL|SHIFT', action = wezterm.action.SpawnTab 'CurrentPaneDomain',},
-    { key = 'C', mods = 'CTRL|SHIFT', action = wezterm.action.CloseCurrentTab { confirm = false },},
+    { key = 'x', mods = 'ALT', action = wezterm.action.ShowLauncher },
+    { key = 't', mods = 'CTRL|SHIFT', action = wezterm.action.SpawnTab 'CurrentPaneDomain',},
+    { key = 'c', mods = 'CTRL|SHIFT', action = wezterm.action.CloseCurrentTab { confirm = false },},
     -- search for things that look like git hashes
-    { key = 'S', mods = 'CTRL', action = wezterm.action.Search { Regex = '[a-f0-9]{6,}', }, },
+    { key = 's', mods = 'CTRL|SHIFT', action = wezterm.action.Search { Regex = '[a-f0-9]{6,}', }, },
   },
 }

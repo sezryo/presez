@@ -8,7 +8,7 @@ let
   hyprland = (import flake-compat {
     src = builtins.fetchTarball {
       url = "https://github.com/hyprwm/Hyprland/archive/master.tar.gz";
-      sha256 = "0l52zmy078170crk4fp50smnqwr0vrnn52ydids04sn8kg05ndn2";
+      sha256 = "0137kq01rqz83v46d432289c9xyac4jxrf0dqmg17rj50jfpprij";
     };
   }).defaultNix;
 in {
