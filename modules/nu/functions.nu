@@ -51,6 +51,20 @@ def tube [
   }
 }
 
+# Nixpkgs search shortcut
+def ratp [
+  name: string
+  --trocadero (-t) # Use terminal prompts to search
+  --pyramides (-p) # Search packages in search.nixos.org
+  --opera (-o) # Search options in search.nixos.org
+  --hotelDeVille (-h) # Search options in home manager archive
+] {
+  if $trocadero {nu -c ("nix search 'nixpkgs#" + $name)}
+  if $pyramides {firefox ('search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=' + $name)}
+  if $opera {firefox ('search.nixos.org/options?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=' + $name)}
+  if $hotelDeVille {firefox 'rycee.gitlab.io/home-manager/options.html'}
+}
+
 # Git shortcout
 def trinity [comment: string] {git add .; git commit -m $comment; git push --force origin main}
 
@@ -90,20 +104,6 @@ def doxx [name: string] {nu -c ("rg -rnw . -e " + $name)}
 # Searching convenience
 def wikt [name: string] {firefox ('en.wiktionary.org/wiki/' + $name)}
 def ggl [name: string] {firefox ('google.com/search?client=firefox-b-d&q=' + $name)}
-
-# Nixpkgs search shortcut
-def ns [
-  name: string
-  --terminal (-t) # Use terminal prompts to search
-  --packages (-p) # Search packages in search.nixos.org
-  --options (-o) # Search options in search.nixos.org
-  --homeManager (-h) # Search options in home manager archive
-] {
-  if $terminal {nu -c ("nix search 'nixpkgs#" + $name)}
-  if $packages {firefox ('search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=' + $name)}
-  if $options {firefox ('search.nixos.org/options?channel=unstable&from=0&size=50&sort=relevance&type=packages&query=' + $name)}
-  if $homeManager {firefox 'rycee.gitlab.io/home-manager/options.html'}
-}
 
 # Asus stuffs related
 def manifest [image: string] {["/home/sezrienne/zauber/static/", $image, ".png"] | str collect | asusctl anime image -p $in}

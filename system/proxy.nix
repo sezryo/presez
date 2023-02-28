@@ -29,8 +29,6 @@
   environment.systemPackages = with pkgs; [
     clash
   ];
-  
-  services.openssh.enable = true;
 
   # nix.settings.substituters = [ "https://mirror.tuna.tsinghua.edu.cn/nix-channels/store" ];
 

@@ -47,7 +47,7 @@ with import ../functions;
     # "mathematica" "libreoffice"
 
     # Virtual environment
-    "bottles" "qemu"
+    "bottles"
 
     # Controllers
     "gammastep" "brightnessctl" "playerctl" "wev" "cava"

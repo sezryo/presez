@@ -10,4 +10,6 @@
     # wifi.backend = "iwd";
     ethernet.macAddress = "random";
   };
+
+  services.openssh.enable = true;
 }
