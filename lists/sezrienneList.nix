@@ -14,7 +14,7 @@ with import ../functions;
     "LANG_c" "LANG_python" # Baddies
 
     # Essentials
-    "firefox" "chromium" "vim" "emacs" "wget" "lf" "socat"
+    "firefox" "chromium" "vim" "emacs" "wget" "lf" "krusader" "socat"
 
     # Utils
     "binutils" "coreutils" "cpufrequtils" "pciutils" "findutils" "gawk"
@@ -47,7 +47,7 @@ with import ../functions;
     # "mathematica" "libreoffice"
 
     # Virtual environment
-    "bottles"
+    "bottles" "qemu" "virt-manager" "quickemu" "quickgui" # System level configs in system/virtualisation
 
     # Controllers
     "gammastep" "brightnessctl" "playerctl" "wev" "cava"

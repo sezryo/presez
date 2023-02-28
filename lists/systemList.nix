@@ -11,7 +11,7 @@ with import ../functions;
     "steam" "gamescope"
 
     # System
-    "flatpak" "xonsh" "acpica-tools" "pcre"
+    "flatpak" "xonsh" "acpica-tools" "pcre" "qemu" "dconf"
 
     # Desktop environment services
     "hyprland" "xdotool" "wmctrl" "blueman" "dbus" "upower" "light"
