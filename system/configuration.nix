@@ -2,7 +2,9 @@
 
 {
   imports =
-    [ 
+    [
+      ./specialisation
+
       ./boot.nix
       ./hardware-configuration.nix
       ./users.nix

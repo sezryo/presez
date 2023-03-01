@@ -19,9 +19,6 @@ with import ../functions;
     # Utils
     "binutils" "coreutils" "cpufrequtils" "pciutils" "findutils" "gawk"
 
-    # Asus support
-    "asusctl" "radeontop"
-
     # Command line tools
     "grex" "lsd" "ripgrep" "bottom" "du-dust" "fzf" "procs" "tealdeer" "bat" "sd" "fd" "htop" "gojq" "jaq"
     "neofetch" "hyfetch"
@@ -32,7 +29,7 @@ with import ../functions;
 
     # I/O
     "ffmpeg" "mesa" "mesa-demos" "vlc"
-    "lm_sensors" "libinput-gestures"
+    "lm_sensors" "libinput-gestures" "radeontop"
 
     # Bluetooth
     "bluez" "bluez-tools" "blueberry"

@@ -14,7 +14,7 @@ with import ../functions;
     "flatpak" "xonsh" "qemu" "dconf"
 
     # Hardware
-    "acpica-tools" "pcre" "supergfxctl"
+    "acpica-tools" "pcre" "supergfxd" "asusd"
 
     # Desktop environment services
     "hyprland" "xdotool" "wmctrl" "blueman" "dbus" "upower" "light"

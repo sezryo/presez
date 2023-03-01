@@ -8,12 +8,11 @@
     avahi.openFirewall = true;
     # for an USB printer
     ipp-usb.enable = true;
-    asusd.enable = true;
-    supergfxd.enable = true;
   };
 
   hardware.pulseaudio.enable = false; # Being conflict to pipewire
   hardware.bluetooth.enable = true;
+  hardware.opengl.enable = true;
 
   security.rtkit.enable = true;
   services.pipewire = {
