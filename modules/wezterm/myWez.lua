@@ -20,7 +20,7 @@ return {
     { key = 'v', mods = 'CTRL', action = wezterm.action.ScrollByPage(1) },
     { key = ',', mods = 'CTRL|SHIFT', action = wezterm.action.ScrollToTop },
     { key = '.', mods = 'CTRL|SHIFT', action = wezterm.action.ScrollToBottom },
-    { key = 'x', mods = 'ALT', action = wezterm.action.ShowLauncher },
+    { key = 'l', mods = 'ALT', action = wezterm.action.ShowLauncher },
     { key = 't', mods = 'CTRL|SHIFT', action = wezterm.action.SpawnTab 'CurrentPaneDomain',},
     { key = 'c', mods = 'CTRL|SHIFT', action = wezterm.action.CloseCurrentTab { confirm = false },},
     -- search for things that look like git hashes

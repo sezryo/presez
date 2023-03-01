@@ -25,7 +25,7 @@ with import ../functions;
     "zip" "unzip" "psmisc" "pueue"
 
     # Developing
-    "gh" "gnumake" "tokei" "git" "nodejs-18_x" "cachix"
+    "gh" "gnumake" "tokei" "git" "nodejs-18_x" "cachix" "direnv"
 
     # I/O
     "ffmpeg" "mesa" "mesa-demos" "vlc"
