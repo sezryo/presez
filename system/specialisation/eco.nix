@@ -8,6 +8,10 @@ in {
     mkEnableOption "Low energy usage";
 
   config = lib.mkIf cfg.enable {
-    services.supergfxd.settings = lib.modules.importJSON ../../modules/supergfxd/eco.conf;
+    # services.supergfxd.settings = lib.modules.importJSON ../../modules/supergfxd/eco.conf;
+    environment.etc."supergfxd.conf" = {
+      source = ../../modules/supergfxd/eco.conf;
+      mode = "0644";
+    };
   };
 }

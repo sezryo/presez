@@ -26,6 +26,11 @@ in {
         echo "vfio-pci" > /sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/0000:02:00.0/0000:03:00.0/driver_override
         modprobe -i vfio-pci
       '';
-      services.supergfxd.settings = lib.modules.importJSON ../../modules/supergfxd/vfio.conf;
+
+      # services.supergfxd.settings = lib.modules.importJSON ../../modules/supergfxd/vfio.conf;
+      environment.etc."supergfxd.conf" = {
+        source = ../../modules/supergfxd/vfio.conf;
+        mode = "0644";
+      };
     };
 }
