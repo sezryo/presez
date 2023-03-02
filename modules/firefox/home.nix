@@ -12,14 +12,14 @@
       isDefault = true;
 
       search = {
-        default = "Google";
+        default = "DuckDuckgo";
         force = true;
-        order = [ "Google" "DuckDuckGo" ];
+        order = [ "DuckDuckGo" "Google" ];
       };
 
       settings = {
         "browser.startup.page" = 3; # Always resume the previous browser session.
-        "browswe.startup.homepage" = "https://chat.openai.com/chat";
+        "browser.startup.homepage" = "https://chat.openai.com/chat";
         "browser.search.isUS" = false;
         "distribution.searchplugins.defaultLocale" = "en-GB";
         "general.useragent.locale" = "en-GB";
@@ -31,6 +31,9 @@
         "svg.context-properties.content.enabled" = true;
 
         "font.cjk_pref_fallback_order" = "ja,zh-tw,zh-hk,zh-cn,ko";
+        "devtools.editor.keymap" = "emacs";
+        "ui.key.accelKey" = 18;
+        "ui.key.chromeAccess" = 6;
       };
     };
   };

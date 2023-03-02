@@ -11,7 +11,7 @@ return {
 
   -- Emacs styled keybinds
   keys = {
-    { key = "w", mods = "ALT", action= wezterm.action.CopyTo "ClipboardAndPrimarySelection" },
+    { key = "w", mods = 'CTRL', action= wezterm.action.CopyTo "ClipboardAndPrimarySelection" },
     { key = 'y', mods = 'CTRL', action = wezterm.action.PasteFrom "PrimarySelection" },
     { key = '-', mods = 'CTRL', action = wezterm.action.DecreaseFontSize },
     { key = '=', mods = 'CTRL', action = wezterm.action.IncreaseFontSize },

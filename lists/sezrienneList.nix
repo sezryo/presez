@@ -14,7 +14,7 @@ with import ../functions;
     "LANG_c" "LANG_python" # Baddies
 
     # Essentials
-    "firefox" "chromium" "vim" "emacs" "wget" "lf" "krusader" "socat"
+    "firefox" "chromium" "vim" "emacs" "wget" "lf" "krusader" "socat" "gtk"
 
     # Utils
     "binutils" "coreutils" "cpufrequtils" "pciutils" "findutils" "gawk"
@@ -50,10 +50,11 @@ with import ../functions;
     "gammastep" "brightnessctl" "playerctl" "wev" "cava"
 
     # Wayland
-    "wl-clipboard" "wlogout" "swaybg" "gtk4"
+    "wl-clipboard" "wlogout" "swaybg"
 
     # Desktop environment
-    "hyprland" "eww"  "rofi" "fuzzel" "dunst" "grim" "gnome.gnome-control-center"
+    "hyprland" "eww"  "rofi" "fuzzel" "dunst" "grim"
+    "gnome.gnome-control-center" "gnome.gnome-tweaks"
 
     # Multimedia, social and entertainment
     "yewtube" "qbittorrent" "spotify" "ncspot" "yt-dlp" "discord" "qq" "tdesktop"
