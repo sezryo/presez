@@ -12,14 +12,14 @@ return {
   -- Emacs styled keybinds
   keys = {
     { key = "w", mods = 'CTRL', action= wezterm.action.CopyTo "ClipboardAndPrimarySelection" },
-    { key = 'y', mods = 'CTRL', action = wezterm.action.PasteFrom "PrimarySelection" },
+    { key = 'y', mods = 'CTRL', action = wezterm.action.PasteFrom "Clipboard" },
     { key = '-', mods = 'CTRL', action = wezterm.action.DecreaseFontSize },
     { key = '=', mods = 'CTRL', action = wezterm.action.IncreaseFontSize },
     -- { key = 'P', mods = 'CTRL', action = wezterm.action.ActivateCommandPalette }, -- Needs Nightly builds
     { key = 'v', mods = 'ALT', action = wezterm.action.ScrollByPage(-1) },
     { key = 'v', mods = 'CTRL', action = wezterm.action.ScrollByPage(1) },
-    { key = ',', mods = 'CTRL|SHIFT', action = wezterm.action.ScrollToTop },
-    { key = '.', mods = 'CTRL|SHIFT', action = wezterm.action.ScrollToBottom },
+    { key = '<', mods = 'CTRL', action = wezterm.action.ScrollToTop },
+    { key = '>', mods = 'CTRL', action = wezterm.action.ScrollToBottom },
     { key = 'l', mods = 'ALT', action = wezterm.action.ShowLauncher },
     { key = 't', mods = 'CTRL|SHIFT', action = wezterm.action.SpawnTab 'CurrentPaneDomain',},
     { key = 'c', mods = 'CTRL|SHIFT', action = wezterm.action.CloseCurrentTab { confirm = false },},

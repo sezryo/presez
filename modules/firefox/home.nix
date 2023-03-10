@@ -12,7 +12,7 @@
       isDefault = true;
 
       search = {
-        default = "DuckDuckgo";
+        default = "DuckDuckGo";
         force = true;
         order = [ "DuckDuckGo" "Google" ];
       };

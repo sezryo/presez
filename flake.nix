@@ -1,7 +1,7 @@
 {
   description = "The preimage of Sez";
 
-  outputs = inputs@{ self, nixpkgs, nur, hyprland, rust-overlay, nixos-hardware, home-manager, ...  }:
+  outputs = inputs@{ self, nixpkgs, nur, hyprland, rust-overlay, emacs-overlay, nixos-hardware, home-manager, ...  }:
     let
 
       # These are modules used accross on system level
@@ -14,7 +14,7 @@
         };
 
       # These are common home settings across profiles
-      common = { lib, ... }:
+      common = { lib, config, ... }:
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
@@ -22,6 +22,7 @@
           nixpkgs.overlays = [
             rust-overlay.overlays.default
             nur.overlay
+            emacs-overlay.overlay
           ];
           _module.args = {
             colourscheme = import ./colourschemes/catppuccin-frappe.nix;
@@ -63,8 +64,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs"; };
     nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs"; };
+      url = "github:nix-community/NUR"; };
     flake-utils.url = "github:numtide/flake-utils";
     emacs-overlay = { url = "github:nix-community/emacs-overlay";
                       inputs.nixpkgs.follows = "nixpkgs";

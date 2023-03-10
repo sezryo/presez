@@ -14,7 +14,10 @@ with import ../functions;
     "LANG_c" "LANG_python" # Baddies
 
     # Essentials
-    "firefox" "chromium" "vim" "emacs" "wget" "lf" "krusader" "socat" "gtk"
+    "firefox" "chromium" "vim" "wget" "lf" "krusader" "socat" "gtk"
+
+    # Emacs
+    "emacs" "ispell" "sqlite" "graphviz" "poppler_utils"
 
     # Utils
     "binutils" "coreutils" "cpufrequtils" "pciutils" "findutils" "gawk"
@@ -26,6 +29,9 @@ with import ../functions;
 
     # Developing
     "gh" "gnumake" "tokei" "git" "nodejs-18_x" "cachix" "direnv"
+
+    # Frontend
+    "electron"
 
     # I/O
     "ffmpeg" "mesa" "mesa-demos" "vlc"

@@ -1,5 +1,4 @@
 # shellAbbrs
-alias e = emacs -nw
 alias sy = systemctl
 alias ssy = sudo systemctl
 alias lt = lsd --tree
@@ -11,12 +10,14 @@ def jr [
   --shinjuku (-s) # Rebuild the system packages
   --kanda (-k) # Garbage collection
   --akihabara (-a) # Thorough garbage collection, incl. root level
+  --takadanobaba (-t) # Add an --show-trace flag
 ] {
   cd /home/sezrienne/presez;
-  if $ueno {sudo nix flake update;}
-  if $shinjuku {sudo nixos-rebuild switch --flake 'path:./#sezrienne';}
-  if $kanda {nix-store --gc}
-  if $akihabara {sudo nix-collect-garbage -d}
+  let debug = if $takadanobaba {" --show-trace"} else {""}
+  if $ueno {nu -c ('sudo nix flake update' + $debug);}
+  if $shinjuku {nu -c ('sudo nixos-rebuild switch --flake "path:./#sezrienne"' + $debug);}
+  if $kanda {nu -c ('nix-store --gc' + $debug);}
+  if $akihabara {nu -c ('sudo nix-collect-garbage -d' + $debug);}
 }
 
 # Maarui midorino yamanotesen
@@ -32,6 +33,7 @@ def yamanote [flags: string] {
 def tube [
   name: string
   --oyster (-o) # Use your Oyster card! (Direct into the corresponding list after adding)
+  --contactless (-c) # TfL loves contactless payment! (Direct into the created config file)
   --hammersmith (-h) # Installing packages in home level
   --southKensington (-s) # Installing packages in system level
   --holborn (-H) # Adding home.packages
@@ -45,6 +47,10 @@ def tube [
   if $embankment {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  environment.systemPackages = [ pkgs." ' + $name + ' " ];\n}" | str collect | save ' + $file);}
   if $piccadilly {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  programs." ' + $name + ' " = {\n    enable = true;\n  };\n}" | str collect | save ' + $file);}
   if $southwark {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  services." ' + $name + ' " = {\n    enable = true;\n  };\n}" | str collect | save ' + $file);}
+  if $contactless {
+    if $hammersmith {reform -h $name}
+    if $southKensington {reform -s $name}
+  }
   if $oyster {
     if $hammersmith {reform --lh}
     if $southKensington {reform --ls}
@@ -70,30 +76,29 @@ def trinity [comment: string] {git add .; git commit -m $comment; git push --for
 
 # Change the config files, n.b. some args only suitable for sezrienne
 def reform [
-  --emacs (-e) # Use emacs non-nw, defaultly use emacs -nw
-  --vim (-v) # Use vim non-nw, defaultly use emacs -nw
+  --vim (-v) # Use vim, defaultly use emacs
   --system (-s): string # Configure system modules files in ~/presez/modules
   --home (-h): string # Configure home modules files in ~/presez/modules
   --nc # Nushell config
   --ne # Nushell env
   --nf # Nushell functions
   --hy # Hyprland config file
-  --doom # Doom emacs config
   --lh # Change homeCommon package list
   --ls # Change systemCommon package list
 ] {
-  let ed = if $emacs {"emacs "} else {if $vim {"vim "} else {"emacs -nw "}}
+  let ed = if $vim {"vim "} else {"emacsclient -c "}
   if ($system != null) {nu -c ($ed + "/home/sezrienne/presez/modules/" + $system + "/default.nix")}
   if ($home != null) {nu -c ($ed + "/home/sezrienne/presez/modules/" + $home + "/home.nix")}
   if $nc {nu -c ($ed + "/home/sezrienne/presez/modules/nu/config.nu")}
   if $ne {nu -c ($ed + "/home/sezrienne/presez/modules/nu/env.nu")}
   if $nf {nu -c ($ed + "/home/sezrienne/presez/modules/nu/functions.nu")}
   if $hy {nu -c ($ed + "/home/sezrienne/presez/modules/hyprland/myHypr.conf")}
-  if $doom {nu -c ($ed + "/home/sezrienne/.doom.d/init.el")}
   if $lh {nu -c ($ed + "/home/sezrienne/presez/lists/sezrienneList.nix")}
   if $ls {nu -c ($ed + "/home/sezrienne/presez/lists/systemList.nix")}
 }
 
+# Emacs forever!!! This is to hide the current terminal while running emacs
+def e [name: string] {hyprctl dispatch movetoworkspacesilent special; emacsclient -c $name;}
 # Realise doom emacs files. WARNING: This is tend to be deprecated by purely managed by nix
 def doom [name: string] {nu -c ("/home/sezrienne/.emacs.d/bin/doom " + $name)}
 

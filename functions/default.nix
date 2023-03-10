@@ -1,6 +1,7 @@
 with import <nixpkgs> {};
 with lib;
 with builtins;
+
 rec {
 
   copyDir = fromDir: toDir:
@@ -9,6 +10,7 @@ rec {
                                       (fromDir + "/${name}"))
       (filterAttrs (name: value: value == "regular")
                        (readDir fromDir));
+
   copyDirRecursively = fromDir: toDir:
     foldl'
       (a: b: a // b)
@@ -17,9 +19,19 @@ rec {
                                                            (toDir + "/" + name))
                           (filterAttrs (name: value: value == "directory")
                                            (readDir fromDir)));
+
+  readRecursively = dir:
+    concatStringsSep "\n"
+      (mapAttrsToList (name: value: if value == "regular"
+                                        then readFile (dir + "/${name}")
+                                        else (if value == "directory"
+                                              then readRecursively (dir + "/${name}")
+                                              else [ ]))
+                          (builtins.readDir dir));
+  
   mkHomeFile = fromDir: toDir:
     mapAttrs'
-      (name: value: nameValuePair name ({ source = value; }))
+      (name: value: nameValuePair name ({ source = mkDefault value; }))
       (copyDirRecursively fromDir toDir);
 
   listDir = fromDir:
