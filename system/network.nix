@@ -10,6 +10,9 @@
     # wifi.backend = "iwd";
     ethernet.macAddress = "random";
   };
+  networking.firewall = {
+    allowedTCPPorts = [ 57621 ]; # For Spotify local discovery
+  };
 
   services.openssh.enable = true;
   users.groups.networkmanager.members = [ "root" "sezrienne" ];

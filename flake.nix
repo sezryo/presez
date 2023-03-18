@@ -58,6 +58,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    latest.url = "github:nixos/nixpkgs/master";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
     hyprland.url = "github:hyprwm/Hyprland";
     home-manager = {

@@ -26,5 +26,8 @@ in rec
     source = ./inits;
     recursive = true;
   };
+  home.packages = with pkgs.emacsPackages; [
+    tuareg
+  ];
 }
 

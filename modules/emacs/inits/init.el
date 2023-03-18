@@ -11,7 +11,7 @@
       (message "Finish loading host init"))
   (message "Host file not found"))
 
-;; customize file
+;; customise file
 (defvar var-dir (concat user-emacs-directory "var/"))
 (defvar sync-dir "syncdir/")
 (make-directory var-dir :parents)
@@ -77,6 +77,7 @@
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
                          ("melpa" . "https://melpa.org/packages/")))
 (require 'package)
+(add-to-list 'package-directory-list "~/.nix-profile/share/emacs/site-lisp/elpa")
 (package-initialize)
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -181,6 +182,7 @@
          (haskell-mode . lsp)
          (haskell-literate-mode . lsp)
          (c-mode . lsp)
+         (tuareg-mode . lsp)
          (c++-mode . lsp)
          (rust-mode . lsp))
   :custom
@@ -202,6 +204,13 @@
 
 (use-package markdown-mode
   :ensure t)
+
+(add-to-list 'load-path "~/.nix-profile/share/emacs/site-lisp")
+(require 'merlin)
+(add-hook 'tuareg-mode-hook 'merlin-mode t)
+(custom-set-variables
+  '(merlin-command "ocamlmerlin")
+)
 
 (use-package nyan-mode
   :ensure t

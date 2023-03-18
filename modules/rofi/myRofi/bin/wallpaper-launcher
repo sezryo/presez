@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# Set the wallpaper directory
+wallpaper_dir="$HOME/presez/assets/wallpapers"
+
+# List the wallpapers in the directory and store them in an array
+wallpapers=( "$wallpaper_dir"/*.{jpg,png,jpeg} )
+
+# Generate a list of wallpaper names
+wallpaper_names=()
+for wallpaper in "${wallpapers[@]}"; do
+    wallpaper_name="$(basename "$wallpaper")"
+    wallpaper_names+=( "$wallpaper_name" )
+done
+
+# Show the wallpaper list in Rofi and get the user's selection
+selected_wallpaper_name=$(printf '%s\n' "${wallpaper_names[@]}" | rofi \
+                                                                      -dmenu\
+                                                                      -p "Wallpaper:" \
+                                                                      -scroll-method 0 \
+	                                                              -terminal kitty \
+	                                                              -theme "$HOME"/.config/rofi/config/runner.rasi)
+
+# If a wallpaper was selected, set it as the current wallpaper using swaybg
+if [ -n "$selected_wallpaper_name" ]; then
+    selected_wallpaper="$wallpaper_dir/$selected_wallpaper_name"
+    swaybg -i "$selected_wallpaper" -m fill -o '*'
+fi

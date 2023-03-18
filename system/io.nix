@@ -4,6 +4,7 @@
   services = {
     printing.enable = true;
     avahi.enable = true;
+    avahi.nssmdns = true;
     # for a WiFi printer
     avahi.openFirewall = true;
     # for an USB printer

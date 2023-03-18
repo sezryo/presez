@@ -48,12 +48,12 @@ def tube [
   if $piccadilly {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  programs." ' + $name + ' " = {\n    enable = true;\n  };\n}" | str collect | save ' + $file);}
   if $southwark {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  services." ' + $name + ' " = {\n    enable = true;\n  };\n}" | str collect | save ' + $file);}
   if $contactless {
-    if $hammersmith {reform -h $name}
-    if $southKensington {reform -s $name}
+    if $hammersmith {rf -h $name}
+    if $southKensington {rf -s $name}
   }
   if $oyster {
-    if $hammersmith {reform --lh}
-    if $southKensington {reform --ls}
+    if $hammersmith {rf --lh}
+    if $southKensington {rf --ls}
   }
 }
 
@@ -74,9 +74,10 @@ def ratp [
 # Git shortcout
 def trinity [comment: string] {git add .; git commit -m $comment; git push --force origin main}
 
-# Change the config files, n.b. some args only suitable for sezrienne
-def reform [
+# Change the config files, n.b. some args only suitable for sezrienne; rf stands for reform 
+def rf [
   --vim (-v) # Use vim, defaultly use emacs
+  --emacs (-e) # Does not hide the current terminal while launching emacs
   --system (-s): string # Configure system modules files in ~/presez/modules
   --home (-h): string # Configure home modules files in ~/presez/modules
   --nc # Nushell config
@@ -86,7 +87,7 @@ def reform [
   --lh # Change homeCommon package list
   --ls # Change systemCommon package list
 ] {
-  let ed = if $vim {"vim "} else {"emacsclient -c "}
+  let ed = if $vim {"vim "} else { if $emacs {"wezterm cli spawn --cwd (pwd); emacsclient -c "} else {"hyprctl dispatch movetoworkspacesilent special; emacsclient -c "}}
   if ($system != null) {nu -c ($ed + "/home/sezrienne/presez/modules/" + $system + "/default.nix")}
   if ($home != null) {nu -c ($ed + "/home/sezrienne/presez/modules/" + $home + "/home.nix")}
   if $nc {nu -c ($ed + "/home/sezrienne/presez/modules/nu/config.nu")}
@@ -97,10 +98,10 @@ def reform [
   if $ls {nu -c ($ed + "/home/sezrienne/presez/lists/systemList.nix")}
 }
 
-# Emacs forever!!! This is to hide the current terminal while running emacs
-def e [name: string] {hyprctl dispatch movetoworkspacesilent special; emacsclient -c $name;}
-# Realise doom emacs files. WARNING: This is tend to be deprecated by purely managed by nix
-def doom [name: string] {nu -c ("/home/sezrienne/.emacs.d/bin/doom " + $name)}
+# Emacs forever!!! This is to hide the current terminal while launching emacs
+def ee [name: string] {hyprctl dispatch movetoworkspacesilent special; emacsclient -c $name;}
+# This is to spawn a new terminal tab while launching emacs, syntax follows nushell
+def e [name: string] {wezterm cli spawn --cwd (pwd); emacsclient -c $name;}
 
 # Some useful tools
 def cipher [name: string] {nu -c ("nix-hash --flat --base32 --type sha256 " + $name)}

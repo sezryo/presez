@@ -8,8 +8,8 @@ with import ../functions;
   imports = useHomeModules [
 
     # Toolchain for languages, n.b. only languages' modules' names are not indentical to its packages
-    "LANG_agda" "LANG_coq" "LANG_purescript" # Goodies
-    "LANG_clojure" "LANG_elixir" "LANG_nix" "LANG_racket" "LANG_scheme" # Quasi-goodies
+    "LANG_agda" "LANG_coq" "LANG_purescript" "LANG_haskell" # Goodies
+    "LANG_clojure" "LANG_elixir" "LANG_nix" "LANG_racket" "LANG_scheme" "LANG_ocaml" # Quasi-goodies
     "LANG_ruby" "LANG_rust" "LANG_tex" # Normies
     "LANG_c" "LANG_python" # Baddies
 
@@ -24,7 +24,7 @@ with import ../functions;
 
     # Command line tools
     "grex" "lsd" "ripgrep" "bottom" "du-dust" "fzf" "procs" "tealdeer" "bat" "sd" "fd" "htop" "gojq" "jaq"
-    "neofetch" "hyfetch"
+    "neofetch" "hyfetch" "cbonsai"
     "zip" "unzip" "psmisc" "pueue"
 
     # Developing
@@ -63,7 +63,7 @@ with import ../functions;
     "gnome.gnome-control-center" "gnome.gnome-tweaks"
 
     # Multimedia, social and entertainment
-    "yewtube" "qbittorrent" "spotify" "ncspot" "yt-dlp" "discord" "qq" "tdesktop"
+    "yewtube" "qbittorrent" "spotify" "ncspot" "yt-dlp" "discord" "qq" "tdesktop" "steam"
 
     # Security
     "yubikey-manager" "thc-hydra" "burpsuite"

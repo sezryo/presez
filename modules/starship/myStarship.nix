@@ -6,4 +6,5 @@
   shell = {
     disabled = false;
   };
-}
+  palette = "catppuccin_frappe";
+}     
