@@ -1,9 +1,15 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, config, lib, ... }:
 
 {
   services.xserver = {
     enable = true;
     exportConfiguration = true;
-    displayManager.lightdm.enable = true;
+    dpi = 160;
+    libinput.touchpad = {
+      tapping = true;
+      scrollMethod = "twofinger";
+      naturalScrolling = true;
+      middleEmulation = true;
+    };
   };
 }

@@ -26,6 +26,17 @@
         variant = "frappe";
       };
     };
+
+    cursorTheme = {
+      name = "Catppuccin-Frappe-Lavender-Cursors";
+      package = pkgs.catppuccin-cursors.frappeLavender;
+      size = 32;
+    };
+
+    iconTheme = {
+      name = "Catppuccin-Frappe-Lavender-Cursors";
+      package = pkgs.catppuccin-cursors.frappeLavender;
+    };
   };
   home.packages = [ pkgs.gtk4 ];
 }

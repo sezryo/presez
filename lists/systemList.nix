@@ -11,8 +11,11 @@ with import ../functions;
     "steam" "gamescope"
 
     # System
-    "flatpak" "xonsh" "qemu" "dconf"
+    "flatpak" "xonsh" "qemu" "dconf" "sddm"
 
+    # Frame
+    "chromium" "qt"
+    
     # Hardware
     "acpica-tools" "pcre" "supergfxd" "asusd"
 
