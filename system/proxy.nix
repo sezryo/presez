@@ -1,14 +1,14 @@
 { config, pkgs, ... }:
 
 {
-  systemd.services.clashClient = {
-    description = "Clash client service";
+  systemd.services.clash = {
+    description = "Clash client service, using clash-meta";
     wantedBy = [ "multi-user.target" ]; 
     after = [ "network.target" ];
     serviceConfig = {
       Type = "simple";
-      User = "sezrienne";
-      ExecStart = "${pkgs.clash}/bin/clash -f /home/sezrienne/.config/clash/config.yaml";
+      User = "root";
+      ExecStart = "${pkgs.clash-meta}/bin/clash-meta -d /home/sezrienne/.config/clash/";
       Restart = "on-failure";
       RestartPreventExitStatus = "23";
     };
@@ -17,7 +17,7 @@
   networking.proxy.default = "http://127.0.0.1:7890"; 
 
   programs.proxychains = {
-    enable = true;
+    enable = false;
     proxies."clash" = {
       enable = true;
       type = "http";
@@ -27,7 +27,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    clash
+    clash-meta
   ];
 
   # nix.settings.substituters = [ "https://mirror.tuna.tsinghua.edu.cn/nix-channels/store" ];

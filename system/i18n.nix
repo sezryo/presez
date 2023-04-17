@@ -11,7 +11,6 @@
         fcitx5-chinese-addons
         fcitx5-table-extra
       ];
-      fcitx5.enableRimeData = true;
     };
   };
 

@@ -14,7 +14,7 @@ with import ../functions;
     "LANG_c" "LANG_python" # Baddies
 
     # Essentials
-    "firefox" "chromium" "vim" "wget" "lf" "krusader" "socat" "gtk" "qt"
+    "firefox" "chromium" "vim" "wget" "lf" "krusader" "socat"
 
     # Emacs
     "emacs" "ispell" "sqlite" "graphviz" "poppler_utils"
@@ -31,10 +31,13 @@ with import ../functions;
     "gh" "gnumake" "tokei" "git" "nodejs-18_x" "cachix" "direnv"
 
     # Frontend
-    "electron"
+    "electron" "qt"
+
+    # Gtk
+    "gtk" "gnome.gnome-control-center" "gnome.gnome-tweaks" "gnome.nautilus"
 
     # I/O
-    "ffmpeg" "mesa" "mesa-demos" "vlc"
+    "ffmpeg" "mesa" "mesa-demos" "vlc" "xvidcore"
     "lm_sensors" "libinput-gestures" "radeontop"
 
     # Bluetooth
@@ -56,14 +59,13 @@ with import ../functions;
     "gammastep" "brightnessctl" "playerctl" "wev" "cava"
 
     # Wayland
-    "wl-clipboard" "wlogout" "swaybg" "swayidle" "swaylock-effects"
+    "wl-clipboard" "wlogout" "swaybg" "swayidle" # "swaylock-effects"
 
     # Desktop environment
     "hyprland" "eww" "CONFIG_cursor" "rofi" "fuzzel" "dunst" "grim"
-    "gnome.gnome-control-center" "gnome.gnome-tweaks"
 
     # Multimedia, social and entertainment
-    "yewtube" "qbittorrent" "spotify" "ncspot" "yt-dlp" "discord" "qq" "tdesktop" "steam"
+    "yewtube" "qbittorrent" "spotify" "yt-dlp" "discord" "qq" "tdesktop" "steam" "ncspot"
 
     # Security
     "yubikey-manager" "thc-hydra" "burpsuite"

@@ -20,6 +20,7 @@ with import ../functions;
     "acpica-tools" "pcre" "supergfxd" "asusd"
 
     # Desktop environment services
-    "hyprland" "xdotool" "wmctrl" "blueman" "dbus" "upower" "light"
+    #"hyprland"
+    "xdotool" "wmctrl" "blueman" "dbus" "upower" "light"
   ];
 }

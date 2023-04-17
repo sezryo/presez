@@ -1,8 +1,8 @@
 # Incarnation via Nushell
 
-source /home/sezrienne/presez/modules/starship/init.nu
-source /home/sezrienne/presez/modules/zoxide/init.nu
-source /home/sezrienne/presez/modules/nu/functions.nu
+source ~/.cache/starship/init.nu
+source ~/.zoxide.nu
+source ~/presez/modules/nu/functions.nu
 
 
 let pink = "#f5a9b8"
@@ -144,10 +144,10 @@ let-env config = {
   show_banner: false
 
   hooks: {
-    pre_prompt: [{
+    pre_prompt: [{||
       $nothing  # replace with source code to run before the prompt is shown
     }]
-    pre_execution: [{
+    pre_execution: [{||
       $nothing  # replace with source code to run before the repl input is run
     }]
     env_change: {
