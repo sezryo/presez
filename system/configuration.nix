@@ -12,6 +12,7 @@
       ./security.nix
       ./proxy.nix
       ./network.nix
+      ./disk.nix
       ./i18n.nix
       ./io.nix
       ./env.nix

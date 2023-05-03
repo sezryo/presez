@@ -29,7 +29,8 @@ with import ../functions;
 
     # Developing
     "gh" "gnumake" "tokei" "git" "nodejs-18_x" "cachix" "direnv"
-
+    "yarn" "yarn2nix"
+    
     # Frontend
     "electron" "qt"
 
@@ -48,18 +49,19 @@ with import ../functions;
     "wezterm"
 
     # Productivity
-    "ocrmypdf" "nyxt" "calibre" "zathura" "zoom-us" "thunderbird" "remarkable2-toolchain"
+    "ocrmypdf" "calibre" "zathura" "zoom-us" "thunderbird" "remarkable2-toolchain"
     "bc" "gnuplot" "newsflash" "okular" "imagemagick"
-    # "mathematica" "libreoffice"
+    # "mathematica" "libreoffice" "nyxt"
 
     # Virtual environment
     "bottles" "qemu" "virt-manager" "quickemu" "quickgui" # System level configs in system/virtualisation
-
+    "yuzu-early-access"
+    
     # Controllers
     "gammastep" "brightnessctl" "playerctl" "wev" "cava"
 
     # Wayland
-    "wl-clipboard" "wlogout" "swaybg" "swayidle" # "swaylock-effects"
+    "wl-clipboard" "wlogout" "swaybg" "swayidle" "swaylock"
 
     # Desktop environment
     "hyprland" "eww" "CONFIG_cursor" "rofi" "fuzzel" "dunst" "grim"

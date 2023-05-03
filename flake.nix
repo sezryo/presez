@@ -46,6 +46,7 @@
     {
       nixosConfigurations.sezrienne = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
+        specialArgs = {inherit inputs;};
         modules = [
           nixos
           common
@@ -57,7 +58,7 @@
     };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     latest.url = "github:nixos/nixpkgs/master";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
     hyprland.url = "github:hyprwm/Hyprland";

@@ -10,6 +10,7 @@
       efiInstallAsRemovable = true;
       device = "nodev";
       fontSize = 9;
+      configurationLimit = 30;
     };
     # initrd.prepend = [ "${./acpi_override}" ];
     # kernelParams = [ "mem_sleep_default=deep" ];

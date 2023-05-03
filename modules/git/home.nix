@@ -5,7 +5,7 @@
     enable = true;
     delta.enable = true;
 
-    userName = "Sezriv";
+    userName = "sezryo";
     userEmail = "sezrienne@proton.me";
 
     extraConfig = {

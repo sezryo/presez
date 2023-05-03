@@ -43,10 +43,10 @@ def tube [
 ] {
   let file = if $hammersmith {"home.nix"} else {"default.nix"}
   cd /home/sezrienne/presez/modules; mkdir $name; cd $name;
-  if $holborn {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  home.packages = [ pkgs." ' + $name + ' " ];\n}" | str collect | save ' + $file);}
-  if $embankment {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  environment.systemPackages = [ pkgs." ' + $name + ' " ];\n}" | str collect | save ' + $file);}
-  if $piccadilly {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  programs." ' + $name + ' " = {\n    enable = true;\n  };\n}" | str collect | save ' + $file);}
-  if $southwark {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  services." ' + $name + ' " = {\n    enable = true;\n  };\n}" | str collect | save ' + $file);}
+  if $holborn {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  home.packages = [ pkgs." ' + $name + ' " ];\n}" | str join | save ' + $file);}
+  if $embankment {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  environment.systemPackages = [ pkgs." ' + $name + ' " ];\n}" | str join | save ' + $file);}
+  if $piccadilly {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  programs." ' + $name + ' " = {\n    enable = true;\n  };\n}" | str join | save ' + $file);}
+  if $southwark {nu -c ('echo "{ pkgs, lib, ... }:\n\n{\n  services." ' + $name + ' " = {\n    enable = true;\n  };\n}" | str join | save ' + $file);}
   if $contactless {
     if $hammersmith {rf -h $name}
     if $southKensington {rf -s $name}
@@ -112,6 +112,6 @@ def wikt [name: string] {firefox ('en.wiktionary.org/wiki/' + $name)}
 def ggl [name: string] {firefox ('google.com/search?client=firefox-b-d&q=' + $name)}
 
 # Asus stuffs related
-def manifest [image: string] {["/home/sezrienne/zauber/static/", $image, ".png"] | str collect | asusctl anime image -p $in}
+def manifest [image: string] {["/home/sezrienne/zauber/static/", $image, ".png"] | str join | asusctl anime image -p $in}
 def dgpuon [] {supergfxctl -m hybrid}
 def dgpuoff [] {supergfxctl -m integrated}
