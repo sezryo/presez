@@ -64,7 +64,7 @@ with import ../functions;
     "wl-clipboard" "wlogout" "swaybg" "swayidle" "swaylock"
 
     # Desktop environment
-    "hyprland" "eww" "CONFIG_cursor" "rofi" "fuzzel" "dunst" "grim"
+    "hyprland" "eww" "rofi" "fuzzel" "dunst" "grim"
 
     # Multimedia, social and entertainment
     "yewtube" "qbittorrent" "spotify" "yt-dlp" "discord" "qq" "tdesktop" "steam" "ncspot"

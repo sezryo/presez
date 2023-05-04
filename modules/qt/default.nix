@@ -3,13 +3,16 @@
 {
   qt = {
     enable = true;
-    style = "gtk2";
-    platformTheme = "gtk2";
+    platformTheme = "qt5ct";
   };
+
+  # QT related environment variables set in ~/system/env.nix
   
-  environment.systemPackages = with pkgs; [
-    libsForQt5.qt5.qtgraphicaleffects
-    libsForQt5.qt5.qtquickcontrols2
-    libsForQt5.qt5.qtsvg
+  environment.systemPackages = with pkgs.libsForQt5; [
+    qt5.qtgraphicaleffects
+    qt5.qtquickcontrols2
+    qt5.qtsvg
+    qt5ct
+    lightly
   ];
 }

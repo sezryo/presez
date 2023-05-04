@@ -14,29 +14,21 @@
         };
 
       # These are common home settings across profiles
-      common = { lib, config, ... }:
+      common = { lib, config, inputs, ... }:
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-          nixpkgs.overlays = [
-            rust-overlay.overlays.default
-            nur.overlay
-            emacs-overlay.overlay
-          ];
-          _module.args = {
-            colourscheme = import ./colourschemes/catppuccin-frappe.nix;
-          };
+          imports = [
+            ./homes/common/configuration.nix
+          ];          
         };
 
-      # These are modules used on profile sezrienne
-      sezrienne = { lib, ... }:
+      # These are sezrienne specific home settings
+      sezrienne = { lib, config, inputs, ... }:
         {
           home-manager.users.sezrienne = {
-            home.username = "sezrienne";
-            home.homeDirectory = "/home/sezrienne";
-            home.stateVersion = "22.05";
-            imports = [ ./lists/sezrienneList.nix ];
+            imports = [
+              ./lists/sezrienneList.nix
+              ./homes/sezrienne/configuration.nix
+            ];
           };
         };
 

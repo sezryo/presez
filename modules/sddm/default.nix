@@ -5,6 +5,9 @@
     enable = true;
     enableHidpi = true;
     theme = "corners"; # You can also choose sugar-dark
+    settings = {
+      Theme.CursorTheme = "breeze_cursors";
+    };
   };
 
   environment.systemPackages =
