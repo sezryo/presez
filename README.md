@@ -1,6 +1,4 @@
-# presez
-**Sez's Dotfiles** \
-**BTW I use NixOS (with flakes)!** 
+# presez (Sez's Dotfiles)
 
 <p align="center"><img src="https://github.com/sezryo/presez/blob/main/assets/icons/nixowo.png"></p>
 
@@ -23,3 +21,13 @@
 | **Lock Screen**            | [swaylock-effects](https://github.com/mortie/swaylock-effects)                                              |
 | **Fonts**                  | [JetBrains-mono](https://www.jetbrains.com/lp/mono/), [Nerd fonts](https://github.com/ryanoasis/nerd-fonts) |
 | **English**                | [en_GB](https://www.bbc.com/culture/article/20170904-how-americanisms-are-killing-the-english-language)     |
+
+## How to use
+
+Even if the dotfiles is designed for my private use, you may have a try on it to get some inspirations. To use the dotfiles:
+
+1. Simply clone this repo, cd to the directory, and you may change the `sezrienne` block in `flake.nix` and `homes/sezrienne/` to customise your own user usage.
+
+2. Run `sudo nixos-rebuild switch --flake "path:./#YOUR_USER_NAME"` and all set. You may use my shell rebuild function shorthands after the first build and enter the Nushell, usage is available by running `help jr`
+
+3. Notice that my daily machine is ASUS GA402 with an APU and a dedicated AMD GPU, thus my dotfiles are designed for them, you may need change files catering to your own usage in `system/`.
