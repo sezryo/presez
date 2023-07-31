@@ -17,7 +17,7 @@ with import ../functions;
     "chromium" "qt"
     
     # Hardware
-    "acpica-tools" "pcre" "supergfxd" "asusd"
+    "acpica-tools" "pcre" "supergfxd" "asusd" "auto-cpufreq" "powertop"
 
     # Desktop environment services
     "hyprland" "xdotool" "wmctrl" "blueman" "dbus" "upower" "light" "wayland"

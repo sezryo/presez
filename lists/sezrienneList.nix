@@ -29,13 +29,16 @@ with import ../functions;
 
     # Developing
     "gh" "gnumake" "tokei" "git" "nodejs-18_x" "cachix" "direnv"
-    "yarn" "yarn2nix"
+    "yarn" "yarn2nix" "pnpm"
     
     # Frontend
     "electron" "qt"
 
+    # Networking
+    "dig"
+    
     # Gtk
-    "gtk" "gnome.gnome-control-center" "gnome.gnome-tweaks" "gnome.nautilus"
+    "gtk" "gnome.gnome-control-center" "gnome.gnome-tweaks" "networkmanagerapplet"
 
     # I/O
     "ffmpeg" "mesa" "mesa-demos" "vlc" "xvidcore"
@@ -49,9 +52,9 @@ with import ../functions;
     "wezterm"
 
     # Productivity
-    "ocrmypdf" "calibre" "zathura" "zoom-us" "thunderbird" "remarkable2-toolchain"
-    "bc" "gnuplot" "newsflash" "okular" "imagemagick"
-    # "mathematica" "libreoffice" "nyxt"
+    "ocrmypdf" "calibre" "zathura" "thunderbird" "remarkable2-toolchain"
+    "bc" "gnuplot" "newsflash" "okular" "imagemagick" "dolphin"
+    # "mathematica" "libreoffice" "nyxt" "zoom-us"
 
     # Virtual environment
     "bottles" "qemu" "virt-manager" "quickemu" "quickgui" # System level configs in system/virtualisation
@@ -70,7 +73,7 @@ with import ../functions;
     "yewtube" "qbittorrent" "spotify" "yt-dlp" "discord" "qq" "tdesktop" "steam" "ncspot"
 
     # Security
-    "yubikey-manager" "thc-hydra" "burpsuite"
+    "yubikey-manager" "thc-hydra" "burpsuite" "gpg"
 
   ];
 

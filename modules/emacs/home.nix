@@ -7,7 +7,7 @@ let
     config = ./inits/init.el;
     # defaultInitFile = true;
     alwaysEnsure = true;
-    package = pkgs.emacsPgtk;
+    package = pkgs.emacs-pgtk;
     # override = epkgs: epkgs // {};
   });
 in rec 

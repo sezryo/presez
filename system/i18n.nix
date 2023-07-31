@@ -15,9 +15,9 @@
   };
 
    fonts = {
-    enableDefaultFonts = true;
+    enableDefaultPackages = true;
     fontDir.enable = true;
-    fonts = with pkgs; [
+    packages = with pkgs; [
       jetbrains-mono
       jost
       noto-fonts noto-fonts-emoji noto-fonts-cjk

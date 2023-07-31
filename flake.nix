@@ -1,11 +1,12 @@
 {
   description = "The preimage of Sez";
 
-  outputs = inputs@{ self, nixpkgs, nur, hyprland, rust-overlay, emacs-overlay, nixos-hardware, home-manager, ...  }:
+  outputs = inputs@{ self, nixpkgs, nur, hyprland, rust-overlay, emacs-overlay, nixos-hardware, home-manager, darkmatter-grub-theme, ...  }:
+    
     let
 
       # These are modules used accross on system level
-      nixos = { lib, ... }:
+      nixos = { lib, config, inputs, ... }:
         {
           imports = [
             ./lists/systemList.nix
@@ -44,6 +45,7 @@
           common
           sezrienne
           hyprland.nixosModules.default
+          darkmatter-grub-theme.nixosModule
           home-manager.nixosModules.home-manager
         ];
       };
@@ -54,11 +56,9 @@
     latest.url = "github:nixos/nixpkgs/master";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
     hyprland.url = "github:hyprwm/Hyprland";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs"; };
-    nur = {
-      url = "github:nix-community/NUR"; };
+    home-manager = { url = "github:nix-community/home-manager";
+                     inputs.nixpkgs.follows = "nixpkgs"; };
+    nur.url = "github:nix-community/NUR";
     flake-utils.url = "github:numtide/flake-utils";
     emacs-overlay = { url = "github:nix-community/emacs-overlay";
                       inputs.nixpkgs.follows = "nixpkgs";
@@ -66,5 +66,8 @@
     rust-overlay = { url = "github:oxalica/rust-overlay";
                      inputs.nixpkgs.follows = "nixpkgs";
                      inputs.flake-utils.follows = "flake-utils"; };
+    darkmatter-grub-theme = { url = "gitlab:VandalByte/darkmatter-grub-theme";
+                              inputs.nixpkgs.follows = "nixpkgs"; };
+
   };
 }

@@ -3,6 +3,7 @@ alias sy = systemctl
 alias ssy = sudo systemctl
 alias lt = lsd --tree
 alias l = lsd -Fal
+alias cheers = sudo systemctl restart NetworkManager
 
 # System Rolling(?), n.b. some args only suitable for sezrienne
 def jr [
@@ -22,11 +23,7 @@ def jr [
 
 # Maarui midorino yamanotesen
 def yamanote [flags: string] {
-    nu -c ("jr " + $flags);
-    let code = (echo $env.LAST_EXIT_CODE)
-    if ($code != 0 and $code != -1) {
-       yamanote $flags
-    }
+     nu --config "/home/sezrienne/presez/modules/nu/functions.nu" -c ("jr " + $flags) | complete | if ($in.exit_code != 0 and $in.exit_code != -1) {yamanote $flags}
 }
 
 # Adding new packages, n.b. some args only suitable for sezrienne
