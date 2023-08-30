@@ -24,7 +24,7 @@ with import ../functions;
 
     # Command line tools
     "grex" "lsd" "ripgrep" "bottom" "du-dust" "fzf" "procs" "tealdeer" "bat" "sd" "fd" "htop" "gojq" "jaq"
-    "neofetch" "hyfetch" "cbonsai"
+    "neofetch" "hyfetch" "cbonsai" "baobab"
     "zip" "unzip" "psmisc" "pueue"
 
     # Developing
@@ -54,7 +54,8 @@ with import ../functions;
     # Productivity
     "ocrmypdf" "calibre" "zathura" "thunderbird" "remarkable2-toolchain"
     "bc" "gnuplot" "newsflash" "okular" "imagemagick" "dolphin"
-    # "mathematica" "libreoffice" "nyxt" "zoom-us"
+    "libreoffice" "nyxt" "zoom-us"
+    # "mathematica"
 
     # Virtual environment
     "bottles" "qemu" "virt-manager" "quickemu" "quickgui" # System level configs in system/virtualisation
@@ -64,7 +65,7 @@ with import ../functions;
     "gammastep" "brightnessctl" "playerctl" "wev" "cava"
 
     # Wayland
-    "wl-clipboard" "wlogout" "swaybg" "swayidle" "swaylock"
+    "wl-clipboard" "wlogout" "swaybg" "swaylock"
 
     # Desktop environment
     "hyprland" "eww" "rofi" "fuzzel" "dunst" "grim"

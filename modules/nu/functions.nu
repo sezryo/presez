@@ -80,6 +80,7 @@ def rf [
   --nc # Nushell config
   --ne # Nushell env
   --nf # Nushell functions
+  --em # Emacs inits
   --hy # Hyprland config file
   --lh # Change homeCommon package list
   --ls # Change systemCommon package list
@@ -93,6 +94,7 @@ def rf [
   if $hy {nu -c ($ed + "/home/sezrienne/presez/modules/hyprland/myHypr.conf")}
   if $lh {nu -c ($ed + "/home/sezrienne/presez/lists/sezrienneList.nix")}
   if $ls {nu -c ($ed + "/home/sezrienne/presez/lists/systemList.nix")}
+  if $em {nu -c ($ed + "/home/sezrienne/presez/modules/emacs/inits/init.el")}
 }
 
 # Emacs forever!!! This is to hide the current terminal while launching emacs

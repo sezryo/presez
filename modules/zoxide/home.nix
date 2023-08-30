@@ -4,6 +4,6 @@
   programs.zoxide = {
     enable = true;
     enableNushellIntegration = true;
-    package = pkgs.callPackage ./myZoxide.nix {};
+    package = pkgs.zoxide; # pkgs.callPackage ./myZoxide.nix {};
   };
 }

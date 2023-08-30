@@ -93,7 +93,7 @@ let sezTheme = {
     shape_nothing: light_cyan
 }
 
-let-env config = {
+$env.config = {
   ls: {
     use_ls_colors: true # use the LS_COLORS environment variable to colorize output
     clickable_links: true # enable or disable clickable links. Your terminal has to support links.

@@ -3,9 +3,9 @@
 {
   home.packages = [ pkgs.spotify ];
 
-  xdg.desktopEntries."spotify-flatpak" = {
-    name = "Spotify-flatpak";
+  xdg.desktopEntries."spotify-wayland" = {
+    name = "spotify-wayland";
     genericName = "Proprietary musics, lauching with flatpak";
-    exec = "flatpak run com.spotify.Client";
+    exec = "spotify --enable-features=UseOzonePlatform --ozone-platform=wayland";
   };
 }
