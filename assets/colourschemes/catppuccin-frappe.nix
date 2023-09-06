@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 
-with import ../../functions;
+with import ../../lib/morphisms.nix;
 
 rec {
   name = "catppuccin-frappe";
