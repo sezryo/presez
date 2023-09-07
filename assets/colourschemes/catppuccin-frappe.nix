@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 
-with import ../../lib/morphisms.nix;
-
-rec {
+let
+  inherit (lib.mine) transparentify;
+in rec {
   name = "catppuccin-frappe";
 
   emacs-name = "catppuccin-flavor 'frappe";

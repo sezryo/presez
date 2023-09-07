@@ -1,8 +1,7 @@
 {
   description = "The preimage of Sez";
 
-  outputs = {
-    self, nixpkgs, latest, nur, hyprland, rust-overlay, emacs-overlay, home-manager, darkmatter-grub-theme, agenix, flake-parts, ...  } @ inputs:
+  outputs = { self, nixpkgs, home-manager, flake-parts, devshell, mission-control, treefmt-nix, ...  } @ inputs:
     
     let
       # Lib with extended customisations
@@ -24,6 +23,9 @@
         imports = [
           hosts.configuration
           flake-parts.flakeModules.easyOverlay
+          devshell.flakeModule
+          mission-control.flakeModule
+          treefmt-nix.flakeModule
         ];
 
         systems = [
@@ -37,24 +39,32 @@
             lib = lib;
           };
         };
-      });    
+      });
+  
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     latest.url = "github:nixos/nixpkgs/master";
     agenix.url = "github:ryantm/agenix";
     hyprland.url = "github:hyprwm/Hyprland";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
     home-manager = { url = "github:nix-community/home-manager";
                      inputs.nixpkgs.follows = "nixpkgs"; };
     nur.url = "github:nix-community/NUR";
     flake-parts = { url = "github:hercules-ci/flake-parts";
                     inputs.nixpkgs-lib.follows = "nixpkgs"; };
     emacs-overlay = { url = "github:nix-community/emacs-overlay";
-                      inputs.nixpkgs.follows = "nixpkgs";};
+                      inputs.nixpkgs.follows = "nixpkgs"; };
     rust-overlay = { url = "github:oxalica/rust-overlay";
-                     inputs.nixpkgs.follows = "nixpkgs";};
+                     inputs.nixpkgs.follows = "nixpkgs"; };
     darkmatter-grub-theme = { url = "gitlab:VandalByte/darkmatter-grub-theme";
                               inputs.nixpkgs.follows = "nixpkgs"; };
+    disko = { url = "github:nix-community/disko";
+              inputs.nixpkgs.follows = "nixpkgs"; };
+    devshell = { url = "github:numtide/devshell";
+                 inputs.nixpkgs.follows = "nixpkgs"; };
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    mission-control.url = "github:Platonic-Systems/mission-control";
 
   };
 }
