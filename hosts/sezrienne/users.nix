@@ -4,7 +4,7 @@
   users.users = {
     sezrienne = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "input" "tss" ];
+      extraGroups = [ "wheel" "input" "tss" "networkmanager"];
       shell = pkgs.xonsh;
     };
   };
@@ -12,4 +12,8 @@
     networkmanager.members = [ "sezrienne" ];
     libvirtd.members = [ "sezrienne" ];
   };
+
+  # Must declare as a new user registers
+  dotfiles.dir = "/home/sezrienne/presez";
+  user.name = "sezrienne";
 }

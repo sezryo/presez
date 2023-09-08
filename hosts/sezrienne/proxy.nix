@@ -8,7 +8,7 @@
     serviceConfig = {
       Type = "simple";
       User = "root";
-      ExecStart = "${pkgs.clash-meta}/bin/clash-meta -d /home/sezrienne/.config/clash/";
+      ExecStart = "${pkgs.clash-meta}/bin/clash-meta -d " + "${config.user.homeConfig}/clash/";
       Restart = "on-failure";
       RestartPreventExitStatus = "23";
     };

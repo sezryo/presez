@@ -62,11 +62,6 @@
 ;; quoted char radix
 (setq read-quoted-char-radix 16)
 
-;; open init.el command
-(defun nixos-rebuild-switch ()
-  "NixOS rebuild"
-  (interactive)
-  (async-shell-command "sudo nixos-rebuild switch --flake 'path:/home/sezrienne/presez/#sezrienne'"))
 (defun restart-emacs-daemon ()
   "Restart emacs"
   (interactive)

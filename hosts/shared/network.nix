@@ -17,5 +17,5 @@
   services.openssh = {
     enable = true;
   };
-  users.groups.networkmanager.members = [ "root" "sezrienne" ];
+  users.groups.networkmanager.members = [ "root" ];
 }
