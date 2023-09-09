@@ -1,7 +1,7 @@
 { self, inputs, lib, withSystem, ... }:
 
 let
-  inherit (inputs) home-manager hyprland darkmatter-grub-theme agenix;
+  inherit (inputs) home-manager hyprland darkmatter-grub-theme agenix disko;
   inherit (lib.mine) rakeLeaves;
   hosts = rakeLeaves ../hosts;
   hardwares = rakeLeaves ../hardwares;

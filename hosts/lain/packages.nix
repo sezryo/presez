@@ -5,7 +5,7 @@ let
   modules = rakeLeaves ../../modules;
   systemFiles = with modules.system; [
     # Hardware optimisation
-    flatpak chromium qemu supergfxd asusd acpica-tools
+    flatpak chromium supergfxd asusd acpica-tools
 
     # Gaming
     steam gamescope

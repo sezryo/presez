@@ -6,14 +6,14 @@ let
   homeFiles = with modules.shelter; [
       
     # Essentials
-    firefox chromium lf krusader socat
+    firefox chromium lf krusader socat gpg
 
     # Emacs
     ispell sqlite graphviz poppler_utils
 
     # Command line tools
     grex lsd ripgrep bottom du-dust fzf procs tealdeer bat sd fd htop gojq jaq
-    neofetch hyfetch cbonsai baobab
+    neofetch hyfetch baobab
     zip unzip psmisc pueue
 
     # Developing
@@ -34,14 +34,13 @@ let
     wezterm
 
     # Productivity
-    ocrmypdf calibre zathura thunderbird remarkable2-toolchain
-    bc gnuplot newsflash okular imagemagick dolphin
+    ocrmypdf zathura thunderbird remarkable2-toolchain
+    bc gnuplot okular imagemagick dolphin
     libreoffice nyxt zoom-us
     # mathematica
 
     # Virtual environment
-    bottles qemu virt-manager quickemu quickgui
-    yuzu-early-access
+    bottles
     
     # Controllers
     gammastep brightnessctl playerctl wev cava
@@ -53,18 +52,14 @@ let
     hyprland eww rofi fuzzel dunst grim
 
     # Multimedia, social and entertainment
-    yewtube qbittorrent spotify yt-dlp discord qq tdesktop steam ncspot
-
-    # Security
-    yubikey thc-hydra burpsuite gpg
+    yewtube spotify yt-dlp discord qq tdesktop steam ncspot
+    
   ];  
   devFiles = with modules.dev; [
     # Pure
-    coq.home agda.home purescript.home haskell.home nix.home
+    coq.home agda.home haskell.home nix.home
     # Lisp
-    emacs.home clojure.home racket.home scheme.home
-    # Others
-    ocaml.home elixir.home ocaml.home ruby.home rust.home tex.home python.home typescript.home git.home
+    emacs.home ocaml.home python.home tex.home typescript.home git.home
   ];
 
 in {

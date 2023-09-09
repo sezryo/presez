@@ -3,7 +3,7 @@
   time.timeZone = "Europe/London";
   i18n = {
     defaultLocale = "en_GB.UTF-8";
-    extraLocaleSettings.LC_TIME = "de_DE.UTF-8"; 
+    extraLocaleSettings.LC_TIME = "en_GB.UTF-8"; 
     inputMethod = {
       enabled = "fcitx5";
       fcitx5.addons = with pkgs; [
