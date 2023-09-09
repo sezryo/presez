@@ -5,7 +5,7 @@ let
   modules = rakeLeaves ../../modules;
   systemFiles = with modules.system; [
     # System
-    dconf sddm udev pcre auto-cpufreq powertop upower dbus gnumake
+    dconf sddm udev pcre auto-cpufreq powertop upower dbus gnumake udisks
     
     # Basic
     xonsh vim wget firefox binutils coreutils cpufrequtils pciutils findutils gawk wezterm

@@ -15,6 +15,7 @@ let
     baseModules ? [
       home-manager.nixosModules.home-manager
       hosts.shared
+      disko.nixosModules.disko
       agenix.nixosModules.default
     ],
     localeModules ? [],
@@ -35,6 +36,17 @@ in {
           hardwareModules = [ hardwares.ga402 ];
           extraModules = [
             hosts.sezrienne
+            hyprland.nixosModules.default
+            darkmatter-grub-theme.nixosModule
+          ];
+        });
+    "lain" =
+      withSystem "x86_64-linux"
+      ({ pkgs, system, ...}:
+        mkNixosConfig {
+          hardwareModules = [ hardwares.ga402 ];
+          extraModules = [
+            hosts.lain
             hyprland.nixosModules.default
             darkmatter-grub-theme.nixosModule
           ];

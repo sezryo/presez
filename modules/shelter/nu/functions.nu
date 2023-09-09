@@ -5,7 +5,7 @@ alias lt = lsd --tree
 alias l = lsd -Fal
 alias cheers = sudo systemctl restart NetworkManager
 
-# System Rolling(?), n.b. some args only suitable for sezrienne
+# System Rolling, wait to be overwriten by a centralised client
 def jr [
   --ueno (-u) # Update nix flake
   --shinjuku (-s) # Rebuild the system packages
@@ -27,7 +27,7 @@ def yamanote [flags: string] {
      nu --config ($env.DOTFILES_SHELTER + "/nu/functions.nu") -c ("jr " + $flags) | complete | if ($in.exit_code != 0 and $in.exit_code != -1) {yamanote $flags}
 }
 
-# Adding new packages, n.b. some args only suitable for sezrienne
+# Adding new packages
 def tube [
   name: string
   --oyster (-o) # Use your Oyster card! (Direct into the corresponding list after adding)
@@ -72,7 +72,7 @@ def ratp [
 # Git shortcout
 def trinity [comment: string] {git add .; git commit -S -m $comment; git push --force origin main}
 
-# Change the config files, n.b. some args only suitable for sezrienne; rf stands for reform 
+# Change the config files, rf stands for reform 
 def rf [
   --vim (-v) # Use vim, defaultly use emacs
   --emacs (-e) # Does not hide the current terminal while launching emacs
