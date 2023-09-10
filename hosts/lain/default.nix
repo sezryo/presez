@@ -5,6 +5,6 @@ let
   ich = rakeLeaves ./.;
 in {
   imports = with ich; [
-    options home boot env i18n proxy users virtualisation packages security
+    options home boot env i18n proxy users virtualisation packages security hardware-configuration
   ];
 }

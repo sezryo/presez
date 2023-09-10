@@ -6,7 +6,6 @@ let
 in {
   imports = with ich; [
     boot
-    configuration
     io
     specialisation
   ];
