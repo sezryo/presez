@@ -6,6 +6,7 @@ in {
   
   mkEnableOpt = x: (mkEnableOption x);
   mkEnableOpt' = x: (mkEnableOption x) // {default = true;};
+  mkEnableOptIf = x: y: (mkEnableOption x) // {default = y;};
 
   mkOpt = type: default:
     mkOption {inherit type default;};

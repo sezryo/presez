@@ -10,6 +10,7 @@ let _lib = self:
     legacy = callLibs ./legacy.nix;
     importers = callLibs ./importers.nix;
     options = callLibs ./options.nix;
+    units = callLibs ./units.nix;
   };
   mine = makeExtensible _lib;
 in

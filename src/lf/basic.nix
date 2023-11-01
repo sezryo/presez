@@ -1,0 +1,14 @@
+{ config, lib, pkgs, inputs, ... }:
+
+lib.mine.mkIfProfile config.modules.singleton "lf" "basic"
+
+{
+  home.programs.lf = {
+    enable = true;
+    keybindings = {
+      "<delete>" = "delete";
+    };
+  };
+
+  home.packages = [ pkgs.lf ];
+}

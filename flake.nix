@@ -10,8 +10,7 @@
           (self: super: {mine = import ./lib {lib = self;};} // home-manager.lib);
       lib = mkLib inputs.nixpkgs; 
       inherit (lib.mine) rakeLeaves;
-
-      hosts = rakeLeaves ./hosts;
+      profiles = rakeLeaves ./profiles;
 
     in
       flake-parts.lib.mkFlake {
@@ -21,11 +20,11 @@
       {
         # Imports flake-parts modules
         imports = [
-          hosts.configuration
+          profiles.configuration
           flake-parts.flakeModules.easyOverlay
           devshell.flakeModule
           mission-control.flakeModule
-          treefmt-nix.flakeModule
+          # treefmt-nix.flakeModule
         ];
 
         systems = [

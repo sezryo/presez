@@ -1,0 +1,74 @@
+#! /usr/bin/env cached-nix-shell
+#! nix-shell -i runghc -p "haskellPackages.ghcWithPackages (p: [p.turtle])"
+
+{-# LANGUAGE OverloadedStrings #-}
+
+import Turtle
+import System.Environment
+import Prelude hiding (FilePath)
+
+cliDesc :: Line
+cliDesc = "NixOS has a very good feature, the internalised rolling back system higher than the file system level. This makes users be able to use the previous configuration files. However, you shall have noticed that something is missing, the config file itself. By modualising the dotfile flake, we are now able to describe what to use and what not to use in a sole profile file in a pre-configured modualised manner, which is friendly to users. Not repeating cliche from the Guix CLI, The Yo CLI integrates the various common dotfiles-level commands, and generates a new temporary profile each time. You may use some utilities to pin the tmp profile to be permanent, ma  king every single change to the system modualised and trackable."
+
+parser :: Parser (Maybe FilePath, Maybe FilePath)
+parser = (,) <$> optional (optPath "user" 'u' "Create a new user-level package in src")
+             <*> optional (optPath "sys" 's' "Create a new system-level package in src")
+
+newBasic :: Text -> Shell Line
+newBasic pkg = select . map unsafeTextToLine $
+               [ "{ config, pkgs, lib, ... }:"
+               , ""
+               , "lib.mine.mkIfProfile config.modules.singleton \"" <> pkg <> "\" \"basic\""
+               , ""
+               , "{"
+               , "  home.packages = [ pkgs." <> pkg <> " ];"
+               , "}"]
+
+newSysBasic :: Text -> Shell Line
+newSysBasic pkg = select . map unsafeTextToLine $
+               [ "{ config, pkgs, lib, ... }:"
+               , ""
+               , "lib.mine.mkIfProfile config.modules.singleton \"" <> pkg <> "\" \"basic\""
+               , ""
+               , "{"
+               , "  environment.systemPackages = [ pkgs." <> pkg <> " ];"
+               , "}"]
+
+newDisabled :: Text -> Shell Line
+newDisabled pkg = select . map unsafeTextToLine $
+                  [ "{ config, pkgs, lib, ... }:"
+                  , ""
+                  , "lib.mine.mkIfProfile config.modules.singleton \"" <> pkg <> "\" \"disabled\""
+                  , ""
+                  , "{"
+                  , "  runtime." <> pkg <> ".disabled = lib.mkDefault true;"
+                  , "}"]
+
+
+main :: IO()
+main = do
+  (user, sys) <- options "My NixOS CLI" parser
+  case user of
+    Just name -> do
+      src <- getEnv "DOTFILES_SRC"
+      cd (fromString src)
+      mkdir name
+      cd name
+      touch "basic.nix"
+      touch "disabled.nix"
+      output "basic.nix" (newBasic (format fp name))
+      output "disabled.nix" (newDisabled (format fp name))
+    Nothing -> echo ""
+
+  case sys of
+    Just name -> do
+      src <- getEnv "DOTFILES_SRC"
+      cd (fromString src)
+      cd name
+      touch "basic.nix"
+      touch "disabled.nix"
+      output "basic.nix" (newSysBasic (format fp name))
+      output "disabled.nix" (newDisabled (format fp name))
+    Nothing -> echo ""
+  
+-- output "basic.nix" ()
