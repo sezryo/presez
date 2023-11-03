@@ -15,7 +15,8 @@ in {
       networking.wireless.enable = false;
       networking.networkmanager = {
         enable = true;
-        wifi.macAddress = "random";
+        wifi.macAddress = "stable";
+        wifi.scanRandMacAddress = true;
         ethernet.macAddress = "random";
       };
       users.users.${config.user.name}.extraGroups = [ "networkmanager" ];

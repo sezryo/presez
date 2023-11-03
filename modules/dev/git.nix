@@ -12,7 +12,7 @@ in {
 
   config = mkIf cfg.enable {
     modules.singleton = {
-      git = [ "basic" ];
+      git = [ "basic" "user" ];
       gh = [ "basic" ];
     };
   };

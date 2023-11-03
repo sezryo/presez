@@ -17,7 +17,7 @@ in {
       modules.singleton.qt = [ "basic" ];
     }
     (mkIf (cfg.theme == "catppuccin") {
-      modules.singleton.qt = mkDefault [ "catppuccin" ];
+      modules.singleton.qt = [ "catppuccin" ];
     })
   ];
 }

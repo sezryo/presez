@@ -5,11 +5,11 @@ with lib.types;
 
 let
   cfg = config.modules.boot.grub;
-  inherit (lib.mine) mkEnableOpt mkOpt';
+  inherit (lib.mine) mkEnableOpt mkEnableOpt' mkOpt';
   themes = [ "darkmatter-theme" ];
 in {
   options.modules.boot.grub = {
-    enable = mkEnableOpt "Whether to enable basic grub settings as boot loader";
+    enable = mkEnableOpt' "Whether to enable basic grub settings as boot loader";
     efi = mkEnableOpt "Whether to enable efi related boot supports";
     theme = mkOpt' (enum themes) null "Which theme of grub to use";
   };

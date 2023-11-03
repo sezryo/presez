@@ -2,17 +2,20 @@
 
 with lib;
 with lib.types;
+with lib.mine;
 let
   cfg = config.modules.desktop.display;
-  inherit (lib.mine) mkEnableOpt mkOpt';
-  dms = [ "gdm" "sddm" "sddm-corners" ];
+  dms = [ "tty" "gdm" "sddm" "sddm-corners" ];
 in {
   options.modules.desktop.display = {
-    enable = mkEnableOpt "Whether to use a display manager, useful to toggle off when only need tty";
-    package = mkOpt' (enum dms) "sddm-corners" "Choose which display manager to use, themes may apply";
+    enable = mkEnableOpt' "Enable display manager modules";
+    package = mkOpt' (enum dms) null "Choose which display manager to use, themes may apply; enter tty for not using any";
   };
 
-  config = mkIf cfg.enable (mkMerge [   
+  config = mkIf cfg.enable (mkMerge [
+    (mkIf (cfg.package == "tty") {
+      services.xserver.displayManager.startx.enable = true;
+    })
     (mkIf (cfg.package == "gdm") {
       modules.singleton.gdm = [ "basic" ];
     })

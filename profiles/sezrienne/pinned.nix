@@ -51,9 +51,9 @@
         enable = true;
         theme = "catppuccin";
       };
-      display = {
+       display = {
         enable = true;
-        package = "sddm-corners";
+        package = "tty";
       };
       cursor = "catppuccin";
     };
@@ -102,6 +102,10 @@
         enable = true;
         efi = true;
         theme = "darkmatter-theme";
+      };
+      tty = {
+        enable = true;
+        theme = "catppuccin";
       };
       kernel = "latest";
     };

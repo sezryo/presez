@@ -44,7 +44,7 @@ in {
       modules.singleton = {
         radeontop = [ "basic" ];
       };
-      services.xserver.videoDrivers = lib.mkDefault [ "modesetting" ];
+      services.xserver.videoDrivers = [ "modesetting" ];
       gpu.type = "amd";
     })
     (mkIf cfg.amd.loadInInitrd {
