@@ -10,7 +10,8 @@ let
 
   mkIfProfile = base: src: component: drv:
     mkIf (hasAttrByPath [ "${src}" ] base)
-      (mkIf (elem component base."${src}") drv);
+      (mkIf (elem component base."${src}")
+        (mkIf (! elem "disabled" base."${src}") drv));
   
 in {
   inherit mkIfElse mkIfProfile;

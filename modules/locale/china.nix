@@ -14,15 +14,9 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      i18n = {
-        inputMethod = {
-          enabled = "fcitx5";
-          fcitx5.addons = with pkgs; mkDefault [
-            fcitx5-rime
-            fcitx5-chinese-addons
-            fcitx5-table-extra
-          ];
-        };
+      modules.singleton = {
+        fcitx5 = [ "basic" "rime" "catppuccin" ];
+        rime = [ "basic" "defaultSettings" ];
       };
     }
     (mkIf cfg.reside {

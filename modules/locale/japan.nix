@@ -12,6 +12,11 @@ in {
   };
 
   config = mkIf cfg.enable (mkMerge [
+    {
+      modules.singleton = {
+        fcitx5 = [ "basic" "mozc" ];
+      };
+    }
     (mkIf cfg.reside {
       time.timeZone = "Asia/Tokyo";
     })

@@ -149,6 +149,9 @@
         reside = true;
         spirit = true;
       };
+      japan = {
+        enable = true;
+      };
     };
 
     security = {

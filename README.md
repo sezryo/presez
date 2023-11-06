@@ -2,7 +2,14 @@
 
 <p align="center"><img src="https://github.com/sezryo/presez/blob/main/assets/icons/nixowo.png"></p>
 
-## My toolchain
+## Introduction {#introduction}
+NixOS is of perfect functionalities. In a reproducible paradigm, modualised frameworks are built around the system. Should users being bothered by the back-and-forth modifications and looking ups in their ricing, or just daily maintanance attempts, a better solution pipelining monads shall be introduced in some way. The NixOS internalised rolling back system enjoyers shall also expect a well-functional rolling back, and more, system working inside their concise dotfile directories. 
+
+By modualising the dotfile flake, we are now able to describe what to use and what not to use in a sole profile file in a pre-configured modualised manner, which is also friendly to beginners. Should you assume I'm building a CLI simply integrating commands, the project actually aims to achieve something like a local version controller. Users may build various versions of profiles of configuration, which maps to the NixOS version-ised system profiles, and they can be reused and branches may be maded deviating from profiles, creating a well-founded baseground for system config hoppers.
+
+Details of the CLI (yo) may be found in [How To Use](#how-to-use) below.
+
+## My toolchain {#my-toolchain}
 |                            | NixOS-unstable (With flakes and [flake-parts](https://github.com/hercules-ci/flake-parts))                                                                                    |
 |----------------------------|:-----------------------------------------------------------------------------------------------------------:|
 | **Colour Scheme**          | [Catppuccin-Frappé](https://github.com/catppuccin/catppuccin)                                               |
@@ -22,12 +29,8 @@
 | **Fonts**                  | [JetBrains-mono](https://www.jetbrains.com/lp/mono/), [Nerd fonts](https://github.com/ryanoasis/nerd-fonts) |
 | **English**                | [en_GB](https://www.bbc.com/culture/article/20170904-how-americanisms-are-killing-the-english-language)     |
 
-## How to use
+## How to use {#how-to-use}
 
-Even if the dotfiles is designed for my private use, you may have a try on it to get some inspirations. To use the dotfiles:
+NOTICE: Ignore all my narcissistic words in the [Introduction](#introduction) above, currently the project is still based for my own personal use. Where I kept an attic faith following conducts for global reproduciblity, lots of configs still are in the "works on my and my neighbourhood's machines" stage, so be careful if you simply clone and build everything.
 
-1. Simply clone this repo, cd to the directory, and you may add your user profile in `hosts/configuration.nix` using `mkNixosConfig` and add your profile-specific config directory inside `hosts`.
-
-2. Remember to add your hardware-specific `hardwareModules` in `hosts/configuration.nix`, you shall configure them in a subdirectory in `hardwares`. You may use the flake-input `nixos-hardware`. 
-
-2. Run `sudo nixos-rebuild switch --flake "path:./#YOUR_USER_NAME"` and all set. You may use my shell rebuild function shorthands after the first build and enter the Nushell, usage is available by running `help jr`
+TODO: Print help message of yo here.

@@ -1,0 +1,11 @@
+patch:
+  "menu/page_size": 9
+  "switches/@0/reset": 1
+  schema_list:
+    - schema: luna_pinyin
+    - schema: wugniu
+    - schema: jyutping
+    - schema: soutzoe
+    - schema: ipa_yunlong
+  "switcher/hotkeys":
+    - F4

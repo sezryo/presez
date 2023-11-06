@@ -1,0 +1,15 @@
+{ config, pkgs, lib, ... }:
+
+lib.mine.mkIfProfile config.modules.singleton "fcitx5" "rime"
+
+{
+  i18n = {
+    inputMethod = {
+      fcitx5.addons = with pkgs; [
+        fcitx5-rime
+        fcitx5-chinese-addons
+      ];
+    };
+  };
+  # home.packages = [ pkgs.fcitx5-rime ];
+}

@@ -20,6 +20,7 @@ in {
       desktopEntries = mkOpt attrs {};
       sessionVariables = mkOpt attrs {};
       mimeApps = mkOpt attrs {};
+      activation = mkOpt attrs {};
       pointerCursor = mkOpt attrs {};
       file       = mkOpt' attrs {} "Files to place directly in $HOME";
       configFile = mkOpt' attrs {} "Files to place in $XDG_CONFIG_HOME";
@@ -49,6 +50,7 @@ in {
           stateVersion = config.system.stateVersion;
           username = config.user.name;
           pointerCursor = mkAliasDefinitions options.home.pointerCursor;
+          activation = mkAliasDefinitions options.home.activation;
           homeDirectory = config.user.homeDir;
           packages = mkAliasDefinitions options.home.packages;
         };
