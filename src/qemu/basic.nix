@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "qemu" "basic"
+lib.mine.mkIfProfile config.modules "qemu" "basic"
 
 {
   virtualisation.libvirtd.qemu = {

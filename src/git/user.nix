@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "git" "user"
+lib.mine.mkIfProfile config.modules "git" "user"
 
 {
   home.programs.git = {

@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "ispell" "basic"
+lib.mine.mkIfProfile config.modules "ispell" "basic"
 
 {
   home.packages = [ pkgs.ispell ];

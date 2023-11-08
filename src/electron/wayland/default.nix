@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "electron" "wayland"
+lib.mine.mkIfProfile config.modules "electron" "wayland"
   
 {
   home.configFile."electron26-flags.conf".source = ./electron-flags.conf;

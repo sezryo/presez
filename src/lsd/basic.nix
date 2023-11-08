@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "lsd" "basic"
+lib.mine.mkIfProfile config.modules "lsd" "basic"
 
 {
   home.programs.lsd = {

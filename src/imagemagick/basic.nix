@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "imagemagick" "basic"
+lib.mine.mkIfProfile config.modules "imagemagick" "basic"
 
 {
   home.packages = [ pkgs.imagemagick ];

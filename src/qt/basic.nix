@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "qt" "basic"
+lib.mine.mkIfProfile config.modules "qt" "basic"
 
 {
   qt = {

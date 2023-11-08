@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "unicode-paracode" "basic"
+lib.mine.mkIfProfile config.modules "unicode-paracode" "basic"
 
 {
   home.packages = [ pkgs.unicode-paracode ];

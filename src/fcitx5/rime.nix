@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "fcitx5" "rime"
+lib.mine.mkIfProfile config.modules "fcitx5" "rime"
 
 {
   i18n = {

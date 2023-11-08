@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "steam" "steam-deck"
+lib.mine.mkIfProfile config.modules "steam" "steam-deck"
 
 {
   home.desktopEntries."steam-deck" = {

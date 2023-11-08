@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "cmake" "basic"
+lib.mine.mkIfProfile config.modules "cmake" "basic"
 
 {
   home.packages = [ pkgs.cmake ];

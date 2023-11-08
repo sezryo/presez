@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "udisks" "basic"
+lib.mine.mkIfProfile config.modules "udisks" "basic"
 
 {
   services.udisks2 = {

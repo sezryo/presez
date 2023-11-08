@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "lf" "basic"
+lib.mine.mkIfProfile config.modules "lf" "basic"
 
 {
   home.programs.lf = {

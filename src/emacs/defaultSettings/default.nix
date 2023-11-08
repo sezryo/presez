@@ -8,7 +8,7 @@ let
     package = pkgs.emacs-pgtk;
     # override = epkgs: epkgs // {};
   });
-in lib.mine.mkIfProfile config.modules.singleton "emacs" "defaultSettings" rec {
+in lib.mine.mkIfProfile config.modules "emacs" "defaultSettings" rec {
   environment.systemPackages = [ myEmacs ];
   home = {
     services.emacs = {

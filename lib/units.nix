@@ -9,9 +9,9 @@ let
   ];
 
   mkIfProfile = base: src: component: drv:
-    mkIf (hasAttrByPath [ "${src}" ] base)
-      (mkIf (elem component base."${src}")
-        (mkIf (! elem "disabled" base."${src}") drv));
+    mkIf (hasAttrByPath [ "${src}" ] base.singleton)
+      (mkIf (elem component base.singleton."${src}")
+        (mkIf ((! hasAttrByPath [ "${src} "] base.empty) || (! elem component base.empty."${src}")) drv));
   
 in {
   inherit mkIfElse mkIfProfile;

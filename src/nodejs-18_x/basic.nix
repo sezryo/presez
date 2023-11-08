@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "nodejs-18_x" "basic"
+lib.mine.mkIfProfile config.modules "nodejs-18_x" "basic"
 
 {
   home.packages = [ pkgs.nodejs-18_x ];

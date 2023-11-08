@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "direnv" "basic"
+lib.mine.mkIfProfile config.modules "direnv" "basic"
 
 {
   home.programs.direnv = {

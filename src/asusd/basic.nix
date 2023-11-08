@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "asusd" "basic"
+lib.mine.mkIfProfile config.modules "asusd" "basic"
 
 {
   services.asusd = {

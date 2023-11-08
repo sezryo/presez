@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "pipewire" "basic"
+lib.mine.mkIfProfile config.modules "pipewire" "basic"
 
 {
   services.pipewire = {

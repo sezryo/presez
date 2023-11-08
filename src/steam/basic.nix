@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "steam" "basic"
+lib.mine.mkIfProfile config.modules "steam" "basic"
 
 {
   programs.steam = {

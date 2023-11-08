@@ -7,87 +7,95 @@ import Turtle
 import System.Environment
 import Prelude hiding (FilePath)
 
-cliDesc :: Line
-cliDesc = "NixOS has a very good feature, the internalised rolling back system higher than the file system level. This makes users be able to use the previous configuration files. However, you shall have noticed that something is missing, the config file itself. By modualising the dotfile flake, we are now able to describe what to use and what not to use in a sole profile file in a pre-configured modualised manner, which is friendly to users. Not repeating cliche from the Guix CLI, The Yo CLI integrates the various common dotfiles-level commands, and generates a new temporary profile each time. You may use some utilities to pin the tmp profile to be permanent, ma  king every single change to the system modualised and trackable."
-
-{- parser :: Parser (Maybe FilePath, Maybe FilePath)
-parser = (,) <$> optional (optPath "user" 'u' "Create a new user-level package in src")
-             <*> optional (optPath "sys" 's' "Create a new system-level package in src") -}
+data Command = NewPackage FilePath | Rebuild (Maybe Bool, Maybe Bool) | GarbageCollect (Maybe Bool) deriving (Show)
 
 parser :: Parser Command
 parser
-     =   fmap newUserPackage
-         (subcommand "new" "Create new modules of packages"
-           (argPath "package" "Identify in which package shall modules create"))
-     <|> fmap rebuild
-         (subcommand "rebuild" "Rebuild the current system now"
-           (switch "trace" 't' "Enable showing trace while building"))
+     =   fmap NewPackage
+         (subcommand "new" "Create new components of packages"
+           (argPath "package" "Identify in which package shall components create"))
+     <|> fmap Rebuild
+         (subcommand "rebuild" "Rebuild the system using the current profile" rebuildParser)
+     <|> fmap GarbageCollect
+         (subcommand "gc" "Execute nix-store garbage collections"
+           (optional (switch "system" 's' "Root level garbage collections")))
 
-newBasic :: Text -> Shell Line
-newBasic pkg = select . map unsafeTextToLine $
-               [ "{ config, pkgs, lib, ... }:"
-               , ""
-               , "lib.mine.mkIfProfile config.modules.singleton \"" <> pkg <> "\" \"basic\""
-               , ""
-               , "{"
-               , "  home.packages = [ pkgs." <> pkg <> " ];"
-               , "}"]
+rebuildParser :: Parser (Maybe Bool, Maybe Bool)
+rebuildParser = (,) <$> optional (switch "trace" 't' "Enable showing trace while building")
+                    <*> optional (switch "update" 'u' "Update the flake before building")
+                
+rebuild :: (Maybe Bool, Maybe Bool) -> IO()
+rebuild (trace, update)= do
+  userName <- getEnv "CURRENT_USER"
+  dotfiles <- getEnv "DOTFILES_TOP"
+  cd (fromString dotfiles)
+  case update of
+    Just _ -> stdout (inshell "nix flake update" empty)
+    Nothing -> echo ""
+  case trace of
+    Just _  -> stdout (inshell ("sudo nixos-rebuild switch --flake 'path:./#" <> fromString userName <> "' --show-trace") empty)
+    Nothing -> stdout (inshell ("sudo nixos-rebuild switch --flake 'path:./#" <> fromString userName <> "'") empty)
 
-newSysBasic :: Text -> Shell Line
-newSysBasic pkg = select . map unsafeTextToLine $
-               [ "{ config, pkgs, lib, ... }:"
-               , ""
-               , "lib.mine.mkIfProfile config.modules.singleton \"" <> pkg <> "\" \"basic\""
-               , ""
-               , "{"
-               , "  environment.systemPackages = [ pkgs." <> pkg <> " ];"
-               , "}"]
+garbageCollect :: Maybe Bool -> IO()
+garbageCollect n = do
+  stdout (inshell "nix-env --delete-generations old" empty)
+  case n of
+    Just _  -> stdout (inshell "nix-store --gc" empty)
+    Nothing -> stdout (inshell "sudo nix-store --gc" empty)
 
-newDisabled :: Text -> Shell Line
-newDisabled pkg = select . map unsafeTextToLine $
-                  [ "{ config, pkgs, lib, ... }:"
-                  , ""
-                  , "lib.mine.mkIfProfile config.modules.singleton \"" <> pkg <> "\" \"disabled\""
-                  , ""
-                  , "{"
-                  , "  runtime.control." <> pkg <> ".disabled = lib.mkDefault true;"
-                  , "}"]
+newPackage :: FilePath -> IO()
+newPackage pkg = do
+  src <- getEnv "DOTFILES_SRC"
+  cd (fromString src)
+  exists <- testdir pkg
+  if exists
+    then do
+      echo "The package already exists in the source, would you like to proceed adding more components? (Y/N)"
+      proceed <- promptInput
+      when proceed $ do
+        cd pkg
+        addComponents pkg Nothing
+    else do
+      echo "The package does not exist in the source, would you like to proceed creating a new package? (Y/N)"
+      proceed <- promptInput
+      when proceed $ do
+        mkdir pkg
+        cd pkg
+        addComponents pkg (Just "basic")
 
+addComponents :: FilePath -> Maybe Text -> IO()
+addComponents pkg comp = do
+  case comp of
+    Just name -> do
+      touch (fromText (name <> ".nix"))
+      output (fromText (name <> ".nix")) (fileTemplate (format fp pkg) name)
+    Nothing ->
+      echo "Nothing"
+
+promptInput :: IO Bool
+promptInput = do
+  input <- readline
+  case input of
+    Just "Y" -> return True
+    Just "N" -> return False
+    _ -> do
+      echo "Invalid input"
+      promptInput
+      
+fileTemplate :: Text -> Text -> Shell Line
+fileTemplate pkg comp = select . map unsafeTextToLine $
+                        [ "{ config, pkgs, lib, ... }:"
+                        , ""
+                        , "lib.mine.mkIfProfile config.modules \"" <> pkg <> "\" \"basic\""
+                        , ""
+                        , "{"
+                        , "  home.packages = [ pkgs." <> pkg <> " ];"
+                        , "}"]
 
 main :: IO()
 main = do
   x <- options "My NixOS CLI" parser
   case x of
-    rebuild n ->
-      case n of
-        Just _ -> stdout (inshell "sudo nixos-rebuild switch --flake 'path:./#sezrienne' --show-trace" empty)
-        Nothing -> stdout (inshell "sudo nixos-rebuild switch --flake 'path:./#sezrienne' --show-trace" empty)
-    newUserPackage n ->
-      case n of
-    
-{- main = do
-  (user, sys) <- options "My NixOS CLI" parser
-  case user of
-    Just name -> do
-      src <- getEnv "DOTFILES_SRC"
-      cd (fromString src)
-      mkdir name
-      cd name
-      touch "basic.nix"
-      touch "disabled.nix"
-      output "basic.nix" (newBasic (format fp name))
-      output "disabled.nix" (newDisabled (format fp name))
-    Nothing -> echo ""
-
-  case sys of
-    Just name -> do
-      src <- getEnv "DOTFILES_SRC"
-      cd (fromString src)
-      cd name
-      touch "basic.nix"
-      touch "disabled.nix"
-      output "basic.nix" (newSysBasic (format fp name))
-      output "disabled.nix" (newDisabled (format fp name))
-    Nothing -> echo ""
--}
--- output "basic.nix" ()
+    Rebuild (n, m) -> rebuild (n, m)  
+    NewPackage n -> newPackage n  
+    GarbageCollect n -> garbageCollect n

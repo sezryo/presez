@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "dconf" "basic"
+lib.mine.mkIfProfile config.modules "dconf" "basic"
 
 {
   programs.dconf = {

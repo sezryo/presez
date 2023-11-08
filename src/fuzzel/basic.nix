@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "fuzzel" "basic"
+lib.mine.mkIfProfile config.modules "fuzzel" "basic"
 
 {
   home.packages = [ pkgs.fuzzel ];

@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "supergfxd" "basic"
+lib.mine.mkIfProfile config.modules "supergfxd" "basic"
 
 {
   services.supergfxd = {

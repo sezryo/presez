@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "firefox" "simplefox"
+lib.mine.mkIfProfile config.modules "firefox" "simplefox"
 {
   # This CSS style cridits to github.com/migueravila/SimpleFox
   home.file."firefox" = {

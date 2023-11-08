@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "nm-applet" "basic"
+lib.mine.mkIfProfile config.modules "nm-applet" "basic"
 
 {
   home.programs.nm-applet = {

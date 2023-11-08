@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "nushell" "basic"
+lib.mine.mkIfProfile config.modules "nushell" "basic"
 
 {
   home.programs.nushell = {

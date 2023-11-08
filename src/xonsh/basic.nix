@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "xonsh" "basic"
+lib.mine.mkIfProfile config.modules "xonsh" "basic"
 
 {
   programs.xonsh = {

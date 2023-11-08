@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "opengl" "basic"
+lib.mine.mkIfProfile config.modules "opengl" "basic"
 
 {
   hardware.opengl = {

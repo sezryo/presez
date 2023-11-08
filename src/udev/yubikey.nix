@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "udev" "yubikey"
+lib.mine.mkIfProfile config.modules "udev" "yubikey"
 
 {
   services.udev = {

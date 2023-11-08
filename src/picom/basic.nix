@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "picom" "basic"
+lib.mine.mkIfProfile config.modules "picom" "basic"
 
 {
   services.picom = {

@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "asusd" "defaultSettings"
+lib.mine.mkIfProfile config.modules "asusd" "defaultSettings"
 
 {
   environment.etc =

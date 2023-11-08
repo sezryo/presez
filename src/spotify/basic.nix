@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "spotify" "basic"
+lib.mine.mkIfProfile config.modules "spotify" "basic"
 
 {
   home.packages = [ pkgs.spotify ];

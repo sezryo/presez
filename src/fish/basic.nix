@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "fish" "basic"
+lib.mine.mkIfProfile config.modules "fish" "basic"
 
 {
   home.programs.fish = {

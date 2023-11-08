@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "bat" "basic"
+lib.mine.mkIfProfile config.modules "bat" "basic"
 
 {
   home.programs.bat = {

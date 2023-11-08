@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "swaylock" "effects"
+lib.mine.mkIfProfile config.modules "swaylock" "effects"
 
 {
   home.programs.swaylock = {

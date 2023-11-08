@@ -4,7 +4,7 @@ with lib;
   
 let
   secretsFile = "${config.dotfiles.secretsDir}/secrets.nix";
-in lib.mine.mkIfProfile config.modules.singleton "agenix" "basic"{
+in lib.mine.mkIfProfile config.modules "agenix" "basic"{
   environment.systemPackages = [
     inputs.agenix.packages."${pkgs.system}".default
   ];

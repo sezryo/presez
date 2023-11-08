@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "sd" "basic"
+lib.mine.mkIfProfile config.modules "sd" "basic"
 
 {
   home.packages = [ pkgs.sd ];

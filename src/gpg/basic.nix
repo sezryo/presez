@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "gpg" "basic"
+lib.mine.mkIfProfile config.modules "gpg" "basic"
 
 {
   home.programs.gpg = {

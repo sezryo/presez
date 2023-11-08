@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "thunderbird" "basic"
+lib.mine.mkIfProfile config.modules "thunderbird" "basic"
 
 {
   home.packages = [ pkgs.thunderbird ];

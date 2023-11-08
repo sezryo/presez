@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "yarn" "basic"
+lib.mine.mkIfProfile config.modules "yarn" "basic"
 
 {
   home.packages = [ pkgs.yarn ];

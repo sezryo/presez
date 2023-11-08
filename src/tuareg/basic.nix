@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "tuareg" "basic"
+lib.mine.mkIfProfile config.modules "tuareg" "basic"
 
 {
   home.packages = [ pkgs.emacsPackages.tuareg ];

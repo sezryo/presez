@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "gh" "basic"
+lib.mine.mkIfProfile config.modules "gh" "basic"
 
   {
     home.programs.gh = {

@@ -16,21 +16,13 @@ let
       map (x: ../src/${name}/${x}) value
     )
     (getDir dir));
-
-  disabledSubmodule = submodule ({ name, config, ...}:
-    let
-      inherit name;
-    in {
-      options = {
-        disabled = mkEnableOpt "Whether to disable ${name}"; 
-      };
-    });
+  
 in {
   options = {
     modules = {
       singleton = mkOpt (attrsOf (listOf str)) {};
+      empty = mkOpt (attrsOf (listOf str)) {};
     };
-    runtime.control = mkOpt (attrsOf disabledSubmodule) {};
   };
   imports = importList ../src;
 }

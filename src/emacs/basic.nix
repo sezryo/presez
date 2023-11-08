@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "emacs" "basic"
+lib.mine.mkIfProfile config.modules "emacs" "basic"
 
 {
   home = {

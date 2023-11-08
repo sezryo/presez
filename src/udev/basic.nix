@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "udev" "basic"
+lib.mine.mkIfProfile config.modules "udev" "basic"
 
 {
   services.udev = {

@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "starship" "basic"
+lib.mine.mkIfProfile config.modules "starship" "basic"
 
 {
   home.programs.starship = {

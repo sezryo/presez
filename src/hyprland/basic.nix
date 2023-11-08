@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "hyprland" "basic"
+lib.mine.mkIfProfile config.modules "hyprland" "basic"
 
 {
   programs.hyprland = {

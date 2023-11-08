@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "racket" "basic"
+lib.mine.mkIfProfile config.modules "racket" "basic"
 
 {
   home.packages = [ pkgs.racket ];

@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "gtk" "catppuccin"
+lib.mine.mkIfProfile config.modules "gtk" "catppuccin"
 
 {
   home.gtk = {

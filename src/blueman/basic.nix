@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "blueman" "basic"
+lib.mine.mkIfProfile config.modules "blueman" "basic"
 
 {
   services.blueman = {

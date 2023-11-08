@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "zoxide" "basic"
+lib.mine.mkIfProfile config.modules "zoxide" "basic"
 
 {
   home.programs.zoxide = {

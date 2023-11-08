@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "ventoy" "basic"
+lib.mine.mkIfProfile config.modules "ventoy" "basic"
 
 {
   home.packages = [ pkgs.ventoy-full ];

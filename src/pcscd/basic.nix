@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "pcscd" "basic"
+lib.mine.mkIfProfile config.modules "pcscd" "basic"
 
 {
   services.pcscd = {

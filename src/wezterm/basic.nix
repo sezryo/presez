@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "wezterm" "basic"
+lib.mine.mkIfProfile config.modules "wezterm" "basic"
 
 {
   home.programs.wezterm = {

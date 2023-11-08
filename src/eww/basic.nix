@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "eww" "basic"
+lib.mine.mkIfProfile config.modules "eww" "basic"
 
 {
   home.programs.eww = {

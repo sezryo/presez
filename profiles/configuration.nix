@@ -25,7 +25,7 @@ let
       modules.nix
       modules.security
       modules.shell
-      modules.singleton
+      modules.termini
       modules.users
     ],
     profiles ? [],

@@ -9,3 +9,4 @@ patch:
     - schema: ipa_yunlong
   "switcher/hotkeys":
     - F4
+  "style/font_point": 14

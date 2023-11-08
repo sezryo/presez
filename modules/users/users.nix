@@ -47,6 +47,7 @@ in {
       XDG_CONFIG_HOME = "${config.user.configDir}";
       XDG_DATA_HOME   = "${config.user.dataDir}";
       XDG_STATE_HOME  = "${config.user.stateDir}";
+      CURRENT_USER = "${config.user.name}";
     };
   };
 }

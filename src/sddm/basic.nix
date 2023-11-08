@@ -1,6 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules.singleton "sddm" "basic"
+lib.mine.mkIfProfile config.modules "sddm" "basic"
 
 {
   services.xserver.displayManager.sddm = {
