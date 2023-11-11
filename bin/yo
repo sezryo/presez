@@ -1,5 +1,5 @@
 #! /usr/bin/env cached-nix-shell
-#! nix-shell -i runghc -p "haskellPackages.ghcWithPackages (p: [p.turtle])"
+#! nix-shell -i runghc -p ripgrep "haskellPackages.ghcWithPackages (p: [p.turtle])"
 
 {-# LANGUAGE OverloadedStrings #-}
 
@@ -7,7 +7,11 @@ import Turtle
 import System.Environment
 import Prelude hiding (FilePath)
 
-data Command = NewPackage FilePath | Rebuild (Maybe Bool, Maybe Bool) | GarbageCollect (Maybe Bool) deriving (Show)
+data Command = NewPackage FilePath | Rebuild (Maybe Bool, Maybe Bool) | GarbageCollect (Maybe Bool) | Check (Maybe Bool) | Search SearchSource | Init (Maybe Bool) | Hop (Maybe Text) | Profile ProfileOptions deriving (Show)
+
+data SearchSource = Package Text | SystemOption Text | HomeOption Text | Source Text deriving (Show)
+
+data ProfileOptions = ListProfiles (Maybe Bool) deriving (Show)
 
 parser :: Parser Command
 parser
@@ -19,13 +23,47 @@ parser
      <|> fmap GarbageCollect
          (subcommand "gc" "Execute nix-store garbage collections"
            (optional (switch "system" 's' "Root level garbage collections")))
+     <|> fmap Check
+         (subcommand "check" "Check the dotfiles flake"
+           (optional (switch "" ' ' "")))
+     <|> fmap Search
+         (subcommand "search" "Search up related packages in nixpkgs" searchParser)
+     <|> fmap Init
+         (subcommand "init" "Initialise your dotfiles system!"
+           (optional (switch "user" 'u' "Create a new user")))
+     <|> fmap Hop
+         (subcommand "hop" "Switch into another profile system quickly"
+           (optional (argText "profile" "The designated profile name (Optional)")))
+     <|> fmap Profile
+         (subcommand "profile" "Configure the profile and generation settings" profileParser)
 
+searchParser :: Parser SearchSource
+searchParser
+            =   fmap Package
+                (subcommand "pkg" "Search upon nixpkgs packages"
+                 (argText "pname" "The desired package name"))
+            <|> fmap SystemOption
+                (subcommand "osopt" "Search upon nixpkgs provided options"
+                 (argText "pname" "The desired package name"))
+            <|> fmap HomeOption
+                (subcommand "hmopt" "Search upon home-manager provided options"
+                 (argText "pname" "The desired package name"))
+            <|> fmap Source
+                (subcommand "src" "Search upon the local dotfiles src directory"
+                 (argText "pname" "The desired package name"))
+                
 rebuildParser :: Parser (Maybe Bool, Maybe Bool)
 rebuildParser = (,) <$> optional (switch "trace" 't' "Enable showing trace while building")
                     <*> optional (switch "update" 'u' "Update the flake before building")
                 
+profileParser :: Parser ProfileOptions
+profileParser
+             =  fmap ListProfiles
+                (subcommand "list" "List all existing profiles"
+                 (optional (switch "" ' ' "")))
+
 rebuild :: (Maybe Bool, Maybe Bool) -> IO()
-rebuild (trace, update)= do
+rebuild (trace, update) = do
   userName <- getEnv "CURRENT_USER"
   dotfiles <- getEnv "DOTFILES_TOP"
   cd (fromString dotfiles)
@@ -36,12 +74,40 @@ rebuild (trace, update)= do
     Just _  -> stdout (inshell ("sudo nixos-rebuild switch --flake 'path:./#" <> fromString userName <> "' --show-trace") empty)
     Nothing -> stdout (inshell ("sudo nixos-rebuild switch --flake 'path:./#" <> fromString userName <> "'") empty)
 
+search :: SearchSource -> IO()
+search n = do
+  case n of
+    Package pname -> stdout (inshell ("nix search nixpkgs " <> pname) empty)
+    HomeOption pname -> stdout (inshell ("man -P cat home-configuration.nix | rg -i '" <> pname <> "'") empty)
+    SystemOption pname -> stdout (inshell ("man -P cat configuration.nix | rg -i '" <> pname <> "'") empty)
+    Source pname -> stdout (inshell ("cd $DOTFILES_SRC && find . -name '" <> pname <> "'") empty)
+  
+
+check :: IO()
+check = do
+  dotfiles <- getEnv "DOTFILES_TOP"
+  cd (fromString dotfiles)
+  stdout (inshell ("nix flake check") empty)
+
 garbageCollect :: Maybe Bool -> IO()
 garbageCollect n = do
   stdout (inshell "nix-env --delete-generations old" empty)
   case n of
     Just _  -> stdout (inshell "nix-store --gc" empty)
     Nothing -> stdout (inshell "sudo nix-store --gc" empty)
+
+init :: (Maybe bool) -> IO()
+init n = do
+  echo "Welcome to NixOS, enter your desired username to start"
+
+hop :: Maybe Text -> IO()
+hop n = do
+  echo ""
+
+profile :: ProfileOptions -> IO()
+profile n = do
+  case n of
+    ListProfiles m -> echo ""
 
 newPackage :: FilePath -> IO()
 newPackage pkg = do
@@ -69,8 +135,13 @@ addComponents pkg comp = do
     Just name -> do
       touch (fromText (name <> ".nix"))
       output (fromText (name <> ".nix")) (fileTemplate (format fp pkg) name)
-    Nothing ->
-      echo "Nothing"
+    Nothing -> do
+      echo "Enter the desired component name you want to add"
+      input <- readline
+      let cinput = fmap lineToText input
+      case cinput of
+        Just cname -> output (fromText (cname <> ".nix")) (fileTemplate (format fp pkg) cname)
+        Nothing -> echo "Invalid input"
 
 promptInput :: IO Bool
 promptInput = do
@@ -81,7 +152,13 @@ promptInput = do
     _ -> do
       echo "Invalid input"
       promptInput
-      
+
+configTemplate :: Text -> Text -> Text
+configTemplate pkg comp =
+  case comp of
+    "basic" -> "home.packages = [ pkgs." <> pkg <> " ];"
+    _ -> "Unspecified"
+  
 fileTemplate :: Text -> Text -> Shell Line
 fileTemplate pkg comp = select . map unsafeTextToLine $
                         [ "{ config, pkgs, lib, ... }:"
@@ -89,13 +166,18 @@ fileTemplate pkg comp = select . map unsafeTextToLine $
                         , "lib.mine.mkIfProfile config.modules \"" <> pkg <> "\" \"basic\""
                         , ""
                         , "{"
-                        , "  home.packages = [ pkgs." <> pkg <> " ];"
+                        , "  " <> (configTemplate pkg comp)
                         , "}"]
 
 main :: IO()
 main = do
-  x <- options "My NixOS CLI" parser
+  x <- options "Sezryo's NixOS CLI" parser
   case x of
-    Rebuild (n, m) -> rebuild (n, m)  
+    Rebuild (n, m) -> rebuild (n, m)
+    Search n -> search n
     NewPackage n -> newPackage n  
     GarbageCollect n -> garbageCollect n
+    Check n -> check
+    Init n -> Main.init n
+    Hop n -> hop n
+    Profile n -> profile n

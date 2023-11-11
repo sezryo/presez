@@ -48,14 +48,5 @@ in {
             inputs.darkmatter-grub-theme.nixosModule
           ];
         });
-    "lain" =
-      withSystem "x86_64-linux"
-      ({ pkgs, system, ...}:
-        mkNixosConfig {
-          profiles = [
-            inputs.hyprland.nixosModules.default
-            inputs.darkmatter-grub-theme.nixosModule
-          ];
-        });
   };
 }

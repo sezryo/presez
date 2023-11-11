@@ -33,4 +33,23 @@ Details of the CLI (yo) may be found in [How To Use](#how-to-use) below.
 
 NOTICE: Ignore all my narcissistic words in the [Introduction](#introduction) above, currently the project is still based for my own personal use. Where I kept an attic faith following conducts for global reproduciblity, lots of configs still are in the "works on my and my neighbourhood's machines" stage, so be careful if you simply clone and build everything.
 
-TODO: Print help message of yo here.
+```sh
+$ ./bin/yo
+
+Sezryo's NixOS CLI
+
+Usage: yo (new | rebuild | gc | check | search | init | hop | profile)
+
+Available options:
+  -h,--help                Show this help text
+
+Available commands:
+  new                      Create new components of packages
+  rebuild                  Rebuild the system using the current profile
+  gc                       Execute nix-store garbage collections
+  check                    Check the dotfiles flake
+  search                   Search up related packages in nixpkgs
+  init                     Initialise your dotfiles system!
+  hop                      Switch into another profile system quickly
+  profile                  Configure the profile and generation settings
+```
