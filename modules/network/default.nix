@@ -6,5 +6,6 @@
     ./proxy.nix
     ./ssh.nix
     ./wireless.nix
+    ./usb.nix
   ];
 }

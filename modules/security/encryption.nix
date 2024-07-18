@@ -19,6 +19,7 @@ in {
         gpg = [ "basic" ];
         agenix = [ "basic" ];
       };
+      services.gnome.gnome-keyring.enable = true;
     }
     (mkIf cfg.yubikey {
       runtime.yubikey.enable = true;

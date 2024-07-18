@@ -7,6 +7,7 @@ patch:
     - schema: jyutping
     - schema: soutzoe
     - schema: ipa_yunlong
+    - schema: double_pinyin_flypy
   "switcher/hotkeys":
     - F4
   "style/font_point": 14

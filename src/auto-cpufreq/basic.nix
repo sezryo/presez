@@ -7,8 +7,8 @@ lib.mine.mkIfProfile config.modules "auto-cpufreq" "basic"
     enable = true;
     settings = {
       charger = {
-        governor = "performance";
-        turbo = "always";
+        governor = "schedutil";
+        turbo = "auto";
       };
       battery = {
         governor = "conservative";

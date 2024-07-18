@@ -27,6 +27,7 @@ in {
       racket.enable = true;
       ruby.enable = true;
       rust.enable = true;
+      scala.enable = true;
       scheme.enable = true;
       tex.enable = true;
       typescript.enable = true;

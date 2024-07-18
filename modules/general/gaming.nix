@@ -9,6 +9,7 @@ in {
     enable = mkEnableOpt "Whether to install modualised gaming compatitors";
     gamescope = mkEnableOpt "Whether to use gamescope as steam launching scheme";
     emulators = mkEnableOpt "Whether to install gaming emulators";
+    osu = mkEnableOpt "Whether to enable osu bundles";
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -27,7 +28,12 @@ in {
     (mkIf cfg.emulators {
       modules.singleton = {
         bottles = [ "basic" ];
-        yuzu-early-access = [ "basic" ];
+        # yuzu-early-access = [ "basic" ]; # Shame on Nintendo
+      };
+    })
+    (mkIf cfg.osu {
+      modules.singleton = {
+        osu-lazer = [ "basic" ];
       };
     })
   ]);

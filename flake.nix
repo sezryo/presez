@@ -45,7 +45,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     latest.url = "github:nixos/nixpkgs/master";
     agenix.url = "github:ryantm/agenix";
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     home-manager = { url = "github:nix-community/home-manager";
                      inputs.nixpkgs.follows = "nixpkgs"; };

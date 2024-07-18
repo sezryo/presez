@@ -7,11 +7,11 @@ import Turtle
 import System.Environment
 import Prelude hiding (FilePath)
 
-data Command = NewPackage FilePath | Rebuild (Maybe Bool, Maybe Bool) | GarbageCollect (Maybe Bool) | Check (Maybe Bool) | Search SearchSource | Init (Maybe Bool) | Hop (Maybe Text) | Profile ProfileOptions deriving (Show)
+data Command = NewPackage FilePath | Rebuild (Maybe Bool, Maybe Bool) | GarbageCollect (Maybe Bool) | Check (Maybe Bool) | Search SearchSource | Init (Maybe Bool) | Hop (Maybe Text) | Profile ProfileOptions | Repl (Maybe Bool, Maybe Bool) deriving (Show)
 
 data SearchSource = Package Text | SystemOption Text | HomeOption Text | Source Text deriving (Show)
 
-data ProfileOptions = ListProfiles (Maybe Bool) deriving (Show)
+data ProfileOptions = ListProfiles (Maybe Bool) | NewProfile (Maybe Text) deriving (Show)
 
 parser :: Parser Command
 parser
@@ -30,12 +30,14 @@ parser
          (subcommand "search" "Search up related packages in nixpkgs" searchParser)
      <|> fmap Init
          (subcommand "init" "Initialise your dotfiles system!"
-           (optional (switch "user" 'u' "Create a new user")))
+           (optional (switch "" ' ' "")))
      <|> fmap Hop
          (subcommand "hop" "Switch into another profile system quickly"
            (optional (argText "profile" "The designated profile name (Optional)")))
      <|> fmap Profile
          (subcommand "profile" "Configure the profile and generation settings" profileParser)
+     <|> fmap Repl
+         (subcommand "repl" "Run nix repl with reloaded configs and packages" replParser)
 
 searchParser :: Parser SearchSource
 searchParser
@@ -55,24 +57,30 @@ searchParser
 rebuildParser :: Parser (Maybe Bool, Maybe Bool)
 rebuildParser = (,) <$> optional (switch "trace" 't' "Enable showing trace while building")
                     <*> optional (switch "update" 'u' "Update the flake before building")
-                
+
+replParser :: Parser (Maybe Bool, Maybe Bool)
+replParser = (,) <$> optional (switch "flake" 'f' "Preload dotfiles flake inputs")
+                 <*> optional (switch "nixpkgs" 'n' "Preload nixpkgs inputs")
 profileParser :: Parser ProfileOptions
 profileParser
-             =  fmap ListProfiles
-                (subcommand "list" "List all existing profiles"
-                 (optional (switch "" ' ' "")))
+             =   fmap ListProfiles
+                 (subcommand "list" "List all existing profiles"
+                  (optional (switch "" ' ' "")))
+             <|> fmap NewProfile
+                 (subcommand "new" "Create a new profile"
+                  (optional (optText "user" 'u' "Create a profile with a given user name")))
 
 rebuild :: (Maybe Bool, Maybe Bool) -> IO()
 rebuild (trace, update) = do
-  userName <- getEnv "CURRENT_USER"
-  dotfiles <- getEnv "DOTFILES_TOP"
-  cd (fromString dotfiles)
+  userName <- fetchEnv "CURRENT_USER"
+  dotfiles <- fetchEnv "DOTFILES_TOP"
+  cd dotfiles
   case update of
     Just _ -> stdout (inshell "nix flake update" empty)
     Nothing -> echo ""
   case trace of
-    Just _  -> stdout (inshell ("sudo nixos-rebuild switch --flake 'path:./#" <> fromString userName <> "' --show-trace") empty)
-    Nothing -> stdout (inshell ("sudo nixos-rebuild switch --flake 'path:./#" <> fromString userName <> "'") empty)
+    Just _  -> stdout (inshell ("sudo nixos-rebuild switch --flake 'path:./#" <> userName <> "' --show-trace") empty)
+    Nothing -> stdout (inshell ("sudo nixos-rebuild switch --flake 'path:./#" <> userName <> "'") empty)
 
 search :: SearchSource -> IO()
 search n = do
@@ -85,9 +93,19 @@ search n = do
 
 check :: IO()
 check = do
-  dotfiles <- getEnv "DOTFILES_TOP"
-  cd (fromString dotfiles)
+  dotfiles <- fetchEnv "DOTFILES_TOP"
+  cd dotfiles
   stdout (inshell ("nix flake check") empty)
+
+repl :: (Maybe Bool, Maybe Bool) -> IO()
+repl (flake, nixpkgs) = do
+  dotfiles <- fetchEnv "DOTFILES_TOP"
+  case flake of
+    Just _ -> stdout (inshell ("nix repl --expr 'builtins.getFlake \"" <> dotfiles <> "\"'") empty)
+    Nothing -> do
+      case nixpkgs of
+        Just _ -> stdout (inshell ("nix repl '<nixpkgs>'") empty)
+        Nothing -> stdout (inshell ("nix repl") empty)
 
 garbageCollect :: Maybe Bool -> IO()
 garbageCollect n = do
@@ -96,9 +114,25 @@ garbageCollect n = do
     Just _  -> stdout (inshell "nix-store --gc" empty)
     Nothing -> stdout (inshell "sudo nix-store --gc" empty)
 
-init :: (Maybe bool) -> IO()
-init n = do
-  echo "Welcome to NixOS, enter your desired username to start"
+init :: IO()
+init = do
+  echo "Welcome to NixOS! You are now going to initialise your modualised dotfiles to build your system."
+  echo "Please make sure you are now in the top-level of dotfiles directory, usually the git cloned directory for now. Enter Y to proceed. (Y/N)"
+  proceed <- promptInput
+  when proceed $ do
+    echo "Setting temporary environmental variables..."
+    top <- pwd
+    setEnv "DOTFILES_TOP" (encodeString top)
+    setEnv "DOTFILES_BIN" (encodeString top ++ "/bin")
+    setEnv "DOTFILES_ASSETS" (encodeString top ++ "/assets")
+    setEnv "DOTFILES_MODULES" (encodeString top ++ "/modules")
+    setEnv "DOTFILES_SECRETS" (encodeString top ++ "/secrets")
+    setEnv "DOTFILES_SRC" (encodeString top ++ "/src")
+    echo "Now enter your desired user name of the system"
+    name <- readText
+    newProfile name
+  
+  
 
 hop :: Maybe Text -> IO()
 hop n = do
@@ -107,12 +141,30 @@ hop n = do
 profile :: ProfileOptions -> IO()
 profile n = do
   case n of
+    NewProfile m ->
+      case m of
+        Just name -> newProfile name
+        Nothing -> do
+          currentUser <- fetchEnv "CURRENT_USER"
+          echo "Would you like to initialise a new profile of the same user as the current one? (Y/N)"
+          proceed <- promptInput
+          case proceed of
+            True -> newProfile currentUser
+            False -> do
+              echo "Enter your new desired user name if you'd like to proceed"
+              newName <- readText
+              newProfile newName       
+        
     ListProfiles m -> echo ""
 
+newProfile :: Text -> IO()
+newProfile n = do
+  echo ""
+  
 newPackage :: FilePath -> IO()
 newPackage pkg = do
-  src <- getEnv "DOTFILES_SRC"
-  cd (fromString src)
+  src <- fetchEnv "DOTFILES_SRC"
+  cd src
   exists <- testdir pkg
   if exists
     then do
@@ -137,11 +189,8 @@ addComponents pkg comp = do
       output (fromText (name <> ".nix")) (fileTemplate (format fp pkg) name)
     Nothing -> do
       echo "Enter the desired component name you want to add"
-      input <- readline
-      let cinput = fmap lineToText input
-      case cinput of
-        Just cname -> output (fromText (cname <> ".nix")) (fileTemplate (format fp pkg) cname)
-        Nothing -> echo "Invalid input"
+      input <- readText
+      output (fromText (input <> ".nix")) (fileTemplate (format fp pkg) input)
 
 promptInput :: IO Bool
 promptInput = do
@@ -152,6 +201,22 @@ promptInput = do
     _ -> do
       echo "Invalid input"
       promptInput
+
+readText :: MonadIO io => io (Text)
+readText = do
+  input <- readline
+  case input of
+    Just x -> return $ lineToText x
+    Nothing -> readText
+
+fetchEnv :: (IsString a) => String -> IO (a)
+fetchEnv n = do
+  input <- lookupEnv n
+  case input of
+    Just env -> return $ fromString env
+    Nothing -> do
+      echo "Some dotfile related environmental variables are not set, run 'yo init' first."
+      exit (ExitFailure 1)
 
 configTemplate :: Text -> Text -> Text
 configTemplate pkg comp =
@@ -178,6 +243,7 @@ main = do
     NewPackage n -> newPackage n  
     GarbageCollect n -> garbageCollect n
     Check n -> check
-    Init n -> Main.init n
+    Init n -> Main.init
     Hop n -> hop n
     Profile n -> profile n
+    Repl (n, m) -> repl (n, m)

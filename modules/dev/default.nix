@@ -12,6 +12,7 @@
     ./emacs.nix
     ./git.nix
     ./haskell.nix
+    ./lean.nix
     ./nix.nix
     ./ocaml.nix
     ./purescript.nix
@@ -19,6 +20,7 @@
     ./racket.nix
     ./ruby.nix
     ./rust.nix
+    ./scala.nix
     ./scheme.nix
     ./tex.nix
     ./typescript.nix

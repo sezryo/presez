@@ -8,6 +8,7 @@ in {
   options.modules.network.proxy = {
     enable = mkEnableOpt "Whether to do proxy settings";
     clash.enable = mkEnableOpt "Whether to enable clash service";
+    protonvpn.enable = mkEnableOpt "Whether to enable proton vpn service";
     proxychains.enable = mkEnableOpt "Whether to enable proxychains service";
   };
 
@@ -19,6 +20,12 @@ in {
       modules.singleton = {
         clash = [ "basic" ];
         proxychains = [ "clash" ];
+      };
+    })
+    (mkIf cfg.protonvpn.enable {
+      modules.singleton = {
+        protonvpn-cli = [ "basic" ];
+        protonvpn-gui = [ "basic" ];
       };
     })
     (mkIf cfg.proxychains.enable {

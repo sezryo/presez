@@ -10,12 +10,9 @@ lib.mine.mkIfProfile config.modules "qt" "basic"
   
   home.qt = {
     enable = true;
-    # platformTheme = "qt5ct";
+    platformTheme.name = "qtct";
   };
-  
-  home.sessionVariables = {
-    QT_QPA_PLATFORMTHEME = "qt5ct";
-  };
+ 
   environment.sessionVariables = rec {
     QT_QPA_PLATFORMTHEME = "qt5ct";
   };

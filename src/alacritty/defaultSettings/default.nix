@@ -2,5 +2,5 @@
 
 lib.mine.mkIfProfile config.modules "alacritty" "defaultSettings"
 {
-  home.configFile."alacritty/alacritty.yml".source = ./init.yml;
+  home.configFile."alacritty/alacritty.toml".source = ./alacritty.toml;
 }

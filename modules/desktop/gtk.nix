@@ -23,6 +23,7 @@ in {
       modules.singleton = {
         gnome-control-center = [ "basic" ];
         gnome-tweaks = [ "basic" ];
+        gnome-disks = [ "basic" ];
         networkmanagerapplet = [ "basic" ];
       };
     })

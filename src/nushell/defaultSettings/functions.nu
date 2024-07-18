@@ -4,6 +4,7 @@ alias ssy = sudo systemctl
 alias lt = lsd --tree
 alias l = lsd -Fal
 alias ec = emacsclient -c
+alias c = clear
 alias cheers = sudo systemctl restart NetworkManager
 
 # System Rolling, wait to be overwriten by a centralised client

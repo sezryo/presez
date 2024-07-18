@@ -21,6 +21,7 @@ in {
       binutils = [ "basic" ];
       coreutils = [ "basic" ];
       pciutils = [ "basic" ];
+      usbutils = [ "basic" ];
       findutils = [ "basic" ];
       gawk = [ "basic" ];
       cached-nix-shell = [ "basic" ];

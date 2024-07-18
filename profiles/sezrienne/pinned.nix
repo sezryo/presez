@@ -3,7 +3,7 @@
 
 {
   system.stateVersion = "22.05";
-    
+  
   user = {
     name = "sezrienne";
     hostName = "sezrix";
@@ -36,7 +36,10 @@
     desktop = {
       hyprland-primary.enable = true;
       xserver = {
-        touchpad.enable = true;
+        touchpad = {
+          enable = true;
+          wacom = true;
+        };
         wm = {
           enable = true;
           minimum = true;
@@ -78,12 +81,17 @@
       proxy = {
         enable = true;
         clash.enable = true;
+        protonvpn.enable = true;
       };
       nm = {
         enable = true;
         iwd.enable = false;
       };
       ssh.enable = true;
+      usb = {
+        enable = true;
+        thunderbolt = true;
+      };
     };
     
     hardware = {
@@ -122,6 +130,7 @@
         enable = true;
         gamescope = true;
         emulators = true;
+        osu = true;
       };
       firefox = {
         enable = true;
@@ -157,7 +166,7 @@
     security = {
       u2f = {
         enable = true;
-        yubikey = true;
+        # yubikey = true;
       };
       tpm.enable = true;
       encryption ={

@@ -24,7 +24,7 @@ in {
     }
     (mkIf (cfg == "unstable" || cfg == "latest") {
       nix = {
-        package = pkgs.nixUnstable;
+        package = pkgs.nixVersions.latest;
         extraOptions = ''
           experimental-features = nix-command flakes
         '';

@@ -7,7 +7,7 @@ lib.mine.mkIfProfile config.modules "qemu" "basic"
     runAsRoot = false;
     ovmf = {
       enable = true;
-      packages = [ pkgs.OVMFFull ];
+      packages = [ pkgs.OVMFFull.fd ];
     };
     swtpm.enable = true;
   };

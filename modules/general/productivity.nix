@@ -11,7 +11,8 @@ in {
 
   config = mkIf cfg.enable {
     modules.singleton = {
-      awscli2 = [ "basic" ];
+      # awscli2 = [ "basic" ];
+      dropbox = [ "basic" ];
       calibre = [ "basic" ];
       zathura = [ "basic" ];
       thunderbird = [ "basic" ];
@@ -30,6 +31,9 @@ in {
       rsync = [ "basic" ];
       anki = [ "basic" ];
       ddgr = [ "basic" ];
+      cloudflared = [ "basic" ];
+      zotero = [ "basic" ];
+      goldendict-ng = [ "basic" ];
     };
   };
 }

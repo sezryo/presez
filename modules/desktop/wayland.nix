@@ -37,7 +37,8 @@ in {
         electron = [ "wayland" ];
       };
       environment.sessionVariables = rec {
-        QT_QPA_PLATFORM = "wayland";
+        QT_QPA_PLATFORM = "wayland;xcb";
+        SDL_VIDEODRIVER = "wayland";
       };
     }
     (mkIf (!cfg.minimum) {
