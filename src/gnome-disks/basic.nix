@@ -3,5 +3,5 @@
 lib.mine.mkIfProfile config.modules "gnome-disks" "basic"
 
 {
-  home.packages = [ pkgs.gnome.gnome-disk-utility ];
+  home.packages = [ pkgs.gnome-disk-utility ];
 }

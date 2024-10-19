@@ -32,7 +32,7 @@ in {
         qemu = [ "basic" ];
         virt-manager = [ "basic" ];
         quickemu = [ "basic" ];
-        quickgui = [ "basic" ];
+        # quickgui = [ "basic" ];
       };
     })
   ]);

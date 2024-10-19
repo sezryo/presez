@@ -14,6 +14,8 @@ let
       inputs.home-manager.nixosModules.home-manager
       inputs.disko.nixosModules.disko
       inputs.agenix.nixosModules.default
+      inputs.hyprland.nixosModules.default
+      inputs.darkmatter-grub-theme.nixosModule
       modules.boot
       modules.desktop
       modules.dev
@@ -37,15 +39,26 @@ let
     };
 in {
   flake.nixosConfigurations = {
-    "sezrienne" =
+    "sezrienne-kuromi" =
       withSystem "x86_64-linux"
       ({ pkgs, system, ...}:
         mkNixosConfig {
           profiles = [
-            profiles.sezrienne.pinned
-            profiles.sezrienne.hardware-configuration
-            inputs.hyprland.nixosModules.default
-            inputs.darkmatter-grub-theme.nixosModule
+            profiles.sezrienne.common
+            profiles.sezrienne.kuromi.hardware-configuration
+	    profiles.sezrienne.kuromi.pinned 
+          ];
+        });
+  };
+  flake.nixosConfigurations = {
+    "sezrienne-azuki" = 
+      withSystem "x86_64-linux"
+      ({ pkgs, system, ...}:
+        mkNixosConfig {
+          profiles = [
+            profiles.sezrienne.common
+            profiles.sezrienne.azuki.hardware-configuration
+	    profiles.sezrienne.azuki.pinned
           ];
         });
   };

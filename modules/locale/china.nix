@@ -25,8 +25,8 @@ in {
       # You may need proxy settings in China
       nix.settings.substituters = [ "https://mirror.tuna.tsinghua.edu.cn/nix-channels/store" ]; 
       modules.network.proxy = {
-        enable = mkDefault true;
-        clash.enable = mkDefault true;
+        enable = mkForce true;
+        clash.enable = mkForce true;
       };
     })
     (mkIf cfg.spirit {

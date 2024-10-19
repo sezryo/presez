@@ -16,7 +16,7 @@ in {
         sudo.wheelNeedsPassword = true;
         pam = {
           services.sudo.u2fAuth = true;
-          u2f.authFile = config.age.secrets.u2f_keys.path;
+          u2f.settings.authFile = config.age.secrets.u2f_keys.path;
         };
       };
     }

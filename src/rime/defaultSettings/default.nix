@@ -9,13 +9,13 @@ in
 lib.mine.mkIfProfile config.modules "rime" "defaultSettings"
 
 {
-  home.activation.setupRimeCacheDirectory = lib.hm.dag.entryAfter [ "writeBoundary" "onFilesChange" ] ''
+  /* home.activation.setupRimeCacheDirectory = lib.hm.dag.entryAfter [ "writeBoundary" "onFilesChange" ] ''
     if [[ -v rimeSettingChanged ]]; then
       rm -rf "${config.user.dataDir}/fcitx5/rime/build"
       fcitx5-remote -r
       fcitx5 -d --replace
     fi
-  '';
+  ''; */
 
   home.dataFile = {
     "fcitx5/rime/default.custom.yaml" = {

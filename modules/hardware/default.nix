@@ -5,6 +5,7 @@
     ./cpu.nix
     ./ga402rk.nix
     # ./ga402xv.nix
+    ./x1nano2.nix
     ./gpu.nix
     ./hdd.nix
     ./power.nix

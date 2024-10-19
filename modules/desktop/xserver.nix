@@ -25,7 +25,7 @@ in {
       };
       xdg.portal = {
         enable = true;
-        config.common.default = "*";
+        # config.common.default = "*";
       };
     }
     (mkIf cfg.touchpad.enable {

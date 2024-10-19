@@ -32,6 +32,7 @@ in {
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
+      backupFileExtension = "backup";
       extraSpecialArgs = { inherit inputs; };
       
       #   home.file           ->  home-manager.users.<user>.home.file

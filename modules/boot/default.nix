@@ -5,5 +5,6 @@
     ./grub.nix
     ./kernel.nix
     ./tty.nix
+    ./systemd-boot.nix
   ];
 }

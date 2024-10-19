@@ -2,21 +2,8 @@
 { config, pkgs, lib, inputs, ... }:
 
 {
-  system.stateVersion = "22.05";
-  
-  user = {
-    name = "sezrienne";
-    hostName = "sezrix";
-    devName = "sezryo";
-    fullName = "Yvette Meng";
-    email = "sezrienne@proton.me";
-    academicEmail = "ym401@cam.ac.uk";
-    defaultPublicKey = "D931EC7A9950B57B";
-    yubikoId =  [ "17672095" ];
-  };
-  
-  dotfiles.dir = "/home/sezrienne/presez";
-  
+  system.stateVersion = "24.05";
+    
   modules = {
     users = {
       users.enable = true;
@@ -34,7 +21,14 @@
     };
       
     desktop = {
-      hyprland-primary.enable = true;
+      # hyprland-primary = {
+      #   enable = true;
+      #   version = "osaka";
+      # };
+      wayland = {
+        enable = true;
+        minimum = true;
+      };
       xserver = {
         touchpad = {
           enable = true;
@@ -47,16 +41,17 @@
       };
       gtk = {
         enable = true;
-        enableDefault = true;
+        # enableDefault = true;
         enableApps = true;
+	gnome.enable = true;
       };
       qt = {
         enable = true;
         theme = "catppuccin";
       };
-       display = {
+      display = {
         enable = true;
-        package = "tty";
+        package = "gdm";
       };
       cursor = "catppuccin";
     };
@@ -78,11 +73,11 @@
     };
 
     network = {
-      proxy = {
+      /* proxy = {
         enable = true;
         clash.enable = true;
         protonvpn.enable = true;
-      };
+      }; */
       nm = {
         enable = true;
         iwd.enable = false;
@@ -95,8 +90,7 @@
     };
     
     hardware = {
-      ga402rk.enable = true;
-      vfio.enable = true;
+      x1nano2.enable = true;  
     };
 
     nix = {
@@ -106,14 +100,9 @@
     };
     
     boot = {
-      grub = {
-        enable = true;
-        efi = true;
-        theme = "darkmatter-theme";
-      };
+      systemd-boot.enable = true; 
       tty = {
         enable = true;
-        theme = "catppuccin";
       };
       kernel = "latest";
     };
@@ -164,10 +153,10 @@
     };
 
     security = {
-      u2f = {
-        enable = true;
-        # yubikey = true;
-      };
+      # u2f = {
+      #   enable = true;
+      #   yubikey = true;
+      # };
       tpm.enable = true;
       encryption ={
         enable = true;

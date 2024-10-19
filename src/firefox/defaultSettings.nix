@@ -9,14 +9,13 @@ lib.mine.mkIfProfile config.modules "firefox" "defaultSettings"
       isDefault = true;
 
       search = {
-        default = "DuckDuckGo";
+        default = "Google";
         force = true;
-        order = [ "DuckDuckGo" "Google" ];
+        order = [ "Google" "DuckDuckGo" ];
       };
 
       settings = {
         "browser.startup.page" = 3; # Always resume the previous browser session.
-        "browser.startup.homepage" = "https://getpocket.com/saves?src=navbar";
         "browser.search.isUS" = false;
         "distribution.searchplugins.defaultLocale" = "en-GB";
         "general.useragent.locale" = "en-GB";

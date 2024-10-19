@@ -15,7 +15,6 @@ in {
       modules.singleton = {
         pipewire = [ "basic" ];
       };
-      sound.enable = true;
     }
     (mkIf cfg.enableApps {
       modules.singleton = {

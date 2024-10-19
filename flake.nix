@@ -1,7 +1,7 @@
 {
   description = "The preimage of Sez";
 
-  outputs = { self, nixpkgs, home-manager, flake-parts, devshell, mission-control, treefmt-nix, ...  } @ inputs:
+  outputs = { self, nixpkgs, home-manager, nur, flake-parts, devshell, mission-control, treefmt-nix, ...  } @ inputs:
     
     let
       # Lib with extended customisations
@@ -24,6 +24,7 @@
           flake-parts.flakeModules.easyOverlay
           devshell.flakeModule
           mission-control.flakeModule
+          # nur.repos.linyinfeng.lpac # TODO: Need to sort out the correct way installing nur packages.
           # treefmt-nix.flakeModule
         ];
 

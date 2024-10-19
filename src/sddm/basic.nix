@@ -3,7 +3,7 @@
 lib.mine.mkIfProfile config.modules "sddm" "basic"
 
 {
-  services.xserver.displayManager.sddm = {
+  services.displayManager.sddm = {
     enable = true;
     enableHidpi = true;
   };

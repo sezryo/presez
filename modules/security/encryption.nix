@@ -17,7 +17,7 @@ in {
     {
       modules.singleton = {
         gpg = [ "basic" ];
-        agenix = [ "basic" ];
+        # agenix = [ "basic" ]; # TODO: address problems
       };
       services.gnome.gnome-keyring.enable = true;
     }

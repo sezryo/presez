@@ -18,7 +18,7 @@ in {
     }
     (mkIf cfg.enableDefault {
       modules.singleton = {
-        firefox = [ "defaultSettings" "simplefox" ];
+        firefox = [ "defaultSettings" ];
       };
     })
   ]);

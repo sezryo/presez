@@ -31,10 +31,11 @@ in {
       modules.singleton = {
         gnome = [ "basic" ];
       };
-      modules.desktop.display = {
-        enable = true;
-        package = "gdm";
-      };
+      /* dconf.settings = {
+        "org/gnome/mutter" = {
+          experimental-features = [ "scale-monitor-framebuffer" ];
+        }; 
+      }; */
     })
     (mkIf cfg.gnome.exclude {
       modules.singleton.gnome = [ "exclude" ];

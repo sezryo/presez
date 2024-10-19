@@ -1,9 +1,11 @@
 { config, pkgs, lib, inputs, options, ... }:
 
 with lib;
+with lib.types;
 let
   cfg = config.modules.hardware.gpu;
   inherit (lib.mine) mkEnableOpt mkEnableOptIf mkOpt mkOpt' mkOptStr;
+  intel_drivers = [ "i915" "xe" ];
 in {
   options = {
     modules.hardware.gpu = {
@@ -15,8 +17,12 @@ in {
         opencl = mkEnableOptIf "Rocm opencl runtime (Install rocm-opencl-icd and rocm-opencl-runtime)" (cfg.amd.enable);
       };
       nvidia = {
-        enable = mkEnableOpt "Whether to enable Nvidia GPU related packages";
+        enable = mkEnableOpt "Whether to enable Nvidia GPU related settings";
         # TODO: Finish nvidia settings
+      };
+      intel = {
+        enable = mkEnableOpt "Whether to enable Intel integrated GPU related settings";
+        driver = mkOpt' (enum intel_drivers) "i915" "Which intel driver to be used";
       };
     };
     gpu = {
@@ -34,11 +40,11 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      modules.singleton = {
-        opengl = [ "basic" ];
+      modules.singleton = { 
         mesa = [ "basic" ];
         mesa-demos = [ "basic" ];
       };
+      hardware.graphics.enable = true;
     }
     (mkIf cfg.amd.enable {
       modules.singleton = {
@@ -51,14 +57,48 @@ in {
       boot.initrd.kernelModules = [ "amdgpu" ];
     })
     (mkIf cfg.amd.amdvlk {
-      modules.singleton = {
-        opengl = [ "amdvlk" ];
+      hardware.graphics = {
+        extraPackages = with pkgs; [
+          amdvlk
+        ];
+
+        extraPackages32 = with pkgs; [
+          driversi686Linux.amdvlk
+        ];
       };
     })
     (mkIf cfg.amd.opencl {
-      modules.singleton = {
-        opengl = [ "opencl" ];
+      hardware.graphics = {
+        extraPackages = with pkgs; [
+          rocm-opencl-icd
+          rocm-opencl-runtime
+        ];
       };
+    })
+    (mkIf cfg.intel.enable {
+      boot.initrd.kernelModules = [ cfg.intel.driver ];
+      environment.variables = {
+        VDPAU_DRIVER = lib.mkIf config.hardware.graphics.enable (lib.mkDefault "va_gl");
+      };
+      hardware.graphics.extraPackages = with pkgs; [
+        (
+          if (lib.versionOlder (lib.versions.majorMinor lib.version) "23.11") then
+            vaapiIntel
+          else
+            intel-vaapi-driver
+        )
+        intel-media-driver
+      ];
+      
+      hardware.graphics.extraPackages32 = with pkgs.driversi686Linux; [
+        (
+          if (lib.versionOlder (lib.versions.majorMinor lib.version) "23.11") then
+            vaapiIntel
+          else
+            intel-vaapi-driver
+        )
+        intel-media-driver
+      ];
     })
   ]);
 }

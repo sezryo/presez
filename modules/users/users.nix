@@ -30,6 +30,7 @@ in {
       homeDir = mkOpt path "/home/${config.user.name}";
       cacheDir = mkOpt path "${config.user.homeDir}/.cache";
       dataDir = mkOpt path "${config.user.homeDir}/.local/share";
+      nixDataDir = mkOpt path "${config.user.homeDir}/.nix-profile/share";
       stateDir = mkOpt path "${config.user.homeDir}/.local/state";
       configDir = mkOpt path "${config.user.homeDir}/.config";
       
@@ -44,8 +45,11 @@ in {
     };
     environment.sessionVariables = rec {
       XDG_CACHE_HOME  = "${config.user.cacheDir}";
-      XDG_CONFIG_HOME = "${config.user.configDir}";
+      # XDG_CONFIG_HOME = "${config.user.configDir}"; # GDM crashes due to this for unknown reasons
       XDG_DATA_HOME   = "${config.user.dataDir}";
+      XDG_DATA_DIRS = [
+        "${config.user.nixDataDir}"
+      ];
       XDG_STATE_HOME  = "${config.user.stateDir}";
       CURRENT_USER = "${config.user.name}";
     };

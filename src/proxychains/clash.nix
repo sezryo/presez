@@ -9,7 +9,7 @@ lib.mine.mkIfProfile config.modules "proxychains" "clash"
       enable = true;
       type = "http";
       host = "127.0.0.1";
-      port = 7890;
+      port = 1337;
     };
   };
 }

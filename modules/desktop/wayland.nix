@@ -44,7 +44,7 @@ in {
     (mkIf (!cfg.minimum) {
       modules.singleton = {
         swaybg = [ "basic" ];
-        swaylock = [ "basic" ];
+        # swaylock = [ "basic" ]; # TODO: Ditch swaylock
         ${cfg.wm} = [ "basic" ];
         ${cfg.launcher} = [ "basic" ];
         ${cfg.notification} = [ "basic" ];

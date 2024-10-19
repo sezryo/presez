@@ -14,7 +14,7 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      networking.proxy.default = "http://127.0.0.1:7890";
+      networking.proxy.default = "http://127.0.0.1:1337";
     }
     (mkIf cfg.clash.enable {
       modules.singleton = {

@@ -15,7 +15,6 @@ in {
     };
     intel = {
       enable = mkEnableOpt "Whether to enable Intel CPU related services";
-      # TODO: Finish intel settings
     };
   };
 
@@ -45,6 +44,10 @@ in {
           kernelParams = [ "amd_pstate=active" ];
         })
       ];
+    })
+    (mkIf cfg.intel.enable {
+      hardware.cpu.intel.updateMicrocode =
+        lib.mkDefault config.hardware.enableRedistributableFirmware;
     })
   ]);
 }
