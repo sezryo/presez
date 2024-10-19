@@ -33,7 +33,7 @@ in {
       ddgr = [ "basic" ];
       cloudflared = [ "basic" ];
       zotero = [ "basic" ];
-      goldendict-ng = [ "basic" ];
+      # goldendict-ng = [ "basic" ];
     };
   };
 }

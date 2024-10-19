@@ -21,9 +21,13 @@
     };
       
     desktop = {
-      hyprland-primary = {
-	enable = true;
-	version = "tokyo";
+      # hyprland-primary = {
+	    #   enable = true;
+	    #   version = "tokyo";
+      # };
+      wayland = {
+        enable = true;
+        minimum = true;
       };
       xserver = {
         touchpad = {
@@ -37,8 +41,9 @@
       };
       gtk = {
         enable = true;
-        enableDefault = true;
+        # enableDefault = true;
         enableApps = true;
+        gnome.enable = true;
       };
       qt = {
         enable = true;
@@ -46,9 +51,9 @@
       };
        display = {
         enable = true;
-        package = "tty";
+        package = "gdm";
       };
-      cursor = "catppuccin";
+      # cursor = "catppuccin";
     };
     
     io = {
@@ -68,11 +73,11 @@
     };
 
     network = {
-      proxy = {
-        enable = true;
-        clash.enable = true;
-        protonvpn.enable = true;
-      };
+      # proxy = {
+      #   enable = true;
+      #   clash.enable = true;
+      #   protonvpn.enable = true;
+      # };
       nm = {
         enable = true;
         iwd.enable = false;

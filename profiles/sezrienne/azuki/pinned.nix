@@ -43,7 +43,7 @@
         enable = true;
         # enableDefault = true;
         enableApps = true;
-	gnome.enable = true;
+	      gnome.enable = true;
       };
       qt = {
         enable = true;
@@ -53,7 +53,7 @@
         enable = true;
         package = "gdm";
       };
-      cursor = "catppuccin";
+      # cursor = "catppuccin";
     };
     
     io = {
