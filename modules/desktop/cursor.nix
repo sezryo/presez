@@ -13,8 +13,8 @@ in {
     (mkIf (cfg == "catppuccin") {
       home.pointerCursor = {
         package = pkgs.catppuccin-cursors.frappeLavender;
-        name = "Catppuccin-Frappe-Lavender";
-        size = 32;
+        name = "catppuccin-frappe-lavender-cursors";
+        size = 24;
         gtk.enable = true;
       };
       modules.singleton.gtk = mkDefault [ "catppuccin" ];

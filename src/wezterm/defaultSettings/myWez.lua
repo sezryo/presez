@@ -1,9 +1,9 @@
 return {
   font = wezterm.font("JetBrains Mono"),
-  font_size = 9.0,
+  font_size = 10.0,
   color_scheme = "Catppuccin Frappe",
   hide_tab_bar_if_only_one_tab = true,
-  window_background_opacity = 0.7,
+  window_background_opacity = 0.8,
   tab_max_width = 12,
   default_prog = { 'nu' },
   disable_default_key_bindings = true,

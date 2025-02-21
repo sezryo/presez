@@ -3,5 +3,5 @@
 lib.mine.mkIfProfile config.modules "nixfmt" "basic"
 
 {
-  home.packages = [ pkgs.nixfmt ];
+  home.packages = [ pkgs.nixfmt-rfc-style ];
 }

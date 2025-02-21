@@ -9,7 +9,7 @@ lib.mine.mkIfProfile config.modules "firefox" "defaultSettings"
       isDefault = true;
 
       search = {
-        default = "Google";
+        default = "DuckDuckgo";
         force = true;
         order = [ "Google" "DuckDuckGo" ];
       };

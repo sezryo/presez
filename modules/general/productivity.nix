@@ -16,7 +16,7 @@ in {
       calibre = [ "basic" ];
       zathura = [ "basic" ];
       thunderbird = [ "basic" ];
-      remarkable2-toolchain = [ "basic" ];
+      # remarkable2-toolchain = [ "basic" ];
       newsflash = [ "basic" ];
       imagemagick = [ "basic" ];
       dolphin = [ "basic" ];
@@ -33,6 +33,8 @@ in {
       ddgr = [ "basic" ];
       cloudflared = [ "basic" ];
       zotero = [ "basic" ];
+      wechat-uos = [ "basic" ];
+      chatgpt = [ "basic" ];
       # goldendict-ng = [ "basic" ];
     };
   };

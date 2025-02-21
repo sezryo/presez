@@ -11,7 +11,7 @@ lib.mine.mkIfProfile config.modules "gtk" "catppuccin"
     };
 
     theme = {
-      name = "Catppuccin-Frappe";
+      name = "catppuccin-frappe";
       package = pkgs.catppuccin-gtk.override {
         accents = [ "pink" ];
         size = "compact";
@@ -21,13 +21,13 @@ lib.mine.mkIfProfile config.modules "gtk" "catppuccin"
     };
 
     cursorTheme = {
-      name = "Catppuccin-Frappe-Lavender-Cursors";
+      name = "catppuccin-frappe-lavender-cursors";
       package = pkgs.catppuccin-cursors.frappeLavender;
       size = 32;
     };
 
     iconTheme = {
-      name = "Catppuccin-Frappe-Lavender-Cursors";
+      name = "catppuccin-frappe-lavender-cursors";
       package = pkgs.catppuccin-cursors.frappeLavender;
     };
   };

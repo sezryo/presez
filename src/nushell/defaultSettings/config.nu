@@ -131,13 +131,12 @@ $env.config = {
     format: "auto"
   }
   color_config: $sezTheme
-  use_grid_icons: true
-  footer_mode: "25" # always, never, number_of_rows, auto
+  footer_mode: 25 # always, never, number_of_rows, auto
   float_precision: 5
   buffer_editor: "emacs" # command that will be used to edit the current line buffer with ctrl+o, if unset fallback to $env.EDITOR and $env.VISUAL
   use_ansi_coloring: true
   edit_mode: emacs # emacs, vi
-  shell_integration: true # enables terminal markers and a workaround to arrow keys stop working issue
+  # shell_integration: true # enables terminal markers and a workaround to arrow keys stop working issue
   show_banner: false
 
   hooks: {

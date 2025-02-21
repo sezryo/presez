@@ -18,8 +18,9 @@ in {
     {
       runtime.channel = cfg;
       nixpkgs.config.allowUnfree = true;
+      nixpkgs.config.allowUnsupportedSystem = true;
       nixpkgs.overlays = [
-        inputs.nur.overlay
+        inputs.nur.overlays.default
       ];
     }
     (mkIf (cfg == "unstable" || cfg == "latest") {

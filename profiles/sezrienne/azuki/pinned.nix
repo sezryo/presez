@@ -53,7 +53,7 @@
         enable = true;
         package = "gdm";
       };
-      # cursor = "catppuccin";
+      cursor = "catppuccin";
     };
     
     io = {

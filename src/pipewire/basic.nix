@@ -11,5 +11,5 @@ lib.mine.mkIfProfile config.modules "pipewire" "basic"
     jack.enable = true;
     wireplumber.enable = true;
   };
-  hardware.pulseaudio.enable = false; # Being conflict to pipewire
+  services.pulseaudio.enable = false; # Being conflict to pipewire
 }
