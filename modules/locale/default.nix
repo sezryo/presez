@@ -28,7 +28,7 @@ in {
           unifont unifont_upper
           jetbrains-mono
           jost
-          noto-fonts noto-fonts-emoji noto-fonts-cjk-sans
+          noto-fonts noto-fonts-color-emoji noto-fonts-cjk-sans
           fira-code fira-code-symbols
           hanazono
           source-han-sans source-han-serif source-han-mono

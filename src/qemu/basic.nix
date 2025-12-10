@@ -5,10 +5,10 @@ lib.mine.mkIfProfile config.modules "qemu" "basic"
 {
   virtualisation.libvirtd.qemu = {
     runAsRoot = false;
-    ovmf = {
+    /* ovmf = {
       enable = true;
       packages = [ pkgs.OVMFFull.fd ];
-    };
+    }; */ # Enabled by default
     swtpm.enable = true;
   };
 

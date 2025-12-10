@@ -2,7 +2,7 @@
 
 lib.mine.mkIfProfile config.modules "qt" "catppuccin"
 {
-  home.qt = {
+  /* home.qt = {
     style = {
       package = pkgs.libsForQt5.lightly;
       name = "lightly";
@@ -13,5 +13,5 @@ lib.mine.mkIfProfile config.modules "qt" "catppuccin"
     lightly
   ];
   
-  home.configFile."qt5ct/colors/Catppuccin-Frappe.conf".source = ./myQt.conf;
+  home.configFile."qt5ct/colors/Catppuccin-Frappe.conf".source = ./myQt.conf; */ #TODO
 }

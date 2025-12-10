@@ -3,7 +3,9 @@
 
 {
   system.stateVersion = "22.05";
- 
+  
+  user.defaultPublicKey = "D931EC7A9950B57B";
+  
   modules = {
     users = {
       users.enable = true;
@@ -41,9 +43,10 @@
       };
       gtk = {
         enable = true;
-        # enableDefault = true;
+        enableDefault = true;
         enableApps = true;
         gnome.enable = true;
+        gnome.enableDefaultExtensions = true;
       };
       qt = {
         enable = true;
@@ -53,7 +56,7 @@
         enable = true;
         package = "gdm";
       };
-      # cursor = "catppuccin";
+      cursor = "catppuccin";
     };
     
     io = {

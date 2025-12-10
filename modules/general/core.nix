@@ -16,6 +16,7 @@ in {
       electron = [ "basic" ];
       dig = [ "basic" ];
       vim = [ "basic" ];
+      lunarvim = [ "basic" ];
       wget = [ "basic" ];
       firefox = [ "basic" ];
       binutils = [ "basic" ];

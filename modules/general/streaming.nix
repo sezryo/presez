@@ -17,6 +17,7 @@ in {
       yewtube = [ "basic" ];
       yt-dlp = [ "basic" ];
       netflix = [ "basic" ];
+      vdhcoapp = [ "basic" ];
     };
     networking.firewall = {
       allowedTCPPorts = [ 57621 ]; # For Spotify local discovery

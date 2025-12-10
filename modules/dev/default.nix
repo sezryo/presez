@@ -6,7 +6,6 @@
     ./bundle.nix
     ./clojure.nix
     ./c.nix
-    ./cobol.nix
     ./coq.nix
     ./elixir.nix
     ./emacs.nix

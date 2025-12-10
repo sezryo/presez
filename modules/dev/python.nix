@@ -12,7 +12,8 @@ in {
 
   config = mkIf cfg.enable {
     modules.singleton = {
-      python311 = [ "basic" ];
+      python313 = [ "basic" ];
+      jupyter = [ "basic" ];
     };
   };
 }

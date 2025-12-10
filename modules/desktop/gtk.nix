@@ -11,6 +11,7 @@ in {
     enableApps = mkEnableOpt "Enable GTK related packages";
     gnome = {
       enable = mkEnableOpt "Enable Gnome Wayland as DE";
+      enableDefaultExtensions = mkEnableOpt "Enable default Gnome extensions for appearance and accessibility";
       exclude = mkEnableOpt "Exclude Unnecessary Packages from Gnome";
     };
   };
@@ -36,6 +37,9 @@ in {
           experimental-features = [ "scale-monitor-framebuffer" ];
         }; 
       }; */
+    })
+    (mkIf cfg.gnome.enableDefaultExtensions {
+      modules.singleton.gnome = [ "defaultExtensions" ];
     })
     (mkIf cfg.gnome.exclude {
       modules.singleton.gnome = [ "exclude" ];

@@ -21,6 +21,7 @@ in {
       sessionVariables = mkOpt attrs {};
       mimeApps = mkOpt attrs {};
       activation = mkOpt attrs {};
+      dconf = mkOpt attrs {};
       pointerCursor = mkOpt attrs {};
       file       = mkOpt' attrs {} "Files to place directly in $HOME";
       configFile = mkOpt' attrs {} "Files to place in $XDG_CONFIG_HOME";
@@ -59,6 +60,7 @@ in {
         programs = mkAliasDefinitions options.home.programs;
         services = mkAliasDefinitions options.home.services;
         qt = mkAliasDefinitions options.home.qt;
+        dconf = mkAliasDefinitions options.home.dconf;
         gtk = mkAliasDefinitions options.home.gtk;
         xdg = {
           enable = true;

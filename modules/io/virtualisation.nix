@@ -24,7 +24,7 @@ in {
       modules.singleton = {
         swtpm = [ "basic" ];
         spice = [ "basic" "gtk" "protocol" "vdagentd" "win" ];
-        win-virtio = [ "basic" ];
+        virtio-win = [ "basic" ];
       };
     }
     (mkIf cfg.qemu {

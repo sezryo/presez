@@ -3,5 +3,5 @@
 lib.mine.mkIfProfile config.modules "okular" "basic"
 
 {
-  home.packages = [ pkgs.okular ];
+  home.packages = [ pkgs.kdePackages.okular ];
 }

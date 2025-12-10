@@ -11,6 +11,14 @@ in {
   };
 
   config = mkIf cfg.enable {
+
+    hardware.ipu6 = {
+      enable = true;
+      platform = "ipu6ep";
+    };
+
+    services.fwupd.enable = true;
+    
     gpu = {
       graphics = "8086:46a6";
       audio = "8086:51c8";

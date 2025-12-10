@@ -15,7 +15,7 @@ in {
     modules.singleton = {
       yarn = [ "basic" ];
       yarn2nix = [ "basic" ];
-      nodejs-18_x = [ "basic" ];
+      nodejs = [ "basic" ];
       pnpm = [ "basic" ];
     };
   };

@@ -13,8 +13,8 @@ in {
     modules.singleton = {
       discord = [ "basic" ];
       qq = [ "basic" ];
-      icalingua = [ "basic" ];
-      tdesktop = [ "basic" ];
+      # icalingua = [ "basic" ];
+      telegram-desktop = [ "basic" ];
     };
   };
 }

@@ -22,7 +22,7 @@ in {
         ispell = [ "basic" ];
         sqlite = [ "basic" ];
         graphviz = [ "basic" ];
-        poppler_utils = [ "basic" ];
+        poppler-utils = [ "basic" ];
         tuareg = [ "basic" ];
       };
     }

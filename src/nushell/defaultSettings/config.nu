@@ -126,10 +126,7 @@ $env.config = {
       completer: null # check 'carapace_completer' above as an example
     }
   }
-  filesize: {
-    metric: true
-    format: "auto"
-  }
+  
   color_config: $sezTheme
   footer_mode: 25 # always, never, number_of_rows, auto
   float_precision: 5
@@ -149,7 +146,14 @@ $env.config = {
     env_change: {
       PWD: [{|before, after|
         null  # replace with source code to run if the PWD environment is different since the last repl input
-      }]
+      }
+      { ||
+    if (which direnv | is-empty) {
+        return
+    }
+
+    direnv export json | from json | default {} | load-env
+    }]    
     }
   }
   menus: [

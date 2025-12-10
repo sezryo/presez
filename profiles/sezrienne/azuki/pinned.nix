@@ -3,7 +3,9 @@
 
 {
   system.stateVersion = "24.05";
-    
+
+  user.defaultPublicKey = "E1D631009F9086E1";
+  
   modules = {
     users = {
       users.enable = true;
@@ -41,9 +43,10 @@
       };
       gtk = {
         enable = true;
-        # enableDefault = true;
+        enableDefault = true;
         enableApps = true;
 	      gnome.enable = true;
+        gnome.enableDefaultExtensions = true;
       };
       qt = {
         enable = true;

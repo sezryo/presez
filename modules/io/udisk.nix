@@ -12,7 +12,7 @@ in {
   config = mkIf cfg.enable {
     modules.singleton = {
       udisks = [ "basic" ];
-      ventoy = [ "basic" ];
+      # ventoy = [ "basic" ];
     };
   };
 }

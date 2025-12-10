@@ -3,5 +3,5 @@
 lib.mine.mkIfProfile config.modules "dolphin" "basic"
 
 {
-  home.packages = [ pkgs.dolphin ];
+  home.packages = [ pkgs.kdePackages.dolphin ];
 }

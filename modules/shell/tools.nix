@@ -16,7 +16,7 @@ in {
       lsd = [ "basic" ];
       ripgrep = [ "basic" ];
       bottom = [ "basic" ];
-      du-dust = [ "basic" ];
+      dust = [ "basic" ];
       procs = [ "basic" ];
       tealdeer = [ "basic" ];
       bat = [ "basic" ];

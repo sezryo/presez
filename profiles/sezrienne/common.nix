@@ -9,7 +9,6 @@
     fullName = "Yvette Meng";
     email = "sezrienne@proton.me";
     academicEmail = "ym401@cam.ac.uk";
-    defaultPublicKey = "D931EC7A9950B57B";
     yubikoId =  [ "17672095" ];
   };
   

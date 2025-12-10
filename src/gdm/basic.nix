@@ -3,7 +3,7 @@
 lib.mine.mkIfProfile config.modules "gdm" "basic"
 
 {
-  services.xserver.displayManager.gdm = {
+  services.displayManager.gdm = {
     enable = true;
     wayland = true;
   };

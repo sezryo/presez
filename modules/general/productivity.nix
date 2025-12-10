@@ -33,7 +33,7 @@ in {
       ddgr = [ "basic" ];
       cloudflared = [ "basic" ];
       zotero = [ "basic" ];
-      wechat-uos = [ "basic" ];
+      # wechat-uos = [ "basic" ];
       chatgpt = [ "basic" ];
       # goldendict-ng = [ "basic" ];
     };
