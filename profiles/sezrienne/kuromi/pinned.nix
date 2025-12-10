@@ -104,6 +104,7 @@
     };
     
     boot = {
+      systemd-boot.enable = false;
       grub = {
         enable = true;
         efi = true;
@@ -162,10 +163,10 @@
     };
 
     security = {
-      u2f = {
-        enable = true;
-        # yubikey = true;
-      };
+      # u2f = {
+      #   enable = true;
+      #   yubikey = true;
+      # };
       tpm.enable = true;
       encryption ={
         enable = true;

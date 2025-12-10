@@ -70,8 +70,7 @@ in {
     (mkIf cfg.amd.opencl {
       hardware.graphics = {
         extraPackages = with pkgs; [
-          rocm-opencl-icd
-          rocm-opencl-runtime
+          rocmPackages.clr.icd
         ];
       };
     })

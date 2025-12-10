@@ -19,7 +19,7 @@ in {
     modules.hardware = {
       cpu = {
         enable = true;
-        autofreq = true; # Tuning of GA402 is terrible
+        # autofreq = true; # Tuning of GA402 is terrible
         amd = {
           enable = true;
           pstate = true;

@@ -28,7 +28,7 @@ in {
       boot = {
         loader.grub = {
           efiSupport = true;
-          efiInstallAsRemovable = true;
+          # efiInstallAsRemovable = true;
         };
         loader.efi.efiSysMountPoint = "/boot";
       };
