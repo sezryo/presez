@@ -11,9 +11,9 @@ lib.mine.mkIfProfile config.modules "git" "basic"
   };
   home.programs.git = {
     enable = true;
-    delta.enable = true;
-    extraConfig = {
+    settings = {
       init.defaultBranch = "main";
     };
   };
+  home.programs.delta.enable = true;
 }

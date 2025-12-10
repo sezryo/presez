@@ -3,6 +3,9 @@
 
 {
   system.stateVersion = "22.05";
+
+  # Used if Asus is treated as a PC at home
+  services.logind.lidSwitch = "ignore"; 
   
   user.defaultPublicKey = "D931EC7A9950B57B";
   
