@@ -228,10 +228,11 @@
   :ensure t)
 
 (use-package lean4-mode
+  :ensure t
   :straight (lean4-mode
 	     :type git
 	     :host github
-	     :repo "leanprover/lean4-mode"
+	     :repo "leanprover-community/lean4-mode"
 	     :files ("*.el" "data"))
   ;; to defer loading the package until required
   :commands (lean4-mode))

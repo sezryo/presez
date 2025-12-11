@@ -37,6 +37,7 @@ in {
           unfonts-core
           # nerd-fonts
           nerd-fonts.fira-code
+	  nerd-fonts.symbols-only
           material-symbols
         ];
         fontconfig = {
