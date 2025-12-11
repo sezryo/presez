@@ -24,6 +24,7 @@ in {
       pciutils = [ "basic" ];
       usbutils = [ "basic" ];
       findutils = [ "basic" ];
+      libtool = [ "basic" ];
       gawk = [ "basic" ];
       cached-nix-shell = [ "basic" ];
       flatpak = [ "basic" ];

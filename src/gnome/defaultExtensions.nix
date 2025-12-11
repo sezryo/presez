@@ -8,12 +8,12 @@ lib.mine.mkIfProfile config.modules "gnome" "defaultExtensions"
       blur-my-shell
       unite
       auto-accent-colour
-      disable-3-finger-gestures
+      disable-3-finger-gestures-redux
       kimpanel
       just-another-search-bar
       just-perfection
       open-bar
-      paperwm
+      paperwm # Install this manually and change patches.js until gnome 49 problem fixed.
       search-light
     ];
     
@@ -23,7 +23,7 @@ lib.mine.mkIfProfile config.modules "gnome" "defaultExtensions"
         blur-my-shell.extensionUuid
         unite.extensionUuid
         auto-accent-colour.extensionUuid
-        disable-3-finger-gestures.extensionUuid
+        disable-3-finger-gestures-redux.extensionUuid
         kimpanel.extensionUuid
         just-another-search-bar.extensionUuid
         just-perfection.extensionUuid

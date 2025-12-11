@@ -3,5 +3,8 @@
 lib.mine.mkIfProfile config.modules "ripgrep" "basic"
 
 {
-  home.packages = [ pkgs.ripgrep ];
+  home.packages = [
+    pkgs.ripgrep
+    pkgs.emacsPackages.ripgrep
+  ];
 }

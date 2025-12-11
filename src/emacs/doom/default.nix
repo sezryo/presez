@@ -22,9 +22,9 @@ in lib.mine.mkIfProfile config.modules "emacs" "doom" rec {
         echo "Doom Emacs downloaded. Please run 'doom install' in your terminal."
       fi
     '';
-    # configFile."doom/config.el" = ./config.el;
-    # configFile."doom/init.el" = ./init.el;
-    # configFile."doom/packages.el" = ./packages.el;
+    configFile."doom/config.el".source = ./config.el;
+    configFile."doom/init.el".source = ./init.el;
+    configFile."doom/packages.el".source = ./packages.el;
 
   };
   environment.sessionVariables = rec {

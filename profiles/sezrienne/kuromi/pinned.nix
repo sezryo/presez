@@ -147,6 +147,10 @@
 
     dev = {
       bundle.enable = true;
+      emacs = {
+        doom = true;
+        defaultEditor = true;
+      };
     };
 
     locale = {

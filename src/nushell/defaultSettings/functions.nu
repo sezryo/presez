@@ -4,6 +4,7 @@ alias ssy = sudo systemctl
 alias lt = lsd --tree
 alias l = lsd -Fal
 alias ec = emacsclient -c
+alias en = emacs -nw
 alias c = clear
 alias cheers = sudo systemctl restart NetworkManager
 
