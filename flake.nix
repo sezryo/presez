@@ -15,7 +15,7 @@
     in
       flake-parts.lib.mkFlake {
         inherit inputs;
-        specialArgs = { inherit lib; };
+        specialArgs = { inherit inputs lib; };
       } ({ self, lib, ... }:
       {
         # Imports flake-parts modules

@@ -5,7 +5,7 @@
   system.stateVersion = "22.05";
 
   # Used if Asus is treated as a PC at home
-  services.logind.lidSwitch = "ignore"; 
+  services.logind.settings.Login.HandleLidSwitch = "ignore"; 
   
   user.defaultPublicKey = "D931EC7A9950B57B";
   
@@ -107,12 +107,12 @@
     };
     
     boot = {
-      systemd-boot.enable = false;
-      grub = {
-        enable = true;
-        efi = true;
-        theme = "darkmatter-theme";
-      };
+      systemd-boot.enable = true;
+      # grub = {
+      #   enable = true;
+      #   efi = true;
+      #   theme = "darkmatter-theme";
+      # };
       tty = {
         enable = true;
         theme = "catppuccin";

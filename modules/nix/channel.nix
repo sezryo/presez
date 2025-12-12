@@ -16,6 +16,8 @@ in {
   config = mkMerge [
     # TODO: Make a nixpkgs flake input alternating utility
     {
+      nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+      nix.registry.nixpkgs.flake = inputs.nixpkgs;
       runtime.channel = cfg;
       nixpkgs.config.allowUnfree = true;
       nixpkgs.config.allowUnsupportedSystem = true;
