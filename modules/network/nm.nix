@@ -12,7 +12,7 @@ in {
 
   config = mkIf (cfg.enable && (!config.modules.network.wireless.enable)) (mkMerge [
     {
-      networking.wireless.enable = false;
+      networking.wireless.enable = mkDefault false;
       networking.networkmanager = {
         enable = true;
         wifi.macAddress = "stable";

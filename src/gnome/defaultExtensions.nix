@@ -15,6 +15,7 @@ lib.mine.mkIfProfile config.modules "gnome" "defaultExtensions"
       open-bar
       paperwm # Install this manually and change patches.js until gnome 49 problem fixed.
       search-light
+      vertical-workspaces
     ];
     
     dconf.settings."org/gnome/shell" = {
@@ -30,6 +31,7 @@ lib.mine.mkIfProfile config.modules "gnome" "defaultExtensions"
         open-bar.extensionUuid
         paperwm.extensionUuid
         search-light.extensionUuid
+	vertical-workspaces.extensionUuid
       ];
     };
   };

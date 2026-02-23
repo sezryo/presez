@@ -17,7 +17,10 @@ in {
       yewtube = [ "basic" ];
       yt-dlp = [ "basic" ];
       netflix = [ "basic" ];
-      vdhcoapp = [ "basic" ];
+      mixxx = [ "basic" ];
+      vcv-rack = [ "basic" ];
+      bitwig-studio = [ "basic" ];
+      reaper = [ "basic" ];
     };
     networking.firewall = {
       allowedTCPPorts = [ 57621 ]; # For Spotify local discovery

@@ -15,7 +15,7 @@
 
     shell = {
       enable = true;
-      env = [ "nushell" "xonsh" "fish" "bash" "babashka" ];
+      env = [ "nushell" "xonsh" "bash" "babashka" ]; # Fish
       defaultShell = "nushell";
       loginShell = "xonsh";
       tools.enable = true;

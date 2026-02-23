@@ -39,6 +39,9 @@ in {
           nerd-fonts.fira-code
 	  nerd-fonts.symbols-only
           material-symbols
+	  liberation_ttf
+	  dejavu_fonts
+          ubuntu-classic
         ];
         fontconfig = {
           defaultFonts = {

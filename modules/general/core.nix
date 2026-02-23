@@ -12,6 +12,7 @@ in {
   config = mkIf cfg.enable {
     modules.singleton = {
       gnumake = [ "basic" ];
+      zenity = [ "basic" ];
       cachix = [ "basic" ];
       electron = [ "basic" ];
       dig = [ "basic" ];
