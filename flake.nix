@@ -1,14 +1,14 @@
 {
   description = "The preimage of Sez";
 
-  outputs = { self, nixpkgs, home-manager, nur, flake-parts, devshell, mission-control, treefmt-nix, ...  } @ inputs:
-    
+  outputs = { self, nixpkgs, home-manager, nur, flake-parts, ... } @ inputs:
+
     let
       # Lib with extended customisations
       mkLib = nixpkgs:
         nixpkgs.lib.extend
-          (self: super: {mine = import ./lib {lib = self;};} // home-manager.lib);
-      lib = mkLib inputs.nixpkgs; 
+          (self: super: { mine = import ./lib { lib = self; }; } // home-manager.lib);
+      lib = mkLib inputs.nixpkgs;
       inherit (lib.mine) rakeLeaves;
       profiles = rakeLeaves ./profiles;
 
@@ -18,14 +18,9 @@
         specialArgs = { inherit inputs lib; };
       } ({ self, lib, ... }:
       {
-        # Imports flake-parts modules
         imports = [
           profiles.configuration
           flake-parts.flakeModules.easyOverlay
-          devshell.flakeModule
-          mission-control.flakeModule
-          # nur.repos.linyinfeng.lpac # TODO: Need to sort out the correct way installing nur packages.
-          # treefmt-nix.flakeModule
         ];
 
         systems = [
@@ -40,11 +35,10 @@
           };
         };
       });
-  
+
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    latest.url = "github:nixos/nixpkgs/master";
     agenix.url = "github:ryantm/agenix";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     nixos-hardware.url = "github:nixos/nixos-hardware";
@@ -61,10 +55,11 @@
                               inputs.nixpkgs.follows = "nixpkgs"; };
     disko = { url = "github:nix-community/disko";
               inputs.nixpkgs.follows = "nixpkgs"; };
-    devshell = { url = "github:numtide/devshell";
-                 inputs.nixpkgs.follows = "nixpkgs"; };
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-    mission-control.url = "github:Platonic-Systems/mission-control";
-
+    claude-code = { url = "github:sadjow/claude-code-nix";
+                    inputs.nixpkgs.follows = "nixpkgs"; };
+    claude-desktop = { url = "github:patrickjaja/claude-desktop-bin";
+                       inputs.nixpkgs.follows = "nixpkgs"; };
+    claude-cowork = { url = "github:patrickjaja/claude-cowork-service";
+                      inputs.nixpkgs.follows = "nixpkgs"; };
   };
 }

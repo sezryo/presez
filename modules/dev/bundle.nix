@@ -11,6 +11,9 @@ in {
   };
 
   config = mkIf cfg.enable {
+    modules.singleton.claude-code = [ "basic" ];
+    modules.singleton.claude-desktop = [ "basic" ];
+    modules.singleton.claude-cowork = [ "basic" ];
     modules.dev = {
       agda.enable = true;
       c.enable = true;

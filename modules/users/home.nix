@@ -1,16 +1,17 @@
 { config, pkgs, inputs, lib, options, ... }:
 
-with lib;
-with lib.types;
 let
+  inherit (lib) mkIf mkAliasDefinitions;
+  inherit (lib.types) attrs listOf package;
+  inherit (lib.mine) mkEnableOpt' mkOpt mkOpt';
+
   cfg = config.modules.users.home;
-  inherit (lib.mine) mkEnableOpt' mkOpt mkOpt' mkOptStr;
 in {
   options = {
     modules.users.home = {
-      enable = mkEnableOpt' "Whether to manager user files wisely";
+      enable = mkEnableOpt' "Whether to manage user files wisely";
     };
-    
+
     home = {
       programs = mkOpt attrs {};
       packages = mkOpt (listOf package) [];
@@ -35,17 +36,10 @@ in {
       useUserPackages = true;
       backupFileExtension = "backup";
       extraSpecialArgs = { inherit inputs; };
-      
-      #   home.file           ->  home-manager.users.<user>.home.file
-      #   home.configFile     ->  home-manager.users.<user>.home.xdg.configFile
-      #   home.dataFile       ->  home-manager.users.<user>.home.xdg.dataFile
-      #   home.mimeApps       ->  home-manager.users.<user>.home.xdg.mimeApps
-      #   home.desktopEntries ->  home-manager.users.<user>.home.xdg.desktopEntries
-      #   home.<others>       ->  home-manager.users.<user>.home.<others>
-      
-      
+
+      # Aliases: home.<attr> -> home-manager.users.<user>.<mapped-attr>
       users.${config.user.name} = {
-        
+
         home = {
           file = mkAliasDefinitions options.home.file;
           sessionVariables = mkAliasDefinitions options.home.sessionVariables;
@@ -56,7 +50,7 @@ in {
           homeDirectory = config.user.homeDir;
           packages = mkAliasDefinitions options.home.packages;
         };
-        
+
         programs = mkAliasDefinitions options.home.programs;
         services = mkAliasDefinitions options.home.services;
         qt = mkAliasDefinitions options.home.qt;

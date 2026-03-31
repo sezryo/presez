@@ -1,12 +1,13 @@
 { config, pkgs, lib, inputs, options, ... }:
 
-with lib;
 let
+  inherit (lib) mkIf;
+  inherit (lib.mine) mkEnableOpt';
+
   cfg = config.modules.general.core;
-  inherit (lib.mine) mkEnableOpt' mkOpt';
 in {
   options.modules.general.core = {
-    enable = mkEnableOpt' "Enable core utilities for a well-functioning linux desktop, potential risks exist if not enabled";
+    enable = mkEnableOpt' "Enable core utilities for a well-functioning linux desktop";
   };
 
   config = mkIf cfg.enable {
@@ -17,7 +18,6 @@ in {
       electron = [ "basic" ];
       dig = [ "basic" ];
       vim = [ "basic" ];
-      lunarvim = [ "basic" ];
       wget = [ "basic" ];
       firefox = [ "basic" ];
       binutils = [ "basic" ];
@@ -29,7 +29,6 @@ in {
       gawk = [ "basic" ];
       cached-nix-shell = [ "basic" ];
       flatpak = [ "basic" ];
-      neofetch = [ "basic" ];
       hyfetch = [ "basic" ];
       baobab = [ "basic" ];
     };

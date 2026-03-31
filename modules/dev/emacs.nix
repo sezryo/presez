@@ -1,11 +1,10 @@
 { config, pkgs, lib, inputs, options, ... }:
 
-# TODO: Modualise emacs configuration and made langauge-specific
-with lib;
-with lib.types;
 let
-  cfg = config.modules.dev.emacs;
+  inherit (lib) mkIf mkMerge;
   inherit (lib.mine) mkEnableOpt;
+
+  cfg = config.modules.dev.emacs;
 in {
   options.modules.dev.emacs = {
     enable = mkEnableOpt "Whether to enable emacs toolchain";
@@ -34,9 +33,7 @@ in {
       modules.singleton.emacs = [ "doom" ];
     })
     (mkIf cfg.defaultEditor {
-      environment.sessionVariables = {
-        EDITOR = "emacsclient -c";
-      };
+      environment.sessionVariables.EDITOR = "emacsclient -c";
     })
   ]);
 }

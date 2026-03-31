@@ -4,11 +4,10 @@
 {
   system.stateVersion = "22.05";
 
-  # Used if Asus is treated as a PC at home
-  services.logind.settings.Login.HandleLidSwitch = "ignore"; 
-  
+  services.logind.settings.Login.HandleLidSwitch = "ignore";
+
   user.defaultPublicKey = "D931EC7A9950B57B";
-  
+
   modules = {
     users = {
       users.enable = true;
@@ -24,12 +23,8 @@
       tools.enable = true;
       integration.enable = true;
     };
-      
+
     desktop = {
-      # hyprland-primary = {
-	    #   enable = true;
-	    #   version = "tokyo";
-      # };
       wayland = {
         enable = true;
         minimum = true;
@@ -61,7 +56,7 @@
       };
       cursor = "catppuccin";
     };
-    
+
     io = {
       audio = {
         enable = true;
@@ -79,11 +74,6 @@
     };
 
     network = {
-      # proxy = {
-      #   enable = true;
-      #   clash.enable = true;
-      #   protonvpn.enable = true;
-      # };
       nm = {
         enable = true;
         iwd.enable = false;
@@ -94,25 +84,19 @@
         thunderbolt = true;
       };
     };
-    
+
     hardware = {
       ga402rk.enable = true;
       vfio.enable = true;
     };
 
     nix = {
-      # localise.enable = true; # TODO: Problems to be addressed
       gc.enable = true;
       channel = "unstable";
     };
-    
+
     boot = {
       systemd-boot.enable = true;
-      # grub = {
-      #   enable = true;
-      #   efi = true;
-      #   theme = "darkmatter-theme";
-      # };
       tty = {
         enable = true;
         theme = "catppuccin";
@@ -156,26 +140,18 @@
     locale = {
       enable = true;
       defaultFonts = true;
-      china = {
-        enable = true;
-      };
+      china.enable = true;
       uk = {
         enable = true;
         reside = true;
         spirit = true;
       };
-      japan = {
-        enable = true;
-      };
+      japan.enable = true;
     };
 
     security = {
-      # u2f = {
-      #   enable = true;
-      #   yubikey = true;
-      # };
       tpm.enable = true;
-      encryption ={
+      encryption = {
         enable = true;
         yubikey = true;
       };
@@ -183,4 +159,3 @@
     };
   };
 }
-      

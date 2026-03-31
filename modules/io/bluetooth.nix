@@ -1,9 +1,10 @@
 { config, pkgs, lib, inputs, options, ... }:
 
-with lib;
 let
-  cfg = config.modules.io.bluetooth;
+  inherit (lib) mkIf;
   inherit (lib.mine) mkEnableOpt;
+
+  cfg = config.modules.io.bluetooth;
 in {
   options.modules.io.bluetooth = {
     enable = mkEnableOpt "Whether to enable bluetooth related tools";
@@ -13,7 +14,6 @@ in {
     modules.singleton = {
       bluez = [ "basic" ];
       bluez-tools = [ "basic" ];
-      blueberry = [ "basic" ];
       blueman = [ "basic" ];
     };
     hardware.bluetooth.enable = true;

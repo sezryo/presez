@@ -9,6 +9,7 @@ lib.mine.mkIfProfile config.modules "git" "user"
     signing = {
       key = "${config.user.defaultPublicKey}";
       signByDefault = true;
+      format = "openpgp";
     };    
   };
 }

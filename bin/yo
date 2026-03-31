@@ -1,23 +1,49 @@
 #! /usr/bin/env cached-nix-shell
-#! nix-shell -i runghc -p ripgrep "haskellPackages.ghcWithPackages (p: [p.turtle])"
+#! nix-shell -i runghc -p ripgrep "haskellPackages.ghcWithPackages (p: [p.turtle p.directory])"
 
 {-# LANGUAGE OverloadedStrings #-}
 
 import Turtle
 import System.Environment
+import System.Directory (listDirectory, doesDirectoryExist)
+import Data.List (intercalate, isPrefixOf)
 import Prelude hiding (FilePath)
+import qualified Data.Text as T
 
-data Command = NewPackage FilePath | Rebuild (Maybe Bool, Maybe Bool) | GarbageCollect (Maybe Bool) | Check (Maybe Bool) | Search SearchSource | Init (Maybe Bool) | Hop (Maybe Text) | Profile ProfileOptions | Repl (Maybe Bool, Maybe Bool) deriving (Show)
+-- ─── Data types ──────────────────────────────────────────────
 
-data SearchSource = Package Text | SystemOption Text | HomeOption Text | Source Text deriving (Show)
+data Command
+  = NewPackage FilePath
+  | Rebuild (Maybe Bool, Maybe Bool)
+  | GarbageCollect (Maybe Bool)
+  | Check (Maybe Bool)
+  | Search SearchSource
+  | Init (Maybe Bool)
+  | Hop (Maybe Text)
+  | Profile ProfileOptions
+  | Repl (Maybe Bool, Maybe Bool)
+  deriving (Show)
 
-data ProfileOptions = ListProfiles (Maybe Bool) | NewProfile (Maybe Text) deriving (Show)
+data SearchSource
+  = Package Text
+  | SystemOption Text
+  | HomeOption Text
+  | Source Text
+  deriving (Show)
+
+data ProfileOptions
+  = ListProfiles (Maybe Bool)
+  | NewProfile (Maybe Text)
+  | AddMachine Text
+  deriving (Show)
+
+-- ─── Parsers ─────────────────────────────────────────────────
 
 parser :: Parser Command
 parser
      =   fmap NewPackage
-         (subcommand "new" "Create new components of packages"
-           (argPath "package" "Identify in which package shall components create"))
+         (subcommand "new" "Create new src/ modules (packages or variants)"
+           (argPath "package" "Package name to create or add components to"))
      <|> fmap Rebuild
          (subcommand "rebuild" "Rebuild the system using the current profile" rebuildParser)
      <|> fmap GarbageCollect
@@ -32,8 +58,8 @@ parser
          (subcommand "init" "Initialise your dotfiles system!"
            (optional (switch "" ' ' "")))
      <|> fmap Hop
-         (subcommand "hop" "Switch into another profile system quickly"
-           (optional (argText "profile" "The designated profile name (Optional)")))
+         (subcommand "hop" "Switch into another profile (user-machine) quickly"
+           (optional (argText "profile" "Profile name as user-machine (optional, lists if omitted)")))
      <|> fmap Profile
          (subcommand "profile" "Configure the profile and generation settings" profileParser)
      <|> fmap Repl
@@ -53,7 +79,7 @@ searchParser
             <|> fmap Source
                 (subcommand "src" "Search upon the local dotfiles src directory"
                  (argText "pname" "The desired package name"))
-                
+
 rebuildParser :: Parser (Maybe Bool, Maybe Bool)
 rebuildParser = (,) <$> optional (switch "trace" 't' "Enable showing trace while building")
                     <*> optional (switch "update" 'u' "Update the flake before building")
@@ -61,189 +87,441 @@ rebuildParser = (,) <$> optional (switch "trace" 't' "Enable showing trace while
 replParser :: Parser (Maybe Bool, Maybe Bool)
 replParser = (,) <$> optional (switch "flake" 'f' "Preload dotfiles flake inputs")
                  <*> optional (switch "nixpkgs" 'n' "Preload nixpkgs inputs")
+
 profileParser :: Parser ProfileOptions
 profileParser
              =   fmap ListProfiles
-                 (subcommand "list" "List all existing profiles"
+                 (subcommand "list" "List all existing profiles (user-machine pairs)"
                   (optional (switch "" ' ' "")))
              <|> fmap NewProfile
-                 (subcommand "new" "Create a new profile"
-                  (optional (optText "user" 'u' "Create a profile with a given user name")))
+                 (subcommand "new" "Create a new user profile"
+                  (optional (optText "user" 'u' "User name for the profile")))
+             <|> fmap AddMachine
+                 (subcommand "add-machine" "Add a new machine to an existing user profile"
+                  (argText "machine" "Machine name to create"))
 
-rebuild :: (Maybe Bool, Maybe Bool) -> IO()
+-- ─── Commands ────────────────────────────────────────────────
+
+rebuild :: (Maybe Bool, Maybe Bool) -> IO ()
 rebuild (trace, update) = do
   userName <- fetchEnv "CURRENT_USER"
   dotfiles <- fetchEnv "DOTFILES_TOP"
   cd dotfiles
   case update of
     Just _ -> stdout (inshell "nix flake update" empty)
-    Nothing -> echo ""
-  case trace of
-    Just _  -> stdout (inshell ("sudo nixos-rebuild switch --flake 'path:./#" <> userName <> "' --show-trace") empty)
-    Nothing -> stdout (inshell ("sudo nixos-rebuild switch --flake 'path:./#" <> userName <> "'") empty)
+    Nothing -> pure ()
+  let traceFlag = case trace of { Just _ -> " --show-trace"; Nothing -> "" }
+  -- Discover which profile matches this user, pick automatically if unique
+  profiles <- discoverProfiles
+  let userProfiles = filter (\p -> T.unpack userName `isPrefixOf` p) profiles
+  hostName <- case userProfiles of
+    [single] -> do
+      echo ("Using profile: " <> T.pack single)
+      return (T.pack single)
+    [] -> do
+      echo "No profiles found for current user. Specify one with 'yo hop <profile>'."
+      exit (ExitFailure 1)
+    multiple -> do
+      echo "Multiple profiles found for current user:"
+      mapM_ (\p -> echo ("  " <> T.pack p)) multiple
+      echo "Enter the profile to rebuild:"
+      readText
+  stdout (inshell ("sudo nixos-rebuild switch --flake 'path:./#" <> hostName <> "'" <> traceFlag) empty)
 
-search :: SearchSource -> IO()
+search :: SearchSource -> IO ()
 search n = do
   case n of
     Package pname -> stdout (inshell ("nix search nixpkgs " <> pname) empty)
     HomeOption pname -> stdout (inshell ("man -P cat home-configuration.nix | rg -i '" <> pname <> "'") empty)
     SystemOption pname -> stdout (inshell ("man -P cat configuration.nix | rg -i '" <> pname <> "'") empty)
-    Source pname -> stdout (inshell ("cd $DOTFILES_SRC && find . -name '" <> pname <> "'") empty)
-  
+    Source pname -> do
+      srcDir <- fetchEnv "DOTFILES_SRC"
+      stdout (inshell ("find " <> srcDir <> " -name '*" <> pname <> "*'") empty)
 
-check :: IO()
+check :: IO ()
 check = do
   dotfiles <- fetchEnv "DOTFILES_TOP"
   cd dotfiles
-  stdout (inshell ("nix flake check") empty)
+  stdout (inshell "nix flake check" empty)
 
-repl :: (Maybe Bool, Maybe Bool) -> IO()
+repl :: (Maybe Bool, Maybe Bool) -> IO ()
 repl (flake, nixpkgs) = do
   dotfiles <- fetchEnv "DOTFILES_TOP"
   case flake of
     Just _ -> stdout (inshell ("nix repl --expr 'builtins.getFlake \"" <> dotfiles <> "\"'") empty)
-    Nothing -> do
-      case nixpkgs of
-        Just _ -> stdout (inshell ("nix repl '<nixpkgs>'") empty)
-        Nothing -> stdout (inshell ("nix repl") empty)
+    Nothing -> case nixpkgs of
+      Just _ -> stdout (inshell "nix repl '<nixpkgs>'" empty)
+      Nothing -> stdout (inshell "nix repl" empty)
 
-garbageCollect :: Maybe Bool -> IO()
+garbageCollect :: Maybe Bool -> IO ()
 garbageCollect n = do
   stdout (inshell "nix-env --delete-generations old" empty)
   case n of
     Just _  -> stdout (inshell "nix-store --gc" empty)
     Nothing -> stdout (inshell "sudo nix-store --gc" empty)
 
-init :: IO()
+init :: IO ()
 init = do
-  echo "Welcome to NixOS! You are now going to initialise your modualised dotfiles to build your system."
-  echo "Please make sure you are now in the top-level of dotfiles directory, usually the git cloned directory for now. Enter Y to proceed. (Y/N)"
+  echo "Welcome to NixOS! You are now going to initialise your modularised dotfiles."
+  echo "Make sure you are in the top-level dotfiles directory. Enter Y to proceed. (Y/N)"
   proceed <- promptInput
   when proceed $ do
     echo "Setting temporary environmental variables..."
     top <- pwd
-    setEnv "DOTFILES_TOP" (encodeString top)
-    setEnv "DOTFILES_BIN" (encodeString top ++ "/bin")
-    setEnv "DOTFILES_ASSETS" (encodeString top ++ "/assets")
-    setEnv "DOTFILES_MODULES" (encodeString top ++ "/modules")
-    setEnv "DOTFILES_SECRETS" (encodeString top ++ "/secrets")
-    setEnv "DOTFILES_SRC" (encodeString top ++ "/src")
-    echo "Now enter your desired user name of the system"
+    setEnv "DOTFILES_TOP" top
+    setEnv "DOTFILES_BIN" (top ++ "/bin")
+    setEnv "DOTFILES_ASSETS" (top ++ "/assets")
+    setEnv "DOTFILES_MODULES" (top ++ "/modules")
+    setEnv "DOTFILES_SECRETS" (top ++ "/secrets")
+    setEnv "DOTFILES_SRC" (top ++ "/src")
+    echo "Enter your desired user name for the system:"
     name <- readText
     newProfile name
-  
-  
 
-hop :: Maybe Text -> IO()
-hop n = do
-  echo ""
+-- ─── Hop: switch to another NixOS configuration ─────────────
 
-profile :: ProfileOptions -> IO()
-profile n = do
-  case n of
-    NewProfile m ->
-      case m of
-        Just name -> newProfile name
-        Nothing -> do
-          currentUser <- fetchEnv "CURRENT_USER"
-          echo "Would you like to initialise a new profile of the same user as the current one? (Y/N)"
-          proceed <- promptInput
-          case proceed of
-            True -> newProfile currentUser
-            False -> do
-              echo "Enter your new desired user name if you'd like to proceed"
-              newName <- readText
-              newProfile newName       
-        
-    ListProfiles m -> echo ""
+hop :: Maybe Text -> IO ()
+hop target = do
+  dotfiles <- fetchEnv "DOTFILES_TOP"
+  cd dotfiles
+  case target of
+    Just profileName -> do
+      echo ("Switching to profile: " <> profileName)
+      stdout (inshell ("sudo nixos-rebuild switch --flake 'path:./#" <> profileName <> "'") empty)
+      echo ("Successfully switched to " <> profileName)
+    Nothing -> do
+      profiles <- discoverProfiles
+      case profiles of
+        [] -> echo "No profiles found. Run 'yo profile new' to create one."
+        _  -> do
+          echo "Available profiles:"
+          mapM_ (\p -> echo ("  " <> T.pack p)) profiles
+          echo ""
+          echo "Enter the profile to switch to:"
+          choice <- readText
+          hop (Just choice)
 
-newProfile :: Text -> IO()
-newProfile n = do
-  echo ""
-  
-newPackage :: FilePath -> IO()
+-- ─── Profile management ─────────────────────────────────────
+
+profile :: ProfileOptions -> IO ()
+profile n = case n of
+  NewProfile m -> case m of
+    Just name -> newProfile name
+    Nothing -> do
+      currentUser <- fetchEnv "CURRENT_USER"
+      echo ("Would you like to create a new profile for user '" <> currentUser <> "'? (Y/N)")
+      proceed <- promptInput
+      if proceed
+        then newProfile currentUser
+        else do
+          echo "Enter the user name for the new profile:"
+          newName <- readText
+          newProfile newName
+
+  ListProfiles _ -> do
+    profiles <- discoverProfiles
+    case profiles of
+      [] -> echo "No profiles found."
+      _  -> do
+        echo "Available profiles (user-machine):"
+        mapM_ (\p -> echo ("  " <> T.pack p)) profiles
+
+  AddMachine userName -> do
+    dotfiles <- fetchEnv "DOTFILES_TOP"
+    let profilesDir = T.unpack dotfiles ++ "/profiles/" ++ T.unpack userName
+    exists <- liftIO $ doesDirectoryExist profilesDir
+    if not exists
+      then echo ("User profile '" <> userName <> "' does not exist. Create it first with 'yo profile new'.")
+      else do
+        echo "Enter the machine name:"
+        machineName <- readText
+        createMachine (T.pack dotfiles) userName machineName
+
+-- Discover all <user>-<machine> profile combinations by scanning profiles/ directory.
+discoverProfiles :: IO [String]
+discoverProfiles = do
+  dotfiles <- fetchEnv "DOTFILES_TOP"
+  let profilesDir = T.unpack (dotfiles :: Text) ++ "/profiles"
+  topEntries <- liftIO $ listDirectory profilesDir
+  fmap concat $ mapM (\entry -> do
+    let entryPath = profilesDir ++ "/" ++ entry
+    isDir <- liftIO $ doesDirectoryExist entryPath
+    if not isDir || entry == "." || entry == ".."
+      then return []
+      else do
+        subEntries <- liftIO $ listDirectory entryPath
+        fmap concat $ mapM (\sub -> do
+          let subPath = entryPath ++ "/" ++ sub
+          isSubDir <- liftIO $ doesDirectoryExist subPath
+          -- A machine directory must contain pinned.nix
+          if isSubDir && sub /= "common"
+            then do
+              let pinnedPath = subPath ++ "/pinned.nix"
+              hasPinned <- testpath (fromString pinnedPath)
+              if hasPinned
+                then return [entry ++ "-" ++ sub]
+                else return []
+            else return []
+          ) subEntries
+    ) topEntries
+
+-- Create a new user profile with common.nix and prompt for first machine.
+newProfile :: Text -> IO ()
+newProfile userName = do
+  dotfiles <- fetchEnv "DOTFILES_TOP"
+  let profileDir = T.unpack dotfiles ++ "/profiles/" ++ T.unpack userName
+  exists <- liftIO $ doesDirectoryExist profileDir
+  if exists
+    then echo ("Profile '" <> userName <> "' already exists.")
+    else do
+      echo ("Creating profile for user '" <> userName <> "'...")
+      mktree (fromString profileDir)
+      -- Write common.nix
+      output (fromString (profileDir ++ "/common.nix")) (commonTemplate userName)
+      echo ("  Created profiles/" <> userName <> "/common.nix")
+      echo ""
+      echo "Would you like to add a machine configuration? (Y/N)"
+      proceed <- promptInput
+      when proceed $ do
+        echo "Enter the machine name:"
+        machineName <- readText
+        createMachine dotfiles userName machineName
+
+-- Create a machine directory under an existing user profile.
+createMachine :: Text -> Text -> Text -> IO ()
+createMachine dotfiles userName machineName = do
+  let machineDir = T.unpack dotfiles ++ "/profiles/" ++ T.unpack userName ++ "/" ++ T.unpack machineName
+  exists <- liftIO $ doesDirectoryExist machineDir
+  if exists
+    then echo ("Machine '" <> machineName <> "' already exists under '" <> userName <> "'.")
+    else do
+      mktree (fromString machineDir)
+      -- Write pinned.nix
+      output (fromString (machineDir ++ "/pinned.nix")) (pinnedTemplate machineName)
+      echo ("  Created profiles/" <> userName <> "/" <> machineName <> "/pinned.nix")
+      -- Write hardware-configuration.nix placeholder
+      output (fromString (machineDir ++ "/hardware-configuration.nix")) hardwareTemplate
+      echo ("  Created profiles/" <> userName <> "/" <> machineName <> "/hardware-configuration.nix")
+      echo ""
+      echo ("Profile '" <> userName <> "-" <> machineName <> "' is now ready.")
+      echo "Replace hardware-configuration.nix with output from: nixos-generate-config --show-hardware-config"
+      echo "Then rebuild with: yo rebuild"
+
+-- ─── Package (src/) management ───────────────────────────────
+
+newPackage :: FilePath -> IO ()
 newPackage pkg = do
   src <- fetchEnv "DOTFILES_SRC"
   cd src
   exists <- testdir pkg
   if exists
     then do
-      echo "The package already exists in the source, would you like to proceed adding more components? (Y/N)"
+      echo "The package already exists. Would you like to add a new variant? (Y/N)"
       proceed <- promptInput
       when proceed $ do
         cd pkg
         addComponents pkg Nothing
     else do
-      echo "The package does not exist in the source, would you like to proceed creating a new package? (Y/N)"
+      echo "Creating new package. Proceed? (Y/N)"
       proceed <- promptInput
       when proceed $ do
         mkdir pkg
         cd pkg
         addComponents pkg (Just "basic")
 
-addComponents :: FilePath -> Maybe Text -> IO()
+addComponents :: FilePath -> Maybe Text -> IO ()
 addComponents pkg comp = do
+  let pkgName = format fp pkg
   case comp of
     Just name -> do
-      touch (fromText (name <> ".nix"))
-      output (fromText (name <> ".nix")) (fileTemplate (format fp pkg) name)
+      let fileName = T.unpack (name <> ".nix")
+      output fileName (fileTemplate pkgName name)
+      echo ("  Created src/" <> pkgName <> "/" <> name <> ".nix")
     Nothing -> do
-      echo "Enter the desired component name you want to add"
+      echo "Enter the variant name to add:"
       input <- readText
-      output (fromText (input <> ".nix")) (fileTemplate (format fp pkg) input)
+      echo "Is this a directory variant with config files? (Y/N)"
+      isDir <- promptInput
+      if isDir
+        then do
+          let dirPath = T.unpack input
+          mktree dirPath
+          output (dirPath </> "default.nix") (fileTemplate pkgName input)
+          echo ("  Created src/" <> pkgName <> "/" <> input <> "/default.nix")
+        else do
+          output (T.unpack (input <> ".nix")) (fileTemplate pkgName input)
+          echo ("  Created src/" <> pkgName <> "/" <> input <> ".nix")
+
+-- ─── Templates ───────────────────────────────────────────────
+
+-- Template for common.nix in a new user profile
+commonTemplate :: Text -> Shell Line
+commonTemplate userName = select . map unsafeTextToLine $
+  [ ""
+  , "{ config, pkgs, lib, inputs, ... }:"
+  , ""
+  , "{"
+  , "  user = {"
+  , "    name = \"" <> userName <> "\";"
+  , "    hostName = \"nixos\";  # Change to your desired hostname"
+  , "    fullName = \"\";        # Your full name"
+  , "    email = \"\";           # Your email"
+  , "  };"
+  , ""
+  , "  dotfiles.dir = \"/home/" <> userName <> "/presez\";"
+  , "}"
+  ]
+
+-- Template for pinned.nix in a new machine configuration
+pinnedTemplate :: Text -> Shell Line
+pinnedTemplate machineName = select . map unsafeTextToLine $
+  [ ""
+  , "{ config, pkgs, lib, inputs, ... }:"
+  , ""
+  , "{"
+  , "  system.stateVersion = \"24.11\";"
+  , ""
+  , "  modules = {"
+  , "    users = {"
+  , "      users.enable = true;"
+  , "      dotfiles.enable = true;"
+  , "      home.enable = true;"
+  , "    };"
+  , ""
+  , "    shell = {"
+  , "      enable = true;"
+  , "      env = [ \"bash\" ];"
+  , "      defaultShell = \"bash\";"
+  , "      loginShell = \"bash\";"
+  , "      tools.enable = true;"
+  , "      integration.enable = true;"
+  , "    };"
+  , ""
+  , "    desktop = {"
+  , "      wayland = {"
+  , "        enable = true;"
+  , "        minimum = true;"
+  , "      };"
+  , "      gtk.enable = true;"
+  , "      qt.enable = true;"
+  , "      display = {"
+  , "        enable = true;"
+  , "        package = \"gdm\";"
+  , "      };"
+  , "    };"
+  , ""
+  , "    io = {"
+  , "      audio.enable = true;"
+  , "      bluetooth.enable = true;"
+  , "    };"
+  , ""
+  , "    network = {"
+  , "      nm.enable = true;"
+  , "      ssh.enable = true;"
+  , "    };"
+  , ""
+  , "    nix = {"
+  , "      gc.enable = true;"
+  , "      channel = \"unstable\";"
+  , "    };"
+  , ""
+  , "    boot = {"
+  , "      systemd-boot.enable = true;"
+  , "      kernel = \"latest\";"
+  , "    };"
+  , ""
+  , "    general = {"
+  , "      system.enable = true;"
+  , "      core.enable = true;"
+  , "    };"
+  , ""
+  , "    locale = {"
+  , "      enable = true;"
+  , "      defaultFonts = true;"
+  , "    };"
+  , ""
+  , "    security = {};"
+  , "  };"
+  , "}"
+  ]
+
+-- Placeholder hardware-configuration.nix
+hardwareTemplate :: Shell Line
+hardwareTemplate = select . map unsafeTextToLine $
+  [ "# This is a placeholder. Replace with output from:"
+  , "#   nixos-generate-config --show-hardware-config"
+  , ""
+  , "{ config, lib, pkgs, modulesPath, ... }:"
+  , ""
+  , "{"
+  , "  imports = ["
+  , "    (modulesPath + \"/installer/scan/not-detected.nix\")"
+  , "  ];"
+  , ""
+  , "  # Add your filesystem, boot, and hardware config here."
+  , "}"
+  ]
+
+-- Template for a src/ package module using mkIfProfile
+fileTemplate :: Text -> Text -> Shell Line
+fileTemplate pkg comp = select . map unsafeTextToLine $
+  [ "{ config, lib, pkgs, inputs, ... }:"
+  , ""
+  , "lib.mine.mkIfProfile config.modules \"" <> pkg <> "\" \"" <> comp <> "\""
+  , ""
+  , "{"
+  , "  " <> configTemplate pkg comp
+  , "}"
+  ]
+
+configTemplate :: Text -> Text -> Text
+configTemplate pkg comp =
+  case comp of
+    "basic" -> "home.packages = [ pkgs." <> pkg <> " ];"
+    _       -> "# Add your " <> comp <> " configuration here"
+
+-- ─── Utilities ───────────────────────────────────────────────
 
 promptInput :: IO Bool
 promptInput = do
   input <- readline
   case input of
     Just "Y" -> return True
+    Just "y" -> return True
     Just "N" -> return False
+    Just "n" -> return False
     _ -> do
-      echo "Invalid input"
+      echo "Invalid input (Y/N)"
       promptInput
 
-readText :: MonadIO io => io (Text)
+readText :: MonadIO io => io Text
 readText = do
   input <- readline
   case input of
     Just x -> return $ lineToText x
     Nothing -> readText
 
-fetchEnv :: (IsString a) => String -> IO (a)
+fetchEnv :: (IsString a) => String -> IO a
 fetchEnv n = do
   input <- lookupEnv n
   case input of
     Just env -> return $ fromString env
     Nothing -> do
-      echo "Some dotfile related environmental variables are not set, run 'yo init' first."
+      echo "Some dotfile-related env vars are not set. Run 'yo init' first."
       exit (ExitFailure 1)
 
-configTemplate :: Text -> Text -> Text
-configTemplate pkg comp =
-  case comp of
-    "basic" -> "home.packages = [ pkgs." <> pkg <> " ];"
-    _ -> "Unspecified"
-  
-fileTemplate :: Text -> Text -> Shell Line
-fileTemplate pkg comp = select . map unsafeTextToLine $
-                        [ "{ config, pkgs, lib, ... }:"
-                        , ""
-                        , "lib.mine.mkIfProfile config.modules \"" <> pkg <> "\" \"basic\""
-                        , ""
-                        , "{"
-                        , "  " <> (configTemplate pkg comp)
-                        , "}"]
+-- ─── Main ────────────────────────────────────────────────────
 
-main :: IO()
+main :: IO ()
 main = do
   x <- options "Sezryo's NixOS CLI" parser
   case x of
-    Rebuild (n, m) -> rebuild (n, m)
-    Search n -> search n
-    NewPackage n -> newPackage n  
-    GarbageCollect n -> garbageCollect n
-    Check n -> check
-    Init n -> Main.init
-    Hop n -> hop n
-    Profile n -> profile n
-    Repl (n, m) -> repl (n, m)
+    Rebuild (n, m)     -> rebuild (n, m)
+    Search n           -> search n
+    NewPackage n       -> newPackage n
+    GarbageCollect n   -> garbageCollect n
+    Check _            -> check
+    Init _             -> Main.init
+    Hop n              -> hop n
+    Profile n          -> profile n
+    Repl (n, m)        -> repl (n, m)

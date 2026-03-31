@@ -5,7 +5,7 @@
   system.stateVersion = "24.05";
 
   user.defaultPublicKey = "E1D631009F9086E1";
-  
+
   modules = {
     users = {
       users.enable = true;
@@ -15,18 +15,14 @@
 
     shell = {
       enable = true;
-      env = [ "nushell" "xonsh" "bash" "babashka" ]; # Fish
+      env = [ "nushell" "xonsh" "bash" "babashka" ];
       defaultShell = "nushell";
       loginShell = "xonsh";
       tools.enable = true;
       integration.enable = true;
     };
-      
+
     desktop = {
-      # hyprland-primary = {
-      #   enable = true;
-      #   version = "osaka";
-      # };
       wayland = {
         enable = true;
         minimum = true;
@@ -45,7 +41,7 @@
         enable = true;
         enableDefault = true;
         enableApps = true;
-	      gnome.enable = true;
+        gnome.enable = true;
         gnome.enableDefaultExtensions = true;
       };
       qt = {
@@ -58,7 +54,7 @@
       };
       cursor = "catppuccin";
     };
-    
+
     io = {
       audio = {
         enable = true;
@@ -76,11 +72,6 @@
     };
 
     network = {
-      /* proxy = {
-        enable = true;
-        clash.enable = true;
-        protonvpn.enable = true;
-      }; */
       nm = {
         enable = true;
         iwd.enable = false;
@@ -91,22 +82,19 @@
         thunderbolt = true;
       };
     };
-    
+
     hardware = {
-      x1nano2.enable = true;  
+      x1nano2.enable = true;
     };
 
     nix = {
-      # localise.enable = true; # TODO: Problems to be addressed
       gc.enable = true;
       channel = "unstable";
     };
-    
+
     boot = {
-      systemd-boot.enable = true; 
-      tty = {
-        enable = true;
-      };
+      systemd-boot.enable = true;
+      tty.enable = true;
       kernel = "latest";
     };
 
@@ -146,31 +134,24 @@
     locale = {
       enable = true;
       defaultFonts = true;
-      china = {
-        enable = true;
-      };
+      china.enable = true;
       uk = {
         enable = true;
         reside = true;
         spirit = true;
       };
-      japan = {
-        enable = true;
-      };
+      japan.enable = true;
     };
 
     security = {
-      # u2f = {
-      #   enable = true;
-      #   yubikey = true;
-      # };
       tpm.enable = true;
-      encryption ={
+      encryption = {
         enable = true;
         yubikey = true;
       };
       kali.enable = true;
     };
   };
+
+  # modules.singleton.pluely = [ "basic" ];
 }
-      

@@ -11,7 +11,7 @@ let
     jupyter
     keras
     tensorflow
-    arch
+    # arch
     toolz
     seaborn
     pytest

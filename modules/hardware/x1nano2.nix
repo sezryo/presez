@@ -17,7 +17,25 @@ in {
       platform = "ipu6ep";
     };
 
+    # IPU6 Camera HAL needs /run/camera to write calibration data (aiqd files).
+    # Without this, v4l2-relayd-ipu6 crash-loops and the camera drops randomly.
+    systemd.tmpfiles.rules = [
+      "d /run/camera 0755 root root -"
+    ];
+
+    # Increase restart tolerance so transient HAL failures don't permanently kill the camera
+    systemd.services.v4l2-relayd-ipu6 = {
+      serviceConfig = {
+        RestartSec = 2;
+        StartLimitBurst = 50;
+        StartLimitIntervalSec = 120;
+      };
+    };
+
     services.fwupd.enable = true;
+
+    # Intel thermal daemon — prevents thermal throttling by proactively managing thermals
+    services.thermald.enable = true;
     
     gpu = {
       graphics = "8086:46a6";
@@ -47,7 +65,7 @@ in {
       ssd.enable = true;
       power = {
         enable = true;
-        # tuning = true;
+        tuning = true;
       };
     };
     

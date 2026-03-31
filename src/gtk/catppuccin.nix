@@ -4,7 +4,7 @@ lib.mine.mkIfProfile config.modules "gtk" "catppuccin"
 
 {
   home.gtk = {
-    
+
     font = {
       package = pkgs.jetbrains-mono;
       name = "JetBrains Mono";
@@ -19,6 +19,8 @@ lib.mine.mkIfProfile config.modules "gtk" "catppuccin"
         variant = "frappe";
       };
     };
+
+    gtk4.theme = null;
 
     cursorTheme = {
       name = "catppuccin-frappe-lavender-cursors";

@@ -10,6 +10,9 @@ in {
   options.modules.boot.kernel = mkOpt' (enum packages) "latest" "Which kernel version to use, select latest for the mainline kernel, stable for the newest stable kernel and zfs for the newest zfs supportive kernel";
   
   config.boot = mkMerge [
+    # {
+    #   tmp.useTmpfs = true;
+    # }
     (mkIf (cfg == "stable") {
       kernelPackages = pkgs.linuxPackages;
     })

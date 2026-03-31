@@ -1,9 +1,10 @@
 { config, pkgs, lib, inputs, options, ... }:
 
-with lib;
 let
+  inherit (lib) mkIf;
+  inherit (lib.mine) mkEnableOpt;
+
   cfg = config.modules.general.streaming;
-  inherit (lib.mine) mkEnableOpt mkOpt';
 in {
   options.modules.general.streaming = {
     enable = mkEnableOpt "Whether to enable streaming utilities";
@@ -19,11 +20,7 @@ in {
       netflix = [ "basic" ];
       mixxx = [ "basic" ];
       vcv-rack = [ "basic" ];
-      bitwig-studio = [ "basic" ];
-      reaper = [ "basic" ];
     };
-    networking.firewall = {
-      allowedTCPPorts = [ 57621 ]; # For Spotify local discovery
-    };
+    networking.firewall.allowedTCPPorts = [ 57621 ]; # Spotify local discovery
   };
 }
