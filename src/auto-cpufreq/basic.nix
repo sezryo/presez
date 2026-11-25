@@ -1,7 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "auto-cpufreq" "basic"
-
 {
   services.auto-cpufreq = {
     enable = true;

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Yo
+GenericName=System Configuration
+Comment=Manage the profiles, sets and packages of this NixOS configuration
+Exec=yo gui
+Icon=org.presez.Yo
+Terminal=false
+Categories=System;Settings;GTK;
+Keywords=nix;nixos;packages;profile;rebuild;update;
+StartupNotify=true

@@ -1,12 +1,20 @@
 { lib, ... }:
 
 let
-  inherit (lib) mkEnableOption mkOption types;
+  inherit (lib) mkOption types;
+
+  # On/off switches. The description is used as written (mkEnableOption would
+  # put "Whether to enable" in front of it).
+  mkEnableOptIf = description: default:
+    mkOption {
+      inherit description default;
+      type = types.bool;
+      example = true;
+    };
 in {
-  
-  mkEnableOpt = x: (mkEnableOption x);
-  mkEnableOpt' = x: (mkEnableOption x) // {default = true;};
-  mkEnableOptIf = x: y: (mkEnableOption x) // {default = y;};
+  inherit mkEnableOptIf;
+  mkEnableOpt = description: mkEnableOptIf description false;
+  mkEnableOpt' = description: mkEnableOptIf description true;
 
   mkOpt = type: default:
     mkOption {inherit type default;};

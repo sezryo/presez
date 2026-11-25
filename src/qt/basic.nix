@@ -1,7 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "qt" "basic"
-
 {
   qt = {
     enable = true;
@@ -17,10 +15,10 @@ lib.mine.mkIfProfile config.modules "qt" "basic"
     QT_QPA_PLATFORMTHEME = "qt5ct";
   };
   
-  environment.systemPackages = with pkgs.libsForQt5; [
+  environment.systemPackages = with pkgs; [
     qt5.qtgraphicaleffects
     qt5.qtquickcontrols2
     qt5.qtsvg
-    qt5ct
+    libsForQt5.qt5ct
   ];
 }

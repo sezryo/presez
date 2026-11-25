@@ -9,8 +9,6 @@
         nixpkgs.lib.extend
           (self: super: { mine = import ./lib { lib = self; }; } // home-manager.lib);
       lib = mkLib inputs.nixpkgs;
-      inherit (lib.mine) rakeLeaves;
-      profiles = rakeLeaves ./profiles;
 
     in
       flake-parts.lib.mkFlake {
@@ -19,7 +17,6 @@
       } ({ self, lib, ... }:
       {
         imports = [
-          profiles.configuration
           flake-parts.flakeModules.easyOverlay
         ];
 
@@ -28,11 +25,24 @@
           "x86_64-linux"
         ];
 
+        # One NixOS configuration per profiles/<user>/<machine>, named "<user>-<machine>".
+        flake.nixosConfigurations = lib.mine.mkHosts {
+          inherit self inputs;
+          root = ./.;
+          modules = [
+            inputs.disko.nixosModules.disko
+          ];
+        };
+
         perSystem = { inputs', self', pkgs, ... }: {
           _module.args = {
             pkgs = inputs'.nixpkgs.legacyPackages;
             lib = lib;
           };
+
+          # yo, the helper that manages this configuration: `nix run .#yo`.
+          packages.yo = pkgs.callPackage ./yo { };
+          packages.default = self'.packages.yo;
         };
       });
 
@@ -57,8 +67,9 @@
               inputs.nixpkgs.follows = "nixpkgs"; };
     claude-code = { url = "github:sadjow/claude-code-nix";
                     inputs.nixpkgs.follows = "nixpkgs"; };
-    claude-desktop = { url = "github:patrickjaja/claude-desktop-bin";
-                       inputs.nixpkgs.follows = "nixpkgs"; };
+    codex-cli = { url = "github:sadjow/codex-cli-nix";
+                  inputs.nixpkgs.follows = "nixpkgs"; };
+    claude-desktop.url = "github:patrickjaja/claude-desktop-extra";
     claude-cowork = { url = "github:patrickjaja/claude-cowork-service";
                       inputs.nixpkgs.follows = "nixpkgs"; };
   };

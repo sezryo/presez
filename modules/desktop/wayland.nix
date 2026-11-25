@@ -33,6 +33,8 @@ in {
         wmctrl = [ "basic" ];
         wev = [ "basic" ];
         electron = [ "wayland" ];
+        # Productivity apps that ship a Wayland-specific variant.
+        zoom-us = mkIf config.modules.general.productivity.enable [ "wayland" ];
       };
       environment.sessionVariables = {
         QT_QPA_PLATFORM = "wayland;xcb";

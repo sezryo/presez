@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "yo"
+version = "1.0.0"
+description = "The helper that manages this NixOS configuration"
+requires-python = ">=3.11"
+
+[project.scripts]
+yo = "yo.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["yo*"]

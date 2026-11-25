@@ -1,7 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "rofi" "basic"
-
 {
   home.programs.rofi = {
     enable = true;

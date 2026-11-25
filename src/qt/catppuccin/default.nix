@@ -1,6 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "qt" "catppuccin"
 {
   /* home.qt = {
     style = {

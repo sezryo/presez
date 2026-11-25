@@ -9,11 +9,6 @@ let
   shells = [ "bash" "fish" "nushell" "xonsh" "babashka" ];
 
 in {
-  imports = [
-    ./integration.nix
-    ./tools.nix
-  ];
-
   options.modules.shell = {
     enable = mkEnableOpt' "Use modularised options to manage shell preferences";
     env = mkOpt' (listOf (enum shells)) [ "bash" ] "Which shells to use in total";
@@ -23,10 +18,11 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      modules.singleton = {
-        ${cfg.loginShell} = mkDefault [ "basic" ];
-        ${cfg.defaultShell} = mkDefault [ "basic" ];
-      };
+      # Two definitions, because the login shell may also be the default shell.
+      modules.singleton = mkMerge [
+        { ${cfg.loginShell} = mkDefault [ "basic" ]; }
+        { ${cfg.defaultShell} = mkDefault [ "basic" ]; }
+      ];
       users.users.${config.user.name}.shell = pkgs.${cfg.loginShell};
     }
     (mkIf (elem "bash" cfg.env) {

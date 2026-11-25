@@ -1,7 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "firefox" "defaultSettings"
-
 { 
   home.programs.firefox = {
     profiles."main.profile" = {

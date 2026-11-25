@@ -44,7 +44,7 @@ let
     '';
   };
 
-in lib.mine.mkIfProfile config.modules "vcv-rack" "basic"
+in 
 
 {
   home.packages = [ vcv-rack-fixed ];

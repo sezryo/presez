@@ -1,6 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "starship" "catppuccin"
 {
   home.programs.starship = {
     settings = import ./myStarship.nix //

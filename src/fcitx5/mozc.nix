@@ -1,7 +1,5 @@
 { config, pkgs, lib, ... }:
 
-lib.mine.mkIfProfile config.modules "fcitx5" "mozc"
-
 {
   i18n = {
     inputMethod = {

@@ -1,16 +1,6 @@
-{ config, pkgs, lib, inputs, options, ... }:
-
-with lib;
-
-let
-  cfg = config.modules.nix.gc;
-  inherit (lib.mine) mkEnableOpt;
-in {
-  options.modules.nix.gc = {
-    enable = mkEnableOpt "Whether to enable automatic nixos garbage collection";
-  };
-
-  config = mkIf cfg.enable {
+{
+  description = "automatic Nix garbage collection";
+  config = {
     nix.gc = {
       automatic = true;
       randomizedDelaySec = "14m";

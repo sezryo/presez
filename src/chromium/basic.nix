@@ -12,7 +12,6 @@ let
     ];
   };
 in
-lib.mine.mkIfProfile config.modules "chromium" "basic"
 
 {
   home.packages = [ chromiumWithCamera ];

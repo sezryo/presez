@@ -44,7 +44,7 @@ in {
      modules.singleton.hyprland = [ "osaka-night" ];
   })
   (mkIf (cfg.version == "tokyo") {
-     modules.singleton.hyprland = [ "tokto-night" ];
+     modules.singleton.hyprland = [ "tokyo-night" ];
   })
   ]);
 }

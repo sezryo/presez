@@ -1,7 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "gtk" "emacs"
-
 {
   home.gtk = {
 

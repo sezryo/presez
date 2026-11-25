@@ -1,7 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "zoom-us" "wayland"
-
 {
   home.configFile."zoomus.conf".source = ./myZoomus.conf;
   home.desktopEntries."zoom-wayland" = {

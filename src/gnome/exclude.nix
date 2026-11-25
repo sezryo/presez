@@ -1,7 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "gnome" "exclude"
-
 {
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos

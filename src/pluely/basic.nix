@@ -93,7 +93,7 @@ let
     '';
   };
 in
-lib.mine.mkIfProfile config.modules "pluely" "basic"
+
 {
   home.packages = [ pluely ];
 

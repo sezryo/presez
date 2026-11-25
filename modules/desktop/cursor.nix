@@ -12,6 +12,7 @@ in {
   config = mkMerge [
     (mkIf (cfg == "catppuccin") {
       home.pointerCursor = {
+        enable = true;
         package = pkgs.catppuccin-cursors.frappeLavender;
         name = "catppuccin-frappe-lavender-cursors";
         size = 24;

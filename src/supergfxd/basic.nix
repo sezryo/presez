@@ -1,7 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "supergfxd" "basic"
-
 {
   services.supergfxd = {
     enable = true;

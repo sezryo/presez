@@ -1,7 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "clash" "basic"
-
 {
   systemd.services.clash = {
     description = "Clash client service, using clash-meta";

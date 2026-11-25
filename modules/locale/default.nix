@@ -5,11 +5,6 @@ let
   cfg = config.modules.locale;
   inherit (lib.mine) mkEnableOpt;
 in {
-  imports = [
-    ./china.nix
-    ./japan.nix
-    ./uk.nix
-  ];
   options.modules.locale = {
     enable = mkEnableOpt "Whether to enable locale setting modules";
     defaultFonts = mkEnableOpt "Enable this to install default font packages";

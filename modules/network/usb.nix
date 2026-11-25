@@ -14,7 +14,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       modules.singleton = {
-        iperf = [ "basic" ];
+        # iperf = [ "basic" ]; # never had a package under src/, so it was never installed; uncomment to install pkgs.iperf
       };
     }
     (mkIf cfg.thunderbolt {

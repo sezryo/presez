@@ -27,7 +27,7 @@ in {
     })
     (mkIf cfg.emulators {
       modules.singleton = {
-        bottles = [ "basic" ];
+        # bottles = [ "basic" ];
         # yuzu-early-access = [ "basic" ]; # Shame on Nintendo
       };
     })

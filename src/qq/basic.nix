@@ -1,7 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "qq" "basic"
-
 {
   home.packages = [ pkgs.qq ];
   home.desktopEntries.qq = {

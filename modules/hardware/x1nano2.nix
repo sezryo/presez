@@ -25,10 +25,10 @@ in {
 
     # Increase restart tolerance so transient HAL failures don't permanently kill the camera
     systemd.services.v4l2-relayd-ipu6 = {
+      startLimitBurst = 50;
+      startLimitIntervalSec = lib.mkForce 120;
       serviceConfig = {
-        RestartSec = 2;
-        StartLimitBurst = 50;
-        StartLimitIntervalSec = 120;
+        RestartSec = lib.mkForce "2s";
       };
     };
 

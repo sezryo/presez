@@ -1,0 +1,25 @@
+{
+  "version": "0.1.12",
+  "systems": {
+    "aarch64-linux": {
+      "cli": {
+        "url": "https://github.com/pingdotgg/t3code/releases/download/v0.1.12/t3-0.1.12-linux-arm64.tar.gz",
+        "sha256": "29cfbab19117aa436f1700382afb9cfe5d7ef47609cabba9356271a0bca5ad98"
+      },
+      "desktop": {
+        "url": "https://github.com/pingdotgg/t3code/releases/download/v0.1.12/T3-Code-arm64.AppImage",
+        "sha256": "6a004d5da562ec25d147ddf4ae577ed66e3d052b68954e455a178297a83bd8fa"
+      }
+    },
+    "x86_64-linux": {
+      "cli": {
+        "url": "https://github.com/pingdotgg/t3code/releases/download/v0.1.12/t3-0.1.12-linux-x64.tar.gz",
+        "sha256": "9ba3db46e3554fb9970fd5ede9e823c2f6d6f6763f40340bd4c8ef6b09501c54"
+      },
+      "desktop": {
+        "url": "https://github.com/pingdotgg/t3code/releases/download/v0.1.12/T3-Code-x86_64.AppImage",
+        "sha256": "66b91551571df6d29b55cb590295edf411cff96c95a8feb3f41c3ca595d722e2"
+      }
+    }
+  }
+}

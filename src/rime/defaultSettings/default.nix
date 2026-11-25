@@ -6,7 +6,6 @@ let
   '';
 in 
   
-lib.mine.mkIfProfile config.modules "rime" "defaultSettings"
 
 {
   /* home.activation.setupRimeCacheDirectory = lib.hm.dag.entryAfter [ "writeBoundary" "onFilesChange" ] ''

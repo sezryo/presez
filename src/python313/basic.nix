@@ -17,7 +17,7 @@ let
     pytest
     returns
   ];
-in lib.mine.mkIfProfile config.modules "python313" "basic" {
+in {
   home.packages = [
     (pkgs.python313.withPackages core-py)
   ];

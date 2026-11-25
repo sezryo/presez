@@ -1,7 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "swaylock" "effects"
-
 {
   home.programs.swaylock = {
     package = pkgs.swaylock-effects;

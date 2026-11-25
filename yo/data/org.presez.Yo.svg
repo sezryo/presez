@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8caaee"/>
+      <stop offset="1" stop-color="#626880"/>
+    </linearGradient>
+  </defs>
+  <!-- A stack: profile on top of sets on top of packages. -->
+  <rect x="10" y="12" width="108" height="104" rx="24" fill="#303446"/>
+  <rect x="10" y="8" width="108" height="104" rx="24" fill="url(#bg)"/>
+  <rect x="30" y="30" width="68" height="16" rx="8" fill="#ffffff"/>
+  <rect x="30" y="52" width="68" height="16" rx="8" fill="#ffffff" fill-opacity="0.82"/>
+  <rect x="30" y="74" width="68" height="16" rx="8" fill="#ffffff" fill-opacity="0.62"/>
+  <circle cx="40" cy="38" r="4" fill="#a6d189"/>
+  <circle cx="40" cy="60" r="4" fill="#a6d189"/>
+  <circle cx="40" cy="82" r="4" fill="#737994"/>
+</svg>

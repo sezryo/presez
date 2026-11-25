@@ -1,7 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
 
-lib.mine.mkIfProfile config.modules "tlp" "basic"
-
 {
   # TLP and power-profiles-daemon conflict — disable ppd when TLP is wanted.
   services.power-profiles-daemon.enable = false;

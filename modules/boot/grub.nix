@@ -8,6 +8,8 @@ let
   inherit (lib.mine) mkEnableOpt mkEnableOpt' mkOpt';
   themes = [ "darkmatter-theme" "default" ];
 in {
+  imports = [ inputs.darkmatter-grub-theme.nixosModule ];
+
   options.modules.boot.grub = {
     enable = mkEnableOpt "Whether to enable basic grub settings as boot loader";
     efi = mkEnableOpt "Whether to enable efi related boot supports";

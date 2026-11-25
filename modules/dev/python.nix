@@ -1,19 +1,7 @@
-{ config, pkgs, lib, inputs, options, ... }:
-
-with lib;
-with lib.types;
-let
-  cfg = config.modules.dev.python;
-  inherit (lib.mine) mkEnableOpt;
-in {
-  options.modules.dev.python = {
-    enable = mkEnableOpt "Whether to enable python toolchain";
-  };
-
-  config = mkIf cfg.enable {
-    modules.singleton = {
-      python313 = [ "basic" ];
-      jupyter = [ "basic" ];
-    };
-  };
+{
+  description = "the Python toolchain";
+  packages = [
+    "python313"
+    # "jupyter" # never had a package under src/, so it was never installed; uncomment to install pkgs.jupyter
+  ];
 }

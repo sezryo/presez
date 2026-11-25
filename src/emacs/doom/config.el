@@ -30,6 +30,199 @@
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 
 ;; Force disable header line globally
+
+;;; Forester support ---------------------------------------------------------
+;; Semantic editing for .tree files:
+;; - open a tree by title/taxon/address instead of by filename;
+;; - insert links/transclusions by title;
+;; - use Forester's LSP server through Doom's (lsp +eglot) module when available.
+
+(require 'cl-lib)
+(require 'subr-x)
+
+(defgroup yve-forester nil
+  "Small Forester helpers for this Doom configuration."
+  :group 'tools)
+
+(defcustom yve/forester-auto-start-lsp t
+  "When non-nil, start `forester lsp' automatically in `forester-mode'."
+  :type 'boolean
+  :group 'yve-forester)
+
+(defvar yve/forester-font-lock-keywords
+  '(("\\\\[[:alnum:]_/-]+" . font-lock-keyword-face)
+    ("\\[\\[\\([[:alnum:]_-]+\\)\\]\\]" 1 font-lock-constant-face)
+    ("\\\\\\(title\\|taxon\\|number\\|date\\){\\([^}\n]+\\)}"
+     (1 font-lock-keyword-face)
+     (2 font-lock-function-name-face)))
+  "Basic highlighting for Forester source files.")
+
+(define-derived-mode forester-mode text-mode "Forester"
+  "Major mode for Forester .tree files."
+  (setq-local font-lock-defaults '(yve/forester-font-lock-keywords))
+  (setq-local comment-start "%% ")
+  (setq-local comment-end ""))
+
+(add-to-list 'auto-mode-alist '("\\.tree\\'" . forester-mode))
+
+(defun yve/forester-root ()
+  "Return the root directory of the current Forester forest."
+  (or (locate-dominating-file default-directory "forest.toml")
+      (user-error "No forest.toml found above `%s'" default-directory)))
+
+(defun yve/forester--toml-tree-dirs (root)
+  "Read simple `trees = [\"...\"]' entries from ROOT/forest.toml.
+This intentionally implements only the simple form used by ordinary
+Forester forests; when it cannot parse the setting, callers fall back to
+the conventional `trees/' directory."
+  (let ((toml (expand-file-name "forest.toml" root)))
+    (when (file-readable-p toml)
+      (with-temp-buffer
+        (insert-file-contents toml)
+        (goto-char (point-min))
+        (when (re-search-forward
+               "^[[:space:]]*trees[[:space:]]*=[[:space:]]*\\[\\([^]]+\\)\\]"
+               nil t)
+          (let ((inside (match-string-no-properties 1))
+                dirs)
+            (with-temp-buffer
+              (insert inside)
+              (goto-char (point-min))
+              (while (re-search-forward "\"\\([^\"]+\\)\"" nil t)
+                (push (match-string-no-properties 1) dirs))
+              (nreverse dirs))))))))
+
+(defun yve/forester-tree-directories (&optional root)
+  "Return existing tree directories for the Forester forest at ROOT."
+  (let* ((root (or root (yve/forester-root)))
+         (dirs (or (yve/forester--toml-tree-dirs root) '("trees"))))
+    (cl-remove-if-not
+     #'file-directory-p
+     (mapcar (lambda (dir) (expand-file-name dir root)) dirs))))
+
+(defun yve/forester--first-macro (macro)
+  "Return the first one-line value of \\MACRO{...} in the current buffer."
+  (goto-char (point-min))
+  (when (re-search-forward
+         (format "\\\\%s{\\([^}\n]*\\)}" (regexp-quote macro))
+         nil t)
+    (string-trim (match-string-no-properties 1))))
+
+(defun yve/forester--read-tree (file root)
+  "Return a completion candidate `(LABEL . FILE)' for a Forester tree FILE."
+  (with-temp-buffer
+    (insert-file-contents file nil 0 16000)
+    (let* ((title (or (yve/forester--first-macro "title") "(untitled)"))
+           (taxon (or (yve/forester--first-macro "taxon") ""))
+           (number (or (yve/forester--first-macro "number") ""))
+           (id (file-name-base file))
+           (rel (file-relative-name file root))
+           (label
+            (string-trim
+             (format "%s%s%s — %s [%s]"
+                     title
+                     (if (string-empty-p taxon) "" (format " (%s)" taxon))
+                     (if (string-empty-p number) "" (format " #%s" number))
+                     id
+                     rel))))
+      (cons label file))))
+
+(defun yve/forester-tree-candidates ()
+  "Return completion candidates for all trees in the current Forester forest."
+  (let* ((root (yve/forester-root))
+         (dirs (yve/forester-tree-directories root))
+         (files (delete-dups
+                 (apply #'append
+                        (mapcar (lambda (dir)
+                                  (directory-files-recursively dir "\\.tree\\'"))
+                                dirs)))))
+    (unless files
+      (user-error "No .tree files found under %s"
+                  (mapconcat (lambda (d) (file-relative-name d root)) dirs ", ")))
+    (sort
+     (mapcar (lambda (file) (yve/forester--read-tree file root)) files)
+     (lambda (a b) (string< (car a) (car b))))))
+
+(defun yve/forester--choose-tree (&optional prompt)
+  "Choose a Forester tree by semantic metadata and return its file path."
+  (let* ((candidates (yve/forester-tree-candidates))
+         (choice (completing-read (or prompt "Forester tree: ")
+                                  candidates nil t)))
+    (cdr (assoc choice candidates))))
+
+(defun yve/forester-open-tree ()
+  "Open a Forester tree by title, taxon, number, address, or path."
+  (interactive)
+  (find-file (yve/forester--choose-tree "Open Forester tree: ")))
+
+(defun yve/forester--choose-tree-id (&optional prompt)
+  "Choose a Forester tree and return its address, i.e. its filename stem."
+  (file-name-base (yve/forester--choose-tree prompt)))
+
+(defun yve/forester-insert-tree-id ()
+  "Choose a Forester tree by title and insert its address."
+  (interactive)
+  (insert (yve/forester--choose-tree-id "Insert tree address: ")))
+
+(defun yve/forester-insert-link ()
+  "Choose a Forester tree by title and insert a [[tree-id]] link."
+  (interactive)
+  (insert (format "[[%s]]"
+                  (yve/forester--choose-tree-id "Insert link to tree: "))))
+
+(defun yve/forester-insert-transclusion ()
+  "Choose a Forester tree by title and insert \\transclude{tree-id}."
+  (interactive)
+  (insert (format "\\transclude{%s}"
+                  (yve/forester--choose-tree-id "Transclude tree: "))))
+
+(defun yve/forester-insert-folded-transclusion ()
+  "Choose a Forester tree and insert a folded-by-default transclusion."
+  (interactive)
+  (insert
+   (format "\\scope{\n  \\put\\transclude/expanded{false}\n  \\transclude{%s}\n}"
+           (yve/forester--choose-tree-id "Insert folded transclusion: "))))
+
+(defun yve/forester-insert-numbered-transclusion ()
+  "Choose a Forester tree and insert a numbered transclusion."
+  (interactive)
+  (insert
+   (format "\\scope{\n  \\put\\transclude/numbered{true}\n  \\transclude{%s}\n}"
+           (yve/forester--choose-tree-id "Insert numbered transclusion: "))))
+
+(defun yve/forester-eglot-ensure ()
+  "Start Forester's Eglot server when available."
+  (when (and yve/forester-auto-start-lsp
+             (executable-find "forester")
+             (require 'eglot nil t))
+    (add-to-list 'eglot-server-programs
+                 '(forester-mode . ("forester" "lsp")))
+    (eglot-ensure)))
+
+(after! eglot
+  (add-to-list 'eglot-server-programs
+               '(forester-mode . ("forester" "lsp"))))
+
+(add-hook 'forester-mode-hook #'yve/forester-eglot-ensure)
+
+(map! :leader
+      (:prefix ("o" . "open")
+       (:prefix ("F" . "Forester")
+        :desc "Open tree by title" "t" #'yve/forester-open-tree
+        :desc "Insert tree address" "i" #'yve/forester-insert-tree-id
+        :desc "Insert link" "l" #'yve/forester-insert-link
+        :desc "Insert transclusion" "x" #'yve/forester-insert-transclusion
+        :desc "Insert folded transclusion" "f" #'yve/forester-insert-folded-transclusion
+        :desc "Insert numbered transclusion" "n" #'yve/forester-insert-numbered-transclusion)))
+
+(map! :map forester-mode-map
+      :localleader
+      :desc "Open tree by title" "t" #'yve/forester-open-tree
+      :desc "Insert tree address" "i" #'yve/forester-insert-tree-id
+      :desc "Insert link" "l" #'yve/forester-insert-link
+      :desc "Insert transclusion" "x" #'yve/forester-insert-transclusion
+      :desc "Insert folded transclusion" "f" #'yve/forester-insert-folded-transclusion
+      :desc "Insert numbered transclusion" "n" #'yve/forester-insert-numbered-transclusion)
 (setq-default header-line-format nil)
 (setq pgtk-use-im-context nil)
 (setq shell-file-name (executable-find "bash"))
